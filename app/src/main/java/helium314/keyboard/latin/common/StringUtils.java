@@ -64,35 +64,41 @@ public final class StringUtils {
         return new String(Character.toChars(codePoint));
     }
 
+    /**
+     * Based on <a href="https://github.com/apache/commons-lang/blob/master/src/main/java/org/apache/commons/lang3/StringUtils.java">
+     *      apache commons-lang StringUtils::capitalize</a>.
+     */
     @NonNull
     public static String capitalizeFirstCodePoint(@NonNull final String s,
                                                   @NonNull final Locale locale) {
-        if (s.length() <= 1) {
-            return s.toUpperCase(getLocaleUsedForToTitleCase(locale));
+        if (s.isEmpty()) {
+            return s;
         }
         // Please refer to the comment below in
         // {@link #capitalizeFirstAndDowncaseRest(String,Locale)} as this has the same shortcomings
-        final int cutoff = s.offsetByCodePoints(0, 1);
-        return s.substring(0, cutoff).toUpperCase(getLocaleUsedForToTitleCase(locale))
-                + s.substring(cutoff);
+        var firstCodepoint = s.codePointAt(0);
+        var newCodePoint = Character.toTitleCase(firstCodepoint);
+        if (firstCodepoint == newCodePoint) {
+            // already capitalized
+            return s;
+        }
+        var newCodePoints = s.codePoints().toArray();
+        newCodePoints[0] = newCodePoint; // copy the first code point
+        return new String(newCodePoints, 0, newCodePoints.length);
     }
 
     @NonNull
     public static String capitalizeFirstAndDowncaseRest(@NonNull final String s,
                                                         @NonNull final Locale locale) {
-        if (s.length() <= 1) {
-            return s.toUpperCase(getLocaleUsedForToTitleCase(locale));
+        if (s.isEmpty()) {
+            return s;
         }
-        // TODO: fix the bugs below
-        // - It does not work for Serbian, because it fails to account for the "lj" character,
-        // which should be "Lj" in title case and "LJ" in upper case.
-        // - It does not work for Dutch, because it fails to account for the "ij" digraph when it's
+        // TODO: fix the bug below
+        // It does not work for Dutch, because it fails to account for the "ij" digraph when it's
         // written as two separate code points. They are two different characters but both should
-        // be capitalized as "IJ" as if they were a single letter in most words (not all). If the
-        // unicode char for the ligature is used however, it works.
-        final int cutoff = s.offsetByCodePoints(0, 1);
-        return s.substring(0, cutoff).toUpperCase(getLocaleUsedForToTitleCase(locale))
-                + s.substring(cutoff).toLowerCase(locale);
+        // be capitalized as "IJ" as if they were a single letter in most words (not all).
+        var firstCodepoint = Character.toTitleCase(s.codePointAt(0));
+        return Character.toString(firstCodepoint) + s.substring(Character.charCount(firstCodepoint)).toLowerCase(locale);
     }
 
     @NonNull
