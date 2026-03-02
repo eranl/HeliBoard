@@ -122,7 +122,7 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
             inputStyleIfNotPrediction
         }
 
-        suggestionsList.replaceAll { fixEmojiVersion(it) }
+        useDefaultEmojiSkinTone(suggestionsList)
 
         // If there is an incoming autocorrection, make sure typed word is shown, so user is able to override it.
         // Otherwise, if the relevant setting is enabled, show the typed word in the middle.
@@ -325,7 +325,7 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
             )
         }
 
-        suggestionsContainer.replaceAll { fixEmojiVersion(it) }
+        useDefaultEmojiSkinTone(suggestionsContainer)
 
         // In the batch input mode, the most relevant suggested word should act as a "typed word"
         // (typedWordValid=true), not as an "auto correct word" (willAutoCorrect=false).
@@ -342,6 +342,12 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
         }
         return SuggestedWords(suggestionsList, suggestionResults.mRawSuggestions, pseudoTypedWordInfo, true,
             false, false, inputStyle, sequenceNumber)
+    }
+
+    private fun useDefaultEmojiSkinTone(suggestionsList: ArrayList<SuggestedWordInfo>) {
+        for (i in suggestionsList.indices) {
+            suggestionsList[i] = useDefaultEmojiSkinTone(suggestionsList[i])
+        }
     }
 
     /** get suggestions based on the current ngram context, with an empty typed word (that's what next word suggestions do)  */
@@ -424,7 +430,7 @@ class Suggest(private val mDictionaryFacilitator: DictionaryFacilitator) {
         }
 
         @JvmStatic
-        fun fixEmojiVersion(suggestion: SuggestedWordInfo): SuggestedWordInfo {
+        fun useDefaultEmojiSkinTone(suggestion: SuggestedWordInfo): SuggestedWordInfo {
             val defaultVersion = getEmojiDefaultVersion(suggestion.mWord)
             if (defaultVersion == suggestion.mWord) {
                 return suggestion

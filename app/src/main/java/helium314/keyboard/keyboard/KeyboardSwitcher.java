@@ -34,6 +34,7 @@ import helium314.keyboard.keyboard.KeyboardLayoutSet.KeyboardLayoutSetException;
 import helium314.keyboard.keyboard.clipboard.ClipboardHistoryView;
 import helium314.keyboard.keyboard.emoji.EmojiPalettesView;
 import helium314.keyboard.keyboard.internal.KeyboardState;
+import helium314.keyboard.keyboard.internal.keyboard_parser.EmojiParserKt;
 import helium314.keyboard.latin.InputView;
 import helium314.keyboard.latin.KeyboardWrapperView;
 import helium314.keyboard.latin.LatinIME;
@@ -219,7 +220,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         if (currentSettingsValues.needsToLookupSuggestions()
                                     && (currentSettingsValues.mInlineEmojiSearch || currentSettingsValues.mSuggestEmojis)) {
-            mKeyboardLayoutSet.initializeDefaultEmojiVersions();
+            EmojiParserKt.loadEmojiDefaultVersionsAndPopupSpecs(mThemeContext);
         }
     }
 
