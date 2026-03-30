@@ -14,6 +14,7 @@ Does not use internet permission, and thus is 100% offline.
    * [Translations](#translations)
    * [To Community Creation](#to-community)
    * [Code Contribution](CONTRIBUTING.md)
+- [Links](#links)
 - [License](#license)
 - [Credits](#credits)
   * [Funding](#funding)
@@ -89,6 +90,21 @@ You can share your themes, layouts and dictionaries with other people:
 
 ## Code Contribution
 See [Contribution Guidelines](CONTRIBUTING.md)
+
+# Links
+* Info
+  * [Wiki](https://github.com/HeliBorg/HeliBoard/wiki), including FAQ, help on customizing layouts, and gesture data gathering
+  * [Layout documentation](layouts.md) (more technical info regarding layout customization)
+  * [For creating custom dictionaries](https://codeberg.org/Helium314/aosp-dictionaries#wordlist-information) (see also top of the linked readme)
+* Community
+  * [Lemmy](https://lemmy.world/c/Heliboard)
+  * [Reddit](https://www.reddit.com/r/HeliBoard)
+  * GitHub [discussions](https://github.com/Helium314/HeliBoard/discussions)
+* Other
+  * [Translations](https://translate.codeberg.org/projects/heliboard/)
+  * [Dictionaries](https://codeberg.org/Helium314/aosp-dictionaries)
+  * [k3lp](https://codeberg.org/k3lp/k3lp) is a WIP library for keyboard layout parsing that will be implemented in HeliBoard when ready (created by [FlorisBoard](https://github.com/florisboard/florisboard/) maintainers)
+  * [swipe-o-scope](https://codeberg.org/eclexic/swipe-o-scope) for visualizing gesture data as created when using gesture data gathering
 
 # License
 
