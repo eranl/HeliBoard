@@ -43,13 +43,8 @@ import helium314.keyboard.latin.utils.previewDark
 import androidx.core.content.edit
 
 // actual key for each setting is baseKey with one _true/_false appended per dimension (need to keep order!)
-// todo: possible adjustments, maybe depending on user feedback (but nothing after 10 months)
-//  should dimension checkboxes have any other effect than just showing / hiding sliders?
-//   one could argue that e.g. when disabling the split checkbox, then split mode should not affect the setting
-//  store checkbox states?
-//   if so, per setting or global?
-//  show a description? currently commented because it could get long, even without showing the variations
-//   maybe if we store the checkbox state in a setting, we could use it for determining what to show
+// should dimension checkboxes have any other effect than just showing / hiding sliders?
+//  one could argue that e.g. when disabling the split checkbox, then split mode should not affect the setting
 @Composable
 fun KeyboardScalePreference(
     name: String,
@@ -63,15 +58,13 @@ fun KeyboardScalePreference(
     if (defaults.size != 1.shl(dimensions.size))
         throw ArithmeticException("defaults size does not match with dimensions, expected ${1.shl(dimensions.size)}, got ${defaults.size}")
     var showDialog by remember { mutableStateOf(false) }
-    //val (_, keys) = remember { createVariantsAndKeys(dimensions, baseKey) }
-    //val prefs = LocalContext.current.prefs()
     Preference(
         name = name,
         onClick = { showDialog = true },
-        //description = keys.mapIndexed { i, it -> description(prefs.getFloat(it, defaults[i])) }.joinToString(" $SPLIT ")
+        // no description because it can easily take up too much space
     )
     if (showDialog)
-        KeyboardScalePreference(
+        KeyboardScaleDialog(
             onDismissRequest = { showDialog = false },
             title = { Text(name) },
             baseKey = baseKey,
@@ -85,7 +78,7 @@ fun KeyboardScalePreference(
 
 // SliderDialog specialized for keyboard scale settings using multiple sliders with same range, each with a different setting and title
 @Composable
-private fun KeyboardScalePreference(
+private fun KeyboardScaleDialog(
     onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
     baseKey: String,
@@ -196,14 +189,14 @@ private const val SPLIT = " / "
 @Composable
 private fun Preview() {
     Theme(previewDark) {
-        KeyboardScalePreference(
+        KeyboardScaleDialog(
             onDismissRequest = { },
             onDone = { },
             positionString = { "${it.toInt()}%"},
             defaultValues = Array(8) { 100f - it % 2 * 50f },
             range = 0f..500f,
             title = { Text("bottom padding scale") },
-            dimensions = listOf("landscape", "unfolded", "split"),
+            dimensions = listOf("landscape", "split", "folded"),
             baseKey = ""
         )
     }
