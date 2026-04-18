@@ -670,7 +670,8 @@ private fun BinaryDictionary.addWords(words: MutableList<Pair<String, Long>>) {
             ) {
             // probability actually is something like log or very high root of actual word frequency
             // we use power of 4 to shift the probabilities in favor of more frequent words, so users mostly see relatively common words, but aren't bored by tons of very common words
-            cumulativeWeight += result.mWordProperty.probability * result.mWordProperty.probability * result.mWordProperty.probability * result.mWordProperty.probability
+            // (1L because otherwise we'll have int overflow with probability > 215)
+            cumulativeWeight += 1L * result.mWordProperty.probability * result.mWordProperty.probability * result.mWordProperty.probability * result.mWordProperty.probability
             if (added && words.isEmpty())
                 return // crappy workaround for having 2 merged dictionaries when switching dicts while one is still loading
             words.add(word to cumulativeWeight)
