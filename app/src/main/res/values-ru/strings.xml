@@ -379,7 +379,6 @@
     <string name="customize_background_image_landscape">Установить фоновое изображение (альбомный режим)</string>
     <string name="number_row_hints">Показывать подсказки в ряду с цифрами</string>
     <string name="prefs_language_swipe_distance">Дистанция смахивания для смены языка</string>
-    <string name="enable_split_keyboard_landscape">Включить разделение клавиатуры (альбомный режим)</string>
     <string name="split" tools:keep="@string/split">Разделение клавиатуры</string>
     <string name="custom_subtype">Пользовательский подтип</string>
     <string name="subtype_baishakhi_bn_IN">%s (Байсахи)</string>

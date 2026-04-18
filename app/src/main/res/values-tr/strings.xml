@@ -431,7 +431,6 @@
     <string name="customize_icons_reset_message">Tüm özelleştirilmiş simgeleri gerçekten sıfırlamak mı istiyorsunuz?</string>
     <string name="delete_confirmation">%s\'yi gerçekten silmek istiyor musunuz?</string>
     <string name="custom_subtype">Özel alt tür</string>
-    <string name="enable_split_keyboard_landscape">Bölünmüş klavyeyi etkinleştir (yatay)</string>
     <string name="show_tld_popup_keys">TLD açılır pencere tuşlarını göster</string>
     <string name="subtype_dru">Dargwa (Urakhi)</string>
     <string name="subtype_baishakhi_bn_IN">%s (Baishakhi)</string>

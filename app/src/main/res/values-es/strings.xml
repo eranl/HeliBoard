@@ -382,7 +382,6 @@
     <string name="layout_number_row_basic" tools:keep="@string/layout_number_row_basic">Fila de números (básica)</string>
     <string name="subtype_baishakhi_bn_IN">%s (Baishakhi)</string>
     <string name="name_invalid">Nombre inválido</string>
-    <string name="enable_split_keyboard_landscape">Habilitar teclado dividido (horizontal)</string>
     <string name="settings_category_space">Espacio</string>
     <string name="backspace_reverts_autocorrect">Retroceso deshace la autocorrección</string>
     <string name="show_tld_popup_keys">Mostrar dominios TLD en teclas emergentes</string>

@@ -417,7 +417,6 @@
     <string name="number_row_hints">Näita numbrireas vihjeid</string>
     <string name="prefs_language_swipe_distance">Vaheta keele viipamiskaugust</string>
     <string name="split" tools:keep="@string/split">Poolitatud klahvistik</string>
-    <string name="enable_split_keyboard_landscape">Kasuta kaheks jaotatud klahvistikku (rõhtvaates)</string>
     <string name="delete_confirmation">Kas kindlasti kustutame „%s“?</string>
     <string name="layout_functional_keys_tablet" tools:keep="@string/layout_functional_keys_tablet">Funktsiooniklahvid (suurel ekraanil)</string>
     <string name="name_invalid">Vigane nimi</string>

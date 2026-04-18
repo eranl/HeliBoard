@@ -27,7 +27,6 @@
     <string name="settings_category_experimental">Arbrovel</string>
     <string name="settings_category_miscellaneous">Divers</string>
     <string name="enable_split_keyboard">Gallosegi bysowek folsys</string>
-    <string name="enable_split_keyboard_landscape">Gallosegi bysowek folsys (gorwelyek)</string>
     <string name="split_spacer_scale">Pellder fols</string>
     <string name="language_switch_key_switch_input_method">Skwychella dhe methodys ynworrans aral</string>
     <string name="switch_language">Skwychella yeth</string>

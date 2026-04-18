@@ -384,7 +384,6 @@ Nouveau dictionnaire:
     <string name="prefs_side_padding_scale">Espacement latéral</string>
     <string name="number_row_hints">Afficher les symboles sur la rangée numérique</string>
     <string name="prefs_language_swipe_distance">Distance de balayage pour changer de langue</string>
-    <string name="enable_split_keyboard_landscape">Activer le clavier divisé (paysage)</string>
     <string name="split" tools:keep="@string/split">Clavier divisé</string>
     <string name="delete_confirmation">Voulez-vous vraiment supprimer %s ?</string>
     <string name="name_invalid">Nom invalide</string>

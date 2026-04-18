@@ -121,7 +121,6 @@
     <string name="settings_category_suggestions">Təkliflər</string>
     <string name="settings_category_experimental">Sınaq üçün</string>
     <string name="settings_category_miscellaneous">Müxtəlif</string>
-    <string name="enable_split_keyboard_landscape">Bölünmüş klaviaturanı qoş (landşaft)</string>
     <string name="split_spacer_scale">Bölünmə məsafəsi</string>
     <string name="switch_language">Dili dəyişdir</string>
     <string name="language_switch_key_switch_both">Hər ikisini dəyişdir</string>
