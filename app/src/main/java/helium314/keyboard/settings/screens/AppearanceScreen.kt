@@ -38,7 +38,7 @@ import helium314.keyboard.settings.dialogs.CustomizeIconsDialog
 import helium314.keyboard.settings.initPreview
 import helium314.keyboard.settings.preferences.BackgroundImagePref
 import helium314.keyboard.settings.preferences.CustomFontPreference
-import helium314.keyboard.settings.preferences.MultiSliderPreference
+import helium314.keyboard.settings.preferences.KeyboardScalePreference
 import helium314.keyboard.settings.preferences.TextInputPreference
 import helium314.keyboard.latin.utils.previewDark
 import androidx.core.content.edit
@@ -235,7 +235,7 @@ fun createAppearanceSettings(context: Context) = listOf(
         }
     },
     Setting(context, Settings.PREF_SPLIT_SPACER_SCALE_PREFIX, R.string.split_spacer_scale) { setting ->
-        MultiSliderPreference(
+        KeyboardScalePreference(
             name = setting.title,
             baseKey = setting.key,
             dimensions = listOf(stringResource(R.string.landscape), stringResource(R.string.folded)),
@@ -249,7 +249,7 @@ fun createAppearanceSettings(context: Context) = listOf(
         SwitchPreference(it, Defaults.PREF_NARROW_KEY_GAPS) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_KEYBOARD_HEIGHT_SCALE_PREFIX, R.string.prefs_keyboard_height_scale) { setting ->
-        MultiSliderPreference(
+        KeyboardScalePreference(
             name = setting.title,
             baseKey = setting.key,
             dimensions = listOf(stringResource(R.string.landscape), stringResource(R.string.folded)),
@@ -259,7 +259,7 @@ fun createAppearanceSettings(context: Context) = listOf(
         ) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_BOTTOM_ROW_SCALE_PREFIX, R.string.prefs_bottom_row_scale) { setting ->
-        MultiSliderPreference(
+        KeyboardScalePreference(
             name = setting.title,
             baseKey = setting.key,
             dimensions = listOf(stringResource(R.string.landscape), stringResource(R.string.folded)),
@@ -269,7 +269,7 @@ fun createAppearanceSettings(context: Context) = listOf(
         ) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_BOTTOM_PADDING_SCALE_PREFIX, R.string.prefs_bottom_padding_scale) { setting ->
-        MultiSliderPreference(
+        KeyboardScalePreference(
             name = setting.title,
             baseKey = setting.key,
             dimensions = listOf(stringResource(R.string.landscape), stringResource(R.string.folded)),
@@ -279,7 +279,7 @@ fun createAppearanceSettings(context: Context) = listOf(
         ) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_SIDE_PADDING_SCALE_PREFIX, R.string.prefs_side_padding_scale) { setting ->
-        MultiSliderPreference(
+        KeyboardScalePreference(
             name = setting.title,
             baseKey = setting.key,
             dimensions = listOf(stringResource(R.string.landscape), stringResource(R.string.split), stringResource(R.string.folded)),

@@ -42,9 +42,8 @@ import helium314.keyboard.settings.dialogs.ThreeButtonAlertDialog
 import helium314.keyboard.latin.utils.previewDark
 import androidx.core.content.edit
 
-// too specialized for using a more generic dialog
 // actual key for each setting is baseKey with one _true/_false appended per dimension (need to keep order!)
-// todo: possible adjustments, maybe depending on user feedback
+// todo: possible adjustments, maybe depending on user feedback (but nothing after 10 months)
 //  should dimension checkboxes have any other effect than just showing / hiding sliders?
 //   one could argue that e.g. when disabling the split checkbox, then split mode should not affect the setting
 //  store checkbox states?
@@ -52,7 +51,7 @@ import androidx.core.content.edit
 //  show a description? currently commented because it could get long, even without showing the variations
 //   maybe if we store the checkbox state in a setting, we could use it for determining what to show
 @Composable
-fun MultiSliderPreference(
+fun KeyboardScalePreference(
     name: String,
     baseKey: String,
     dimensions: List<String>,
@@ -72,7 +71,7 @@ fun MultiSliderPreference(
         //description = keys.mapIndexed { i, it -> description(prefs.getFloat(it, defaults[i])) }.joinToString(" $SPLIT ")
     )
     if (showDialog)
-        MultiSliderDialog(
+        KeyboardScalePreference(
             onDismissRequest = { showDialog = false },
             title = { Text(name) },
             baseKey = baseKey,
@@ -84,9 +83,9 @@ fun MultiSliderPreference(
         )
 }
 
-// SliderDialog, but for multiple sliders with same range, each with a different setting and title
+// SliderDialog specialized for keyboard scale settings using multiple sliders with same range, each with a different setting and title
 @Composable
-private fun MultiSliderDialog(
+private fun KeyboardScalePreference(
     onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
     baseKey: String,
@@ -197,7 +196,7 @@ private const val SPLIT = " / "
 @Composable
 private fun Preview() {
     Theme(previewDark) {
-        MultiSliderDialog(
+        KeyboardScalePreference(
             onDismissRequest = { },
             onDone = { },
             positionString = { "${it.toInt()}%"},
