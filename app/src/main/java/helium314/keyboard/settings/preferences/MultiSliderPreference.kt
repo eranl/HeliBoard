@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.settings.createPrefKeyForBooleanSettings
+import helium314.keyboard.latin.utils.FoldableUtils
 import helium314.keyboard.latin.utils.prefs
 import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.WithSmallTitle
@@ -97,8 +98,10 @@ private fun MultiSliderDialog(
     positionString: (Float) -> String,
 ) {
     val (variants, keys) = createVariantsAndKeys(dimensions, baseKey)
-    var checked by remember { mutableStateOf(List(variants.size) { true }) }
-    val prefs = LocalContext.current.prefs()
+    val foldedString = stringResource(R.string.folded) // we want to hide foldable settings for non-foldable phones
+    val ctx = LocalContext.current
+    var checked by remember { mutableStateOf(dimensions.map { FoldableUtils.isFoldable || !it.contains(foldedString) }) }
+    val prefs = ctx.prefs()
     val done = remember { mutableMapOf<String, () -> Unit>() }
 
     ThreeButtonAlertDialog(
@@ -114,9 +117,11 @@ private fun MultiSliderDialog(
                 Column(Modifier.verticalScroll(state)) {
                     if (dimensions.size > 1) {
                         dimensions.forEachIndexed { i, dimension ->
-                            DimensionCheckbox(checked[i], dimension) {
-                                checked = checked.mapIndexed { j, c -> if (i == j) it else c }
-                            }
+                            // hide "folded" box for non-foldables
+                            if (FoldableUtils.isFoldable || !dimension.contains(foldedString))
+                                DimensionCheckbox(checked[i], dimension) {
+                                    checked = checked.mapIndexed { j, c -> if (i == j) it else c }
+                                }
                         }
                     }
                     variants.forEachIndexed { i, variant ->
