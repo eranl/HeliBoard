@@ -443,4 +443,8 @@
     <string name="subtype_mhr">Ostmari</string>
     <string name="subtype_khipro_bn">%s (Khipro)</string>
     <string name="layout_functional_keys_khipro" tools:keep="@string/layout_functional_keys">Funktionale Tasten (Khipro)</string>
+    <string name="toolbar_swipe_down_to_hide">Tastatur durch Wischen ausblenden</string>
+    <string name="toolbar_swipe_down_to_hide_summary">Auf Symbolleiste nach unten wischen um Tastatur zu schließen</string>
+    <string name="ask_later">Frag mich später</string>
+    <string name="search_field_placeholder">Suche</string>
 </resources>
