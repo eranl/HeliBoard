@@ -38,6 +38,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -52,7 +53,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalConfiguration
@@ -102,7 +102,6 @@ import helium314.keyboard.settings.DropDownField
 import helium314.keyboard.latin.utils.NextScreenIcon
 import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.latin.utils.appendLink
-import helium314.keyboard.latin.utils.dpToPx
 import helium314.keyboard.settings.dialogs.ConfirmationDialog
 import helium314.keyboard.settings.dialogs.InfoDialog
 import helium314.keyboard.settings.dialogs.ThreeButtonAlertDialog
@@ -283,16 +282,25 @@ fun GestureDataScreen(
         }
         @Composable fun ColumnScope.texts() {
             val imm = ctx.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            val text = when {
-                !UncachedInputMethodManagerUtils.isThisImeCurrent(ctx, imm) -> stringResource(R.string.gesture_data_please_switch_keyboard, stringResource(R.string.english_ime_name))
-                else -> stringResource(R.string.gesture_data_please_type)
+            var isThisKeyboardSelected by remember { mutableStateOf(UncachedInputMethodManagerUtils.isThisImeCurrent(ctx, imm)) }
+            @Composable fun PleaseType() {
+                if (isThisKeyboardSelected)
+                    Text(stringResource(R.string.gesture_data_please_type))
+                else TextButton({
+                    imm.showInputMethodPicker()
+                    scope.launch {
+                        while (!UncachedInputMethodManagerUtils.isThisImeCurrent(ctx, imm)) {
+                            delay(50)
+                        }
+                        isThisKeyboardSelected = true
+                    }
+                }) {
+                    Text(stringResource(R.string.gesture_data_please_switch_keyboard, stringResource(R.string.english_ime_name)))
+                }
             }
             if (useWideLayout) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = text,
-                        modifier = Modifier.alpha(if (wordFromDict == null) 0.5f else 1f)
-                    )
+                    PleaseType()
                     CompositionLocalProvider(
                         LocalTextStyle provides MaterialTheme.typography.titleLarge
                     ) {
@@ -304,10 +312,7 @@ fun GestureDataScreen(
                     }
                 }
             } else {
-                Text(
-                    text = text,
-                    modifier = Modifier.alpha(if (wordFromDict == null) 0.5f else 1f)
-                )
+                PleaseType()
                 CompositionLocalProvider(
                     LocalTextStyle provides MaterialTheme.typography.titleLarge
                 ) {
