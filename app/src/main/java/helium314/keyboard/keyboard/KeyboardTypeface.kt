@@ -69,34 +69,24 @@ object KeyboardTypeface {
     @JvmStatic
     fun resolve(
         text: CharSequence?,
-        customTypeface: Typeface? = customTypeface(),
-        emojiTypeface: Typeface? = emojiTypeface(),
         defaultTypeface: Typeface = Typeface.DEFAULT,
-    ): Typeface = if (emojiTypeface != null && text != null && isEmoji(text)) {
-        emojiTypeface
-    } else {
-        customTypeface ?: defaultTypeface
-    }
-
-    @JvmStatic
-    fun applyToTextView(
-        textView: TextView,
-        text: CharSequence? = textView.text,
-        customTypeface: Typeface? = customTypeface(),
-        emojiTypeface: Typeface? = emojiTypeface(),
-        defaultTypeface: Typeface = Typeface.DEFAULT,
-    ) {
-        textView.typeface = resolve(text, customTypeface, emojiTypeface, defaultTypeface)
+    ): Typeface {
+        val emojiTypeface = emojiTypeface()
+        return if (emojiTypeface != null && text != null && isEmoji(text)) {
+            emojiTypeface
+        } else {
+            customTypeface() ?: defaultTypeface
+        }
     }
 
     @JvmStatic
     fun applyToTextView(textView: TextView) {
-        applyToTextView(textView, textView.text, customTypeface(), emojiTypeface(), Typeface.DEFAULT)
+        applyToTextView(textView, textView.text, Typeface.DEFAULT)
     }
 
     @JvmStatic
     fun applyToTextView(textView: TextView, text: CharSequence?, defaultTypeface: Typeface) {
-        applyToTextView(textView, text, customTypeface(), emojiTypeface(), defaultTypeface)
+        textView.typeface = resolve(text, defaultTypeface = defaultTypeface)
     }
 
     @JvmStatic

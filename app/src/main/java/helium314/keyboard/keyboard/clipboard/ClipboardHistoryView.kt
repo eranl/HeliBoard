@@ -164,7 +164,7 @@ class ClipboardHistoryView @JvmOverloads constructor(
         setupBottomRowKeyboard(editorInfo, keyboardActionListener)
 
         placeholderView.apply {
-            KeyboardTypeface.applyToTextView(this, text, params.mTypeface, null)
+            KeyboardTypeface.applyToTextView(this)
             setTextColor(params.mTextColor)
             setTextSize(TypedValue.COMPLEX_UNIT_PX, params.mLabelSize.toFloat() * 2)
         }

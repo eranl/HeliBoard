@@ -97,8 +97,6 @@ public class KeyboardView extends View {
     @NonNull
     private final Paint mPaint = new Paint();
     private final Paint.FontMetrics mFontMetrics = new Paint.FontMetrics();
-    protected final Typeface mTypeface;
-    protected final Typeface mEmojiTypeface;
 
     public KeyboardView(final Context context, final AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
@@ -148,8 +146,6 @@ public class KeyboardView extends View {
         keyAttr.recycle();
 
         mPaint.setAntiAlias(true);
-        mTypeface = KeyboardTypeface.customTypeface();
-        mEmojiTypeface = KeyboardTypeface.emojiTypeface();
         setFitsSystemWindows(true);
     }
 
@@ -392,7 +388,7 @@ public class KeyboardView extends View {
         float labelBaseline = centerY;
         final String label = key.getLabel();
         if (label != null) {
-            paint.setTypeface(KeyboardTypeface.resolve(label, mTypeface, mEmojiTypeface, key.selectTypeface(params)));
+            paint.setTypeface(KeyboardTypeface.resolve(label, key.selectTypeface(params)));
             paint.setTextSize(key.selectTextSize(params) * mFontSizeMultiplier);
             final float labelCharHeight = TypefaceUtils.getReferenceCharHeight(paint);
             final float labelCharWidth = TypefaceUtils.getReferenceCharWidth(paint);
@@ -462,7 +458,7 @@ public class KeyboardView extends View {
             paint.setTextSize(key.selectHintTextSize(params) * mFontSizeMultiplier); // maybe take sqrt to not have such extreme changes?
             paint.setColor(key.selectHintTextColor(params));
             // TODO: Should add a way to specify type face for hint letters
-            paint.setTypeface(KeyboardTypeface.resolve(hintLabel, mTypeface, mEmojiTypeface, Typeface.DEFAULT_BOLD));
+            paint.setTypeface(KeyboardTypeface.resolve(hintLabel, Typeface.DEFAULT_BOLD));
             blendAlpha(paint, params.mAnimAlpha);
             final float labelCharHeight = TypefaceUtils.getReferenceCharHeight(paint);
             final float labelCharWidth = TypefaceUtils.getReferenceCharWidth(paint);
