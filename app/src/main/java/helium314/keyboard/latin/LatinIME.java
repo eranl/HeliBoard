@@ -847,14 +847,7 @@ public class LatinIME extends InputMethodService implements
     void onStartInputViewInternal(final EditorInfo editorInfo, final boolean restarting) {
         super.onStartInputView(editorInfo, restarting);
 
-        // only for active gesture data gathering, remove when data gathering phase is done (end of 2026 latest)
-        if (GestureDataGatheringKt.isInActiveGatheringMode(editorInfo)) {
-            mDictionaryFacilitator = GestureDataGatheringKt.getGestureDataActiveFacilitator();
-        } else {
-            mDictionaryFacilitator = mOriginalDictionaryFacilitator;
-        }
-        GestureDataGatheringKt.showEndNotificationIfNecessary(this); // will do nothing for a long time
-        mInputLogic.setFacilitator(mDictionaryFacilitator);
+        setGestureDataGatheringMode(editorInfo);
 
         mDictionaryFacilitator.onStartInput();
         // Switch to the null consumer to handle cases leading to early exit below, for which we
@@ -1848,5 +1841,16 @@ public class LatinIME extends InputMethodService implements
             }
             // deallocateMemory always called on hiding, and should not be called when showing
         }
+    }
+
+    private void setGestureDataGatheringMode(EditorInfo editorInfo) {
+        // only for active gesture data gathering, remove when data gathering phase is done (end of 2026 latest)
+        if (GestureDataGatheringKt.isInActiveGatheringMode(editorInfo)) {
+            mDictionaryFacilitator = GestureDataGatheringKt.getGestureDataActiveFacilitator();
+        } else {
+            mDictionaryFacilitator = mOriginalDictionaryFacilitator;
+        }
+        GestureDataGatheringKt.showEndNotificationIfNecessary(this); // will do nothing for a long time
+        mInputLogic.setFacilitator(mDictionaryFacilitator);
     }
 }
