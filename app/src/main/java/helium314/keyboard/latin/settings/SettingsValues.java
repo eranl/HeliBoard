@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.TypedValueCompat;
 
 import helium314.keyboard.compat.ConfigurationCompatKt;
+import helium314.keyboard.keyboard.KeyboardActionListener;
 import helium314.keyboard.keyboard.KeyboardTheme;
 import helium314.keyboard.keyboard.internal.keyboard_parser.LocaleKeyboardInfosKt;
 import helium314.keyboard.latin.InputAttributes;
@@ -77,8 +78,8 @@ public class SettingsValues {
     public final boolean mUsePersonalizedDicts;
     public final boolean mUseDoubleSpacePeriod;
     public final boolean mBlockPotentiallyOffensive;
-    public final int mSpaceSwipeHorizontal;
-    public final int mSpaceSwipeVertical;
+    public final KeyboardActionListener.SwipeAction mSpaceSwipeHorizontal;
+    public final KeyboardActionListener.SwipeAction mSpaceSwipeVertical;
     public final int mLanguageSwipeDistance;
     public final int mTouchpadSensitivity;
     public final boolean mDeleteSwipeEnabled;

@@ -67,10 +67,10 @@ fun AdvancedSettingsScreen(
         Settings.PREF_KEY_LONGPRESS_TIMEOUT,
         Settings.PREF_SPACE_HORIZONTAL_SWIPE,
         Settings.PREF_SPACE_VERTICAL_SWIPE,
-        if (Settings.readHorizontalSpaceSwipe(prefs) == KeyboardActionListener.SWIPE_SWITCH_LANGUAGE
-            || Settings.readVerticalSpaceSwipe(prefs) == KeyboardActionListener.SWIPE_SWITCH_LANGUAGE)
+        if (Settings.readHorizontalSpaceSwipe(prefs) == KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE
+            || Settings.readVerticalSpaceSwipe(prefs) == KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE)
             Settings.PREF_LANGUAGE_SWIPE_DISTANCE else null,
-        if (Settings.readVerticalSpaceSwipe(prefs) == KeyboardActionListener.SWIPE_TOUCHPAD_MODE)
+        if (Settings.readVerticalSpaceSwipe(prefs) == KeyboardActionListener.SwipeAction.TOUCHPAD_MODE)
             Settings.PREF_TOUCHPAD_SENSITIVITY else null,
         Settings.PREF_DELETE_SWIPE,
         Settings.PREF_SPACE_TO_CHANGE_LANG,
@@ -117,21 +117,21 @@ fun createAdvancedSettings(context: Context) = listOf(
     },
     Setting(context, Settings.PREF_SPACE_HORIZONTAL_SWIPE, R.string.show_horizontal_space_swipe) {
         val items = listOf(
-            stringResource(R.string.space_swipe_move_cursor_entry) to "move_cursor",
-            stringResource(R.string.switch_language) to "switch_language",
-            stringResource(R.string.space_swipe_toggle_numpad_entry) to "toggle_numpad",
-            stringResource(R.string.action_none) to "none",
+            stringResource(R.string.space_swipe_move_cursor_entry) to KeyboardActionListener.SwipeAction.MOVE_CURSOR.name,
+            stringResource(R.string.switch_language) to KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE.name,
+            stringResource(R.string.space_swipe_toggle_numpad_entry) to KeyboardActionListener.SwipeAction.TOGGLE_NUMPAD.name,
+            stringResource(R.string.action_none) to KeyboardActionListener.SwipeAction.NONE.name,
         )
         ListPreference(it, items, Defaults.PREF_SPACE_HORIZONTAL_SWIPE)
     },
     Setting(context, Settings.PREF_SPACE_VERTICAL_SWIPE, R.string.show_vertical_space_swipe) {
         val items = listOf(
-            stringResource(R.string.space_swipe_move_cursor_entry) to "move_cursor",
-            stringResource(R.string.switch_language) to "switch_language",
-            stringResource(R.string.space_swipe_toggle_numpad_entry) to "toggle_numpad",
-            stringResource(R.string.space_swipe_hide_keyboard_entry) to "hide_keyboard",
-            stringResource(R.string.space_swipe_touchpad_mode_entry) to "touchpad_mode",
-            stringResource(R.string.action_none) to "none",
+            stringResource(R.string.space_swipe_move_cursor_entry) to KeyboardActionListener.SwipeAction.MOVE_CURSOR.name,
+            stringResource(R.string.switch_language) to KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE.name,
+            stringResource(R.string.space_swipe_toggle_numpad_entry) to KeyboardActionListener.SwipeAction.TOGGLE_NUMPAD.name,
+            stringResource(R.string.space_swipe_hide_keyboard_entry) to KeyboardActionListener.SwipeAction.HIDE_KEYBOARD.name,
+            stringResource(R.string.space_swipe_touchpad_mode_entry) to KeyboardActionListener.SwipeAction.TOUCHPAD_MODE.name,
+            stringResource(R.string.action_none) to KeyboardActionListener.SwipeAction.NONE.name,
         )
         ListPreference(it, items, Defaults.PREF_SPACE_VERTICAL_SWIPE)
     },

@@ -755,8 +755,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     private boolean isSwiper(final int code) {
         final SettingsValues sv = Settings.getValues();
         return switch (code) {
-            case Constants.CODE_SPACE -> sv.mSpaceSwipeHorizontal != KeyboardActionListener.SWIPE_NO_ACTION
-                    || sv.mSpaceSwipeVertical != KeyboardActionListener.SWIPE_NO_ACTION;
+            case Constants.CODE_SPACE -> sv.mSpaceSwipeHorizontal != KeyboardActionListener.SwipeAction.NONE
+                    || sv.mSpaceSwipeVertical != KeyboardActionListener.SwipeAction.NONE;
             case KeyCode.DELETE -> sv.mDeleteSwipeEnabled;
             default -> false;
         };
@@ -920,10 +920,9 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         }
     }
 
-    private boolean oneShotSwipe(final int swipeSetting) {
+    private boolean oneShotSwipe(KeyboardActionListener.SwipeAction swipeSetting) {
         return switch (swipeSetting) {
-            case KeyboardActionListener.SWIPE_NO_ACTION, KeyboardActionListener.SWIPE_TOGGLE_NUMPAD,
-                 KeyboardActionListener.SWIPE_HIDE_KEYBOARD -> true;
+            case NONE, TOGGLE_NUMPAD, HIDE_KEYBOARD -> true;
             default -> false;
         };
     }

@@ -154,27 +154,27 @@ class KeyboardActionListenerImpl(private val latinIME: LatinIME, private val inp
     }
 
     override fun onHorizontalSpaceSwipe(steps: Int): Boolean = when (Settings.getValues().mSpaceSwipeHorizontal) {
-        KeyboardActionListener.SWIPE_MOVE_CURSOR -> onMoveCursorHorizontally(steps)
-        KeyboardActionListener.SWIPE_SWITCH_LANGUAGE -> onLanguageSlide(steps)
-        KeyboardActionListener.SWIPE_TOGGLE_NUMPAD -> toggleNumpad(false, false)
+        KeyboardActionListener.SwipeAction.MOVE_CURSOR -> onMoveCursorHorizontally(steps)
+        KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE -> onLanguageSlide(steps)
+        KeyboardActionListener.SwipeAction.TOGGLE_NUMPAD -> toggleNumpad(false, false)
         else -> false
     }
 
     override fun onVerticalSpaceSwipe(steps: Int): Boolean = when (Settings.getValues().mSpaceSwipeVertical) {
-        KeyboardActionListener.SWIPE_MOVE_CURSOR -> onMoveCursorVertically(steps)
-        KeyboardActionListener.SWIPE_SWITCH_LANGUAGE -> onLanguageSlide(steps)
-        KeyboardActionListener.SWIPE_TOGGLE_NUMPAD -> toggleNumpad(false, false)
-        KeyboardActionListener.SWIPE_HIDE_KEYBOARD -> {
+        KeyboardActionListener.SwipeAction.MOVE_CURSOR -> onMoveCursorVertically(steps)
+        KeyboardActionListener.SwipeAction.SWITCH_LANGUAGE -> onLanguageSlide(steps)
+        KeyboardActionListener.SwipeAction.TOGGLE_NUMPAD -> toggleNumpad(false, false)
+        KeyboardActionListener.SwipeAction.HIDE_KEYBOARD -> {
             latinIME.requestHideSelf(0)
             true
         }
-        KeyboardActionListener.SWIPE_TOUCHPAD_MODE -> {
+        KeyboardActionListener.SwipeAction.TOUCHPAD_MODE -> {
             // Activate touchpad mode - the actual cursor movement will be handled in PointerTracker
 
             // Activation and ensure enough room for navigation.
             val requiredSteps = 8
 
-            if (Math.abs(steps) >= requiredSteps) {
+            if (abs(steps) >= requiredSteps) {
                 TouchpadHandler.setTouchpadModeActive(true)
                 true
             } else {

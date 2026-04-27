@@ -343,24 +343,22 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
         return ToolbarMode.valueOf(prefs.getString(PREF_TOOLBAR_MODE, Defaults.PREF_TOOLBAR_MODE));
     }
 
-    public static int readHorizontalSpaceSwipe(final SharedPreferences prefs) {
-        return switch (prefs.getString(PREF_SPACE_HORIZONTAL_SWIPE, Defaults.PREF_SPACE_HORIZONTAL_SWIPE)) {
-            case "move_cursor" -> KeyboardActionListener.SWIPE_MOVE_CURSOR;
-            case "switch_language" -> KeyboardActionListener.SWIPE_SWITCH_LANGUAGE;
-            case "toggle_numpad" -> KeyboardActionListener.SWIPE_TOGGLE_NUMPAD;
-            default -> KeyboardActionListener.SWIPE_NO_ACTION;
-        };
+    public static KeyboardActionListener.SwipeAction readHorizontalSpaceSwipe(SharedPreferences prefs) {
+        try {
+            String value = prefs.getString(PREF_SPACE_HORIZONTAL_SWIPE, Defaults.PREF_SPACE_HORIZONTAL_SWIPE);
+            return KeyboardActionListener.SwipeAction.valueOf(value);
+        } catch (IllegalArgumentException e) {
+            return KeyboardActionListener.SwipeAction.NONE;
+        }
     }
 
-    public static int readVerticalSpaceSwipe(final SharedPreferences prefs) {
-        return switch (prefs.getString(PREF_SPACE_VERTICAL_SWIPE, Defaults.PREF_SPACE_VERTICAL_SWIPE)) {
-            case "move_cursor" -> KeyboardActionListener.SWIPE_MOVE_CURSOR;
-            case "switch_language" -> KeyboardActionListener.SWIPE_SWITCH_LANGUAGE;
-            case "toggle_numpad" -> KeyboardActionListener.SWIPE_TOGGLE_NUMPAD;
-            case "hide_keyboard" -> KeyboardActionListener.SWIPE_HIDE_KEYBOARD;
-            case "touchpad_mode" -> KeyboardActionListener.SWIPE_TOUCHPAD_MODE;
-            default -> KeyboardActionListener.SWIPE_NO_ACTION;
-        };
+    public static KeyboardActionListener.SwipeAction readVerticalSpaceSwipe(SharedPreferences prefs) {
+        try {
+            String value = prefs.getString(PREF_SPACE_VERTICAL_SWIPE, Defaults.PREF_SPACE_VERTICAL_SWIPE);
+            return KeyboardActionListener.SwipeAction.valueOf(value);
+        } catch (IllegalArgumentException e) {
+            return KeyboardActionListener.SwipeAction.NONE;
+        }
     }
 
     public static boolean readFullscreenModeAllowed(final Resources res) {
