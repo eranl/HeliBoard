@@ -156,6 +156,7 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
 
     public static final String PREF_SPACE_TO_CHANGE_LANG = "prefs_long_press_keyboard_to_change_lang";
     public static final String PREF_LANGUAGE_SWIPE_DISTANCE = "language_swipe_distance";
+    public static final String PREF_TOUCHPAD_SENSITIVITY = "touchpad_sensitivity";
 
     public static final String PREF_ENABLE_CLIPBOARD_HISTORY = "enable_clipboard_history";
     public static final String PREF_CLIPBOARD_HISTORY_RETENTION_TIME = "clipboard_history_retention_time";
@@ -357,6 +358,7 @@ public final class Settings implements SharedPreferences.OnSharedPreferenceChang
             case "switch_language" -> KeyboardActionListener.SWIPE_SWITCH_LANGUAGE;
             case "toggle_numpad" -> KeyboardActionListener.SWIPE_TOGGLE_NUMPAD;
             case "hide_keyboard" -> KeyboardActionListener.SWIPE_HIDE_KEYBOARD;
+            case "touchpad_mode" -> KeyboardActionListener.SWIPE_TOUCHPAD_MODE;
             default -> KeyboardActionListener.SWIPE_NO_ACTION;
         };
     }
