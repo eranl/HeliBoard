@@ -1278,7 +1278,6 @@ public final class InputLogic {
                 if (inputTransaction.getSettingsValues().needsToLookupSuggestions()
                         && inputTransaction.getSettingsValues().mSpacingAndPunctuations.mCurrentLanguageHasSpaces) {
                     restartSuggestionsOnWordTouchedByCursor(inputTransaction.getSettingsValues(), currentKeyboardScript);
-                    mWordComposer.setResumed(false);
                 }
                 return;
             }
