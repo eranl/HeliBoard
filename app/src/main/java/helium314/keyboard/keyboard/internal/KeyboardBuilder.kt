@@ -25,7 +25,6 @@ import helium314.keyboard.latin.utils.Log
 import helium314.keyboard.latin.utils.sumOf
 import org.xmlpull.v1.XmlPullParser
 
-// TODO: Write unit tests for this class.
 open class KeyboardBuilder<KP : KeyboardParams>(protected val mContext: Context, @JvmField val mParams: KP) {
     @JvmField
     protected val mResources: Resources
@@ -71,9 +70,9 @@ open class KeyboardBuilder<KP : KeyboardParams>(protected val mContext: Context,
                 || (mParams.mId.isAlphabetKeyboard && !mParams.mId.mSubtype.hasExtraValue(Constants.Subtype.ExtraValue.NO_SHIFT_PROXIMITY_CORRECTION))
 
         addLocaleKeyTextsToParams(mContext, mParams, sv.mShowMorePopupKeys)
-        mParams.mPopupKeyTypes.addAll(sv.mPopupKeyTypes)
+        mParams.mPopupKeyOrder.addAll(sv.mPopupKeyOrder)
         // add label source only if popup key type enabled
-        sv.mPopupKeyLabelSources.forEach { if (it in sv.mPopupKeyTypes) mParams.mPopupKeyLabelSources.add(it) }
+        sv.mPopupKeyHintOrder.forEach { if (it in sv.mPopupKeyOrder) mParams.mPopupKeyHintOrder.add(it) }
     }
 
     // todo: remnant of old parser, replace it if reasonably simple
@@ -185,10 +184,10 @@ open class KeyboardBuilder<KP : KeyboardParams>(protected val mContext: Context,
         }
     }
 
-    // reduce width of symbol and action key if in the row, and add this width to space to keep other key size constant
-    // todo: this assumes fixed layout for symbols keys, which will change soon!
+    // reduce width of symbol and action key if in the (to be split) row, and add this width to space to keep other key size constant
     private fun reduceSymbolAndActionKeyWidth(row: ArrayList<KeyParams>) {
         val spaceKey = row.first { it.mCode == Constants.CODE_SPACE }
+        if (spaceKey.mWidth >= 0.5) return // only if space key is small
         val symbolKey = row.firstOrNull { it.mCode == KeyCode.SYMBOL_ALPHA }
         val symbolKeyWidth = symbolKey?.mWidth ?: 0f
         if (symbolKeyWidth > mParams.mDefaultKeyWidth) {
@@ -242,12 +241,6 @@ open class KeyboardBuilder<KP : KeyboardParams>(protected val mContext: Context,
 
     private fun endKeyboard() {
         mParams.removeRedundantPopupKeys()
-        // {@link #parseGridRows(XmlPullParser,boolean)} may populate keyboard rows higher than
-        // previously expected.
-        // todo (low priority): mCurrentY may end up too high with the new parser and 4 row keyboards in landscape mode
-        //  -> why is this happening?
-        // but anyway, since the height is resized correctly already, we don't need to adjust the
-        // occupied height, except for the scrollable emoji keyoards
         if (!mParams.mId.isEmojiKeyboard) return
         val actualHeight = mCurrentY - mParams.mVerticalGap + mParams.mBottomPadding
         mParams.mOccupiedHeight = mParams.mOccupiedHeight.coerceAtLeast(actualHeight)

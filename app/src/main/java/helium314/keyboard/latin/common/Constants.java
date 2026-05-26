@@ -171,6 +171,11 @@ public final class Constants {
     // The code to show input method picker.
     public static final int CUSTOM_CODE_SHOW_INPUT_METHOD_PICKER = 1;
 
+    // Codes for touchpad mode
+    public static final int CODE_TOUCHPAD_ON = 1000;
+    public static final int CODE_TOUCHPAD_OFF = 1001;
+    public static final int CODE_PERFORM_HAPTIC = 1002;
+
     /**
      * Some common keys code. Must be positive.
      */
@@ -233,6 +238,7 @@ public final class Constants {
         case KeyCode.SWITCH_ONE_HANDED_MODE: return "switchOneHandedMode";
         case KeyCode.SPLIT_LAYOUT: return "splitLayout";
         case KeyCode.NUMPAD: return "numpad";
+        case KeyCode.EMOJI_SEARCH: return "emojiSearch";
         default:
             if (code < CODE_SPACE) return String.format("\\u%02X", code);
             if (code < 0x100) return String.format("%c", code);

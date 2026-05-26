@@ -10,7 +10,6 @@ import android.content.Context;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 
-import helium314.keyboard.compat.IsLockedCompatKt;
 import helium314.keyboard.keyboard.internal.KeyboardBuilder;
 import helium314.keyboard.keyboard.internal.KeyboardIconsSet;
 import helium314.keyboard.keyboard.internal.KeyboardParams;
@@ -21,6 +20,7 @@ import helium314.keyboard.keyboard.internal.keyboard_parser.LocaleKeyboardInfosK
 import helium314.keyboard.latin.RichInputMethodManager;
 import helium314.keyboard.latin.RichInputMethodSubtype;
 import helium314.keyboard.latin.settings.Settings;
+import helium314.keyboard.latin.utils.DictionaryInfoUtils;
 import helium314.keyboard.latin.utils.InputTypeUtils;
 import helium314.keyboard.latin.utils.Log;
 import helium314.keyboard.latin.utils.ResourceUtils;
@@ -99,6 +99,7 @@ public final class KeyboardLayoutSet {
         // and the required ProductionFlags are enabled.
         boolean mIsSplitLayoutEnabled;
         InternalAction mInternalAction;
+        boolean mEmojiSearchAvailable;
     }
 
     public static void onSystemLocaleChanged() {
@@ -215,12 +216,13 @@ public final class KeyboardLayoutSet {
             params.mEditorInfo = editorInfo;
 
             // When the device is still locked, features like showing the IME setting app need to be locked down.
-            params.mDeviceLocked = IsLockedCompatKt.isDeviceLocked(context);
+            params.mDeviceLocked = Settings.getValues().mIsLocked;
         }
 
         public static KeyboardLayoutSet buildEmojiClipBottomRow(final Context context, @Nullable final EditorInfo ei) {
             final Builder builder = new Builder(context, ei);
             builder.mParams.mMode = KeyboardId.MODE_TEXT;
+            builder.mParams.mEmojiSearchAvailable = ! DictionaryInfoUtils.getLocalesWithEmojiDicts(context).isEmpty();
             final int width = ResourceUtils.getKeyboardWidth(context, Settings.getValues());
             // actually the keyboard does not have full height, but at this point we use it to get correct key heights
             final int height = ResourceUtils.getKeyboardHeight(context.getResources(), Settings.getValues());

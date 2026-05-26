@@ -32,16 +32,17 @@ import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.LocaleUtils.localizedDisplayName
 import helium314.keyboard.latin.utils.DictionaryInfoUtils
 import helium314.keyboard.latin.utils.createDictionaryTextAnnotated
-import helium314.keyboard.settings.DeleteButton
-import helium314.keyboard.settings.ExpandButton
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.DeleteButton
+import helium314.keyboard.latin.utils.ExpandButton
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.dictionaryFilePicker
-import helium314.keyboard.settings.previewDark
+import helium314.keyboard.latin.utils.previewDark
 import helium314.keyboard.settings.screens.getUserAndInternalDictionaries
 import java.io.File
 import java.util.Locale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalResources
+import helium314.keyboard.dictionarypack.DictionaryPackConstants
 
 @Composable
 fun DictionaryDialog(
@@ -130,13 +131,18 @@ private fun DictionaryDetails(dict: File) {
             modifier = Modifier.padding(start = 10.dp, top = 0.dp, end = 10.dp, bottom = 12.dp)
         )
     }
-    if (showDeleteDialog)
+    if (showDeleteDialog) {
+        val context = LocalContext.current
         ConfirmationDialog(
             onDismissRequest = { showDeleteDialog = false },
             confirmButtonText = stringResource(R.string.remove),
-            onConfirmed = { dict.delete() },
-            content = { Text(stringResource(R.string.remove_dictionary_message, type))}
+            onConfirmed = {
+                dict.delete()
+                context.sendBroadcast(Intent(DictionaryPackConstants.NEW_DICTIONARY_INTENT_ACTION))
+            },
+            content = { Text(stringResource(R.string.remove_dictionary_message, type)) }
         )
+    }
 }
 
 @Preview

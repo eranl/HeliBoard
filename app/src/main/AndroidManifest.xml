@@ -22,6 +22,8 @@ SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
             android:allowBackup="true"
             android:defaultToDeviceProtectedStorage="true"
             android:directBootAware="true"
+            android:enableOnBackInvokedCallback="true"
+            android:localeConfig="@xml/locales_config"
             tools:remove="android:appComponentFactory"
             tools:targetApi="p">
 
@@ -84,6 +86,10 @@ SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
             </intent-filter>
         </activity>
 
+        <activity android:name="helium314.keyboard.keyboard.emoji.EmojiSearchActivity" android:exported="false"
+            android:theme="@style/TransparentActivityTheme" android:excludeFromRecents="true" android:noHistory="true"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" android:configChanges="orientation|screenSize"/>
+
         <!-- Broadcast receivers -->
         <receiver android:name="SystemBroadcastReceiver"
                 android:exported="true">
@@ -101,12 +107,22 @@ SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
             </intent-filter>
         </receiver>
 
+        <!-- necessary for sending mail attachments, remove when data gathering phase is done (end of 2026 latest) -->
+        <provider android:name="helium314.keyboard.settings.screens.gesturedata.GestureFileProvider"
+            android:authorities="@string/gesture_data_provider_authority"
+            android:enabled="true"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/gesture_data_path"/>
+        </provider>
     </application>
 
     <queries>
         <!-- To detect other IMEs -->
         <intent>
-            <!-- changed to * as it's supposed to help with finding other keyboard apps, see https://github.com/Helium314/HeliBoard/issues/1340 -->
+            <!-- changed to * as it's supposed to help with finding other keyboard apps, see https://github.com/HeliBorg/HeliBoard/issues/1340 -->
             <!--<action android:name="android.view.InputMethod" />-->
             <action android:name="*" />
         </intent>

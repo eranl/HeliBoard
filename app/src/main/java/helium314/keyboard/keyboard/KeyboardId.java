@@ -62,7 +62,7 @@ public final class KeyboardId {
     public static final int ELEMENT_EMOJI_CATEGORY13 = 23;
     public static final int ELEMENT_EMOJI_CATEGORY14 = 24;
     public static final int ELEMENT_EMOJI_CATEGORY15 = 25;
-    public static final int ELEMENT_EMOJI_CATEGORY16 = 26;
+    public static final int ELEMENT_EMOJI_CATEGORY16 = 26;  // Emoji search
     public static final int ELEMENT_CLIPBOARD = 27;
     public static final int ELEMENT_NUMPAD = 28;
     public static final int ELEMENT_EMOJI_BOTTOM_ROW = 29;
@@ -84,6 +84,7 @@ public final class KeyboardId {
     public final boolean mIsSplitLayout;
     public final boolean mOneHandedModeEnabled;
     public final KeyboardLayoutSet.InternalAction mInternalAction;
+    public final boolean mEmojiSearchAvailable;
 
     private final int mHashCode;
 
@@ -105,6 +106,7 @@ public final class KeyboardId {
         mIsSplitLayout = params.mIsSplitLayoutEnabled;
         mOneHandedModeEnabled = params.mOneHandedModeEnabled;
         mInternalAction = params.mInternalAction;
+        mEmojiSearchAvailable = params.mEmojiSearchAvailable;
 
         mHashCode = computeHashCode(this);
     }
@@ -119,6 +121,7 @@ public final class KeyboardId {
                 id.mDeviceLocked,
                 id.mHasShortcutKey,
                 id.mNumberRowEnabled,
+                id.mNumberRowInSymbols,
                 id.mLanguageSwitchKeyEnabled,
                 id.mEmojiKeyEnabled,
                 id.isMultiLine(),
@@ -128,7 +131,9 @@ public final class KeyboardId {
                 id.navigatePrevious(),
                 id.mSubtype,
                 id.mIsSplitLayout,
-                id.mInternalAction
+                id.mInternalAction,
+                id.mEmojiSearchAvailable,
+                id.mOneHandedModeEnabled,
         });
     }
 
@@ -152,7 +157,9 @@ public final class KeyboardId {
                 && other.navigatePrevious() == navigatePrevious()
                 && other.mSubtype.equals(mSubtype)
                 && other.mIsSplitLayout == mIsSplitLayout
-                && Objects.equals(other.mInternalAction, mInternalAction);
+                && Objects.equals(other.mInternalAction, mInternalAction)
+                && other.mEmojiSearchAvailable == mEmojiSearchAvailable
+                && other.mOneHandedModeEnabled == mOneHandedModeEnabled;
     }
 
     private static boolean isAlphabetKeyboard(final int elementId) {
@@ -229,7 +236,7 @@ public final class KeyboardId {
 
     @Override
     public String toString() {
-        return String.format(Locale.ROOT, "[%s %s:%s %dx%d %s %s%s%s%s%s%s%s%s%s%s%s]",
+        return String.format(Locale.ROOT, "[%s %s:%s %dx%d %s %s%s%s%s%s%s%s%s%s%s%s%s%s]",
                 elementIdToName(mElementId),
                 mSubtype.getLocale(),
                 mSubtype.getExtraValueOf(KEYBOARD_LAYOUT_SET),
@@ -245,7 +252,9 @@ public final class KeyboardId {
                 (mLanguageSwitchKeyEnabled ? " languageSwitchKeyEnabled" : ""),
                 (mEmojiKeyEnabled ? " emojiKeyEnabled" : ""),
                 (isMultiLine() ? " isMultiLine" : ""),
-                (mIsSplitLayout ? " isSplitLayout" : "")
+                (mIsSplitLayout ? " isSplitLayout" : ""),
+                (mInternalAction != null ? " internalAction=" + mInternalAction : ""),
+                (mEmojiSearchAvailable ? " emojiSearchAvailable" : "")
         );
     }
 
@@ -313,7 +322,7 @@ public final class KeyboardId {
                 : EditorInfoCompatUtils.imeActionName(actionId);
     }
 
-    public int getKeyboardCapsMode() {
+    public int getCapsMode() {
         return switch (mElementId) {
             case KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCKED, KeyboardId.ELEMENT_ALPHABET_SHIFT_LOCK_SHIFTED ->
                 WordComposer.CAPS_MODE_MANUAL_SHIFT_LOCKED;

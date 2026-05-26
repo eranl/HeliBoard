@@ -54,10 +54,13 @@ object KeyCode {
     //const val CLIPBOARD_CLEAR_FULL_HISTORY = -37
     //const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
 
+    const val TOGGLE_FLOATING_WINDOW =      -109
+    //const val TOGGLE_COMPACT_LAYOUT =       -110
     //const val COMPACT_LAYOUT_TO_LEFT =      -111
     //const val COMPACT_LAYOUT_TO_RIGHT =     -112
     const val SPLIT_LAYOUT =                -113
     //const val MERGE_LAYOUT =                -114
+    //const val TOGGLE_RESIZE_MODE =          -115
 
     const val UNDO =                        -131
     const val REDO =                        -132
@@ -74,7 +77,7 @@ object KeyCode {
     const val EMOJI =                       -212 // IME_UI_MODE_MEDIA
     const val CLIPBOARD =                   -213 // IME_UI_MODE_CLIPBOARD
 
-    //const val SYSTEM_INPUT_METHOD_PICKER =  -221
+    const val SYSTEM_INPUT_METHOD_PICKER =  -221
     //const val SYSTEM_PREV_INPUT_METHOD =    -222
     //const val SYSTEM_NEXT_INPUT_METHOD =    -223
     //const val IME_SUBTYPE_PICKER =          -224
@@ -176,6 +179,7 @@ object KeyCode {
     const val ALT_RIGHT =                 -10047
     const val META_LEFT =                 -10048
     const val META_RIGHT =                -10049
+    const val EMOJI_SEARCH =              -10050
     const val INLINE_EMOJI_SEARCH_DONE =  -10051
 
 
@@ -192,7 +196,8 @@ object KeyCode {
         REDO, ARROW_DOWN, ARROW_UP, ARROW_RIGHT, ARROW_LEFT, CLIPBOARD_COPY, CLIPBOARD_PASTE, CLIPBOARD_SELECT_ALL,
         CLIPBOARD_SELECT_WORD, TOGGLE_INCOGNITO_MODE, TOGGLE_AUTOCORRECT, MOVE_START_OF_LINE, MOVE_END_OF_LINE,
         MOVE_START_OF_PAGE, MOVE_END_OF_PAGE, SHIFT, CAPS_LOCK, MULTIPLE_CODE_POINTS, UNSPECIFIED, CTRL, ALT,
-        FN, CLIPBOARD_CLEAR_HISTORY, NUMPAD, IME_HIDE_UI, CTRL_LOCK, ALT_LOCK, FN_LOCK,
+        FN, CLIPBOARD_CLEAR_HISTORY, NUMPAD, IME_HIDE_UI, CTRL_LOCK, ALT_LOCK, FN_LOCK, SYSTEM_INPUT_METHOD_PICKER,
+        TOGGLE_FLOATING_WINDOW,
 
         // heliboard only
         SYMBOL_ALPHA, TOGGLE_ONE_HANDED_MODE, SWITCH_ONE_HANDED_MODE, SPLIT_LAYOUT, SHIFT_ENTER,
@@ -200,7 +205,7 @@ object KeyCode {
         PAGE_DOWN, META, TAB, ESCAPE, INSERT, SLEEP, MEDIA_PLAY, MEDIA_PAUSE, MEDIA_PLAY_PAUSE, MEDIA_NEXT,
         MEDIA_PREVIOUS, VOL_UP, VOL_DOWN, MUTE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, BACK,
         TIMESTAMP, CTRL_LEFT, CTRL_RIGHT, ALT_LEFT, ALT_RIGHT, META_LEFT, META_RIGHT, SEND_INTENT_ONE, SEND_INTENT_TWO,
-        SEND_INTENT_THREE, INLINE_EMOJI_SEARCH_DONE, META_LOCK
+        SEND_INTENT_THREE, EMOJI_SEARCH, INLINE_EMOJI_SEARCH_DONE, META_LOCK
         -> this
 
         // conversion
@@ -325,5 +330,10 @@ object KeyCode {
         'Y' -> KeyEvent.KEYCODE_Y
         'Z' -> KeyEvent.KEYCODE_Z
         else -> KeyEvent.KEYCODE_UNKNOWN
+    }
+
+    @JvmStatic fun isIsBlockedWhenLocked(keyCode: Int) = when (keyCode) {
+        SETTINGS, TOGGLE_FLOATING_WINDOW, CLIPBOARD, CLIPBOARD_PASTE -> true
+        else -> false
     }
 }
