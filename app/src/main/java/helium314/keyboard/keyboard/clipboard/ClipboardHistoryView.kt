@@ -70,7 +70,7 @@ class ClipboardHistoryView @JvmOverloads constructor(
         val keyboardViewAttr = context.obtainStyledAttributes(attrs, R.styleable.KeyboardView, defStyle, R.style.KeyboardView)
         keyBackgroundId = keyboardViewAttr.getResourceId(R.styleable.KeyboardView_keyBackground, 0)
         keyboardViewAttr.recycle()
-        if (Settings.getValues().mSecondaryStripVisible) {
+        if (Settings.getValues().isSecondaryStripVisible) {
             getEnabledClipboardToolbarKeys(context.prefs())
                 .forEach { toolbarKeys.add(createToolbarKey(context, it)) }
         }
