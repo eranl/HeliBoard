@@ -7,12 +7,13 @@
 package com.android.inputmethod.latin;
 
 import android.text.TextUtils;
+import helium314.keyboard.latin.utils.ChecksumCalculator;
 import helium314.keyboard.latin.utils.Log;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 
-import helium314.keyboard.latin.Dictionary;
+import helium314.keyboard.latin.dictionary.Dictionary;
 import helium314.keyboard.latin.NgramContext;
 import helium314.keyboard.latin.SuggestedWords.SuggestedWordInfo;
 import helium314.keyboard.latin.common.ComposedData;
@@ -311,14 +312,16 @@ public final class BinaryDictionary extends Dictionary {
                 ++len;
             }
             if (len > 0) {
-                suggestions.add(new SuggestedWordInfo(
-                        new String(session.mOutputCodePoints, start, len),
-                        "" /* prevWordsContext */,
-                        (int)(session.mOutputScores[j] * weightForLocale),
-                        session.mOutputTypes[j],
-                        this /* sourceDict */,
-                        session.mSpaceIndices[j] /* indexOfTouchPointOfSecondWord */,
-                        session.mOutputAutoCommitFirstWordConfidence[0]));
+                SuggestedWordInfo info = new SuggestedWordInfo(
+                    new String(session.mOutputCodePoints, start, len),
+                    "" /* prevWordsContext */,
+                    (int)(session.mOutputScores[j] * weightForLocale),
+                    session.mOutputTypes[j],
+                    this /* sourceDict */,
+                    session.mSpaceIndices[j] /* indexOfTouchPointOfSecondWord */,
+                    session.mOutputAutoCommitFirstWordConfidence[0]);
+                info.mOriginalScore = session.mOutputScores[j]; // no locale weight!
+                suggestions.add(info);
             }
         }
         return suggestions;
@@ -641,6 +644,20 @@ public final class BinaryDictionary extends Dictionary {
             closeNative(mNativeDict);
             mNativeDict = 0;
         }
+    }
+
+    private String mDictFileHash;
+    public String getHash() {
+        if (mDictFileHash != null) return mDictFileHash;
+        final File dict = new File(mDictFilePath);
+        if (!dict.isFile()) {
+            mDictFileHash = "";
+            return mDictFileHash;
+        }
+        mDictFileHash = ChecksumCalculator.INSTANCE.checksum(dict);
+        if (mDictFileHash == null)
+            mDictFileHash = "";
+        return mDictFileHash;
     }
 
     // TODO: Manage BinaryDictionary instances without using WeakReference or something.

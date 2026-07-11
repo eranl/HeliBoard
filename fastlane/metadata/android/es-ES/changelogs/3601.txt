@@ -1,0 +1,12 @@
+* Emojis en internet
+* Guardar el idioma y subtipo para cada aplicación
+* Mejoras en la retroalimentación háptica
+* Portapapeles desanclado al reiniciar la aplicación
+* Elementos fijos del portapapeles como los últimos
+* Barras inferiores opcionales para emojis y portapapeles
+* Botón para cerrar las sugerencias insertadas
+* Añadido bengalí Khipro
+* Añadido mirandés
+* Corregido problemas con el teclado físico
+* Enlaces a diccionarios llevan directamente al ellos
+* Correcciones y mejoras menores

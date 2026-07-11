@@ -9,13 +9,13 @@ package helium314.keyboard.latin.settings;
 import android.content.res.Resources;
 
 import helium314.keyboard.compat.ConfigurationCompatKt;
-import helium314.keyboard.keyboard.internal.PopupKeySpec;
-import helium314.keyboard.latin.PunctuationSuggestions;
 import helium314.keyboard.latin.R;
 import helium314.keyboard.latin.common.Constants;
 import helium314.keyboard.latin.common.StringUtils;
+import helium314.keyboard.latin.common.StringUtilsKt;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public final class SpacingAndPunctuations {
@@ -25,7 +25,7 @@ public final class SpacingAndPunctuations {
     private final int[] mSortedWordConnectors;
     private final int[] mSortedSometimesWordConnectors; // maybe rename... they are some sort of glue for words containing separators
     public final int[] mSortedWordSeparators;
-    public final PunctuationSuggestions mSuggestPuncList;
+    public final List<int[]> mPairSymbols;
     private final int mSentenceSeparator;
     private final int mAbbreviationMarker;
     private final int[] mSortedSentenceTerminators;
@@ -43,6 +43,7 @@ public final class SpacingAndPunctuations {
         // To be able to binary search the code point. See {@link #isWordConnector(int)}.
         mSortedWordConnectors = StringUtils.toSortedCodePointArray(res.getString(R.string.symbols_word_connectors));
         mSortedWordSeparators = StringUtils.toSortedCodePointArray(res.getString(R.string.symbols_word_separators));
+        mPairSymbols = StringUtilsKt.toSortedCodepointArrays(res.getString(R.string.pair_symbols));
         mSortedSentenceTerminators = StringUtils.toSortedCodePointArray(res.getString(R.string.symbols_sentence_terminators));
         mSentenceSeparator = res.getInteger(R.integer.sentence_separator);
         mAbbreviationMarker = res.getInteger(R.integer.abbreviation_marker);
@@ -56,13 +57,14 @@ public final class SpacingAndPunctuations {
         // English variants. German rules (not "German typography") also have small gotchas.
         mUsesAmericanTypography = Locale.ENGLISH.getLanguage().equals(locale.getLanguage());
         mUsesGermanRules = Locale.GERMAN.getLanguage().equals(locale.getLanguage());
-        final String[] suggestPuncsSpec = PopupKeySpec.splitKeySpecs(
-                res.getString(R.string.suggested_punctuations));
-        mSuggestPuncList = PunctuationSuggestions.newPunctuationSuggestions(suggestPuncsSpec);
     }
 
     public boolean isWordSeparator(final int code) {
         return Arrays.binarySearch(mSortedWordSeparators, code) >= 0;
+    }
+
+    public int getSecondInSymbolPair(final int code) {
+        return StringUtilsKt.getSecondInSymbolPair(mPairSymbols, code);
     }
 
     public boolean isWordConnector(final int code) {
@@ -86,7 +88,7 @@ public final class SpacingAndPunctuations {
     }
 
     public boolean isWordCodePoint(final int code) {
-        return Character.isLetter(code) || isWordConnector(code);
+        return Character.isLetter(code) || isWordConnector(code) || Character.COMBINING_SPACING_MARK == Character.getType(code);
     }
 
     public boolean isUsuallyPrecededBySpace(final int code) {
@@ -122,8 +124,6 @@ public final class SpacingAndPunctuations {
                 "" + Arrays.toString(mSortedWordConnectors) +
                 "\n   mSortedWordSeparators = " +
                 "" + Arrays.toString(mSortedWordSeparators) +
-                "\n   mSuggestPuncList = " +
-                "" + mSuggestPuncList +
                 "\n   mSentenceSeparator = " +
                 "" + mSentenceSeparator +
                 "\n   mSentenceSeparatorAndSpace = " +

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -31,7 +32,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -45,9 +45,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import helium314.keyboard.latin.R
+import helium314.keyboard.latin.utils.BackButton
+import helium314.keyboard.latin.utils.CloseIcon
+import helium314.keyboard.latin.utils.SearchIcon
 import helium314.keyboard.settings.preferences.PreferenceCategory
 
 @Composable
@@ -142,14 +146,9 @@ fun <T: Any?> SearchScreen(
                         title = title,
                         windowInsets = WindowInsets(0),
                         navigationIcon = {
-                            IconButton(onClick = {
+                            BackButton {
                                 if (showSearch) setShowSearch(false)
                                 else onClickBack()
-                            }) {
-                                Icon(
-                                    painterResource(R.drawable.ic_arrow_back),
-                                    stringResource(R.string.spoken_description_action_previous)
-                                )
                             }
                         },
                         actions = {
@@ -241,7 +240,8 @@ fun ExpandableSearchField(
             }) { CloseIcon(android.R.string.cancel) } },
             singleLine = true,
             colors = colors,
-            textStyle = contentTextDirectionStyle
+            textStyle = contentTextDirectionStyle,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search)
         )
     }
 }

@@ -7,9 +7,13 @@
 package helium314.keyboard.latin.utils;
 
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.SuggestionSpan;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Represents a range of text, relative to the current cursor position.
@@ -38,13 +42,12 @@ public final class TextRange {
     /**
      * Gets the suggestion spans that are put squarely on the word, with the exact start
      * and end of the span matching the boundaries of the word.
-     * @return the list of spans.
+     * @return the array of spans.
      */
     public SuggestionSpan[] getSuggestionSpansAtWord() {
-        if (!(mTextAtCursor instanceof Spanned && mWord instanceof Spanned)) {
+        if (!(mTextAtCursor instanceof Spanned text && mWord instanceof Spanned)) {
             return new SuggestionSpan[0];
         }
-        final Spanned text = (Spanned)mTextAtCursor;
         // Note: it's fine to pass indices negative or greater than the length of the string
         // to the #getSpans() method. The reason we need to get from -1 to +1 is that, the
         // spans were cut at the cursor position, and #getSpans(start, end) does not return
@@ -93,6 +96,28 @@ public final class TextRange {
             }
         }
         return writeIndex == readIndex ? spans : Arrays.copyOfRange(spans, 0, writeIndex);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof TextRange textRange)) return false;
+        return mWordAtCursorStartIndex == textRange.mWordAtCursorStartIndex
+            && mWordAtCursorEndIndex == textRange.mWordAtCursorEndIndex
+            && mCursorIndex == textRange.mCursorIndex
+            && mHasUrlSpans == textRange.mHasUrlSpans
+            && TextUtils.equals(mTextAtCursor, textRange.mTextAtCursor)
+            && TextUtils.equals(mWord, textRange.mWord);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mTextAtCursor, mWordAtCursorStartIndex, mWordAtCursorEndIndex, mCursorIndex, mWord, mHasUrlSpans);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return mTextAtCursor + ", " + mWord + ", " + mCursorIndex;
     }
 
     public TextRange(final CharSequence textAtCursor, final int wordAtCursorStartIndex,

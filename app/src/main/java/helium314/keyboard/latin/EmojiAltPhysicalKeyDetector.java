@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * A class for detecting Emoji-Alt physical key.
  */
-final class EmojiAltPhysicalKeyDetector {
+public final class EmojiAltPhysicalKeyDetector {
     private static final String TAG = "EmojiAltPhysKeyDetector";
     private static final boolean DEBUG = false;
 
@@ -31,7 +31,7 @@ final class EmojiAltPhysicalKeyDetector {
 
     private static class HotKeySet extends HashSet<Pair<Integer, Integer>> { }
 
-    private abstract class EmojiHotKeys {
+    private abstract static class EmojiHotKeys {
         private final String mName;
         private final HotKeySet mKeySet;
 

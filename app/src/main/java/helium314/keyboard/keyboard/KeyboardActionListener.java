@@ -6,6 +6,11 @@
 
 package helium314.keyboard.keyboard;
 
+import android.view.KeyEvent;
+
+import androidx.core.view.inputmethod.InputContentInfoCompat;
+
+import helium314.keyboard.event.HapticEvent;
 import helium314.keyboard.latin.common.Constants;
 import helium314.keyboard.latin.common.InputPointers;
 
@@ -18,8 +23,11 @@ public interface KeyboardActionListener {
      *            the value will be zero.
      * @param repeatCount how many times the key was repeated. Zero if it is the first press.
      * @param isSinglePointer true if pressing has occurred while no other key is being pressed.
+     * @param hapticEvent the type of haptic feedback to perform.
      */
-    void onPressKey(int primaryCode, int repeatCount, boolean isSinglePointer);
+    void onPressKey(int primaryCode, int repeatCount, boolean isSinglePointer, HapticEvent hapticEvent);
+
+    void onLongPressKey(int primaryCode);
 
     /**
      * Called when the user releases a key. This is sent after the {@link #onCodeInput} is called.
@@ -30,6 +38,12 @@ public interface KeyboardActionListener {
      *             to other key without releasing the finger.
      */
     void onReleaseKey(int primaryCode, boolean withSliding);
+
+    /** For handling hardware key presses. Returns whether the event was handled. */
+    boolean onKeyDown(int keyCode, KeyEvent keyEvent);
+
+    /** For handling hardware key presses. Returns whether the event was handled. */
+    boolean onKeyUp(int keyCode, KeyEvent keyEvent);
 
     /**
      * Send a key code to the listener.
@@ -54,6 +68,9 @@ public interface KeyboardActionListener {
      * @param text the string of characters to be registered.
      */
     void onTextInput(String text);
+
+    /** sends content (URI and description) */
+    void onContent(InputContentInfoCompat content);
 
     /**
      * Called when user started batch input.
@@ -89,7 +106,7 @@ public interface KeyboardActionListener {
      * Send a non-"code input" custom request to the listener.
      * @return true if the request has been consumed, false otherwise.
      */
-    boolean onCustomRequest(int requestCode);
+    boolean onCustomRequest(CustomAction request);
 
     /**
      * Called when the user performs a horizontal or vertical swipe gesture
@@ -106,20 +123,26 @@ public interface KeyboardActionListener {
 
     KeyboardActionListener EMPTY_LISTENER = new Adapter();
 
-    int SWIPE_NO_ACTION = 0;
-    int SWIPE_MOVE_CURSOR = 1;
-    int SWIPE_SWITCH_LANGUAGE = 2;
-    int SWIPE_TOGGLE_NUMPAD = 3;
+    enum SwipeAction { NONE, MOVE_CURSOR, SWITCH_LANGUAGE, TOGGLE_NUMPAD, HIDE_KEYBOARD, TOUCHPAD_MODE }
+    enum CustomAction { SHOW_INPUT_METHOD_PICKER, TOUCHPAD_ON, TOUCHPAD_OFF, PERFORM_HAPTIC }
 
     class Adapter implements KeyboardActionListener {
         @Override
-        public void onPressKey(int primaryCode, int repeatCount, boolean isSinglePointer) {}
+        public void onPressKey(int primaryCode, int repeatCount, boolean isSinglePointer, HapticEvent hapticEvent) {}
+        @Override
+        public void onLongPressKey(int primaryCode) {}
         @Override
         public void onReleaseKey(int primaryCode, boolean withSliding) {}
+        @Override
+        public boolean onKeyDown(int keyCode, KeyEvent keyEvent) { return false; }
+        @Override
+        public boolean onKeyUp(int keyCode, KeyEvent keyEvent) { return false; }
         @Override
         public void onCodeInput(int primaryCode, int x, int y, boolean isKeyRepeat) {}
         @Override
         public void onTextInput(String text) {}
+        @Override
+        public void onContent(InputContentInfoCompat content) {}
         @Override
         public void onStartBatchInput() {}
         @Override
@@ -133,7 +156,7 @@ public interface KeyboardActionListener {
         @Override
         public void onFinishSlidingInput() {}
         @Override
-        public boolean onCustomRequest(int requestCode) {
+        public boolean onCustomRequest(CustomAction request) {
             return false;
         }
         @Override

@@ -81,11 +81,9 @@
     <string name="show_setup_wizard_icon_summary">Bistaratu aplikazioaren ikonoa panelean</string>
     <string name="dictionary_category_title">"Hiztegi gehigarriak"</string>
     <string name="dictionary_available">"Hiztegia erabilgarri"</string>
-    <string name="last_update">"Azken eguneratzea"</string>
     <string name="settings">"Ezarpenak"</string>
     <string name="delete">"Ezabatu"</string>
     <string name="version_text">%1$s bertsioa</string>
-    <string name="user_dict_settings_add_dialog_title">"Gehitu hiztegian"</string>
     <string name="user_dict_settings_add_shortcut_option_name">"Lasterbidea:"</string>
     <string name="user_dict_settings_add_locale_option_name">"Hizkuntza:"</string>
     <string name="user_dict_settings_add_word_hint">"Idatzi hitz bat"</string>
@@ -93,7 +91,6 @@
     <string name="user_dict_settings_edit_dialog_title">"Editatu hitza"</string>
     <string name="user_dict_settings_all_languages">"Hizkuntza guztietan"</string>
     <string name="user_dict_settings_more_languages">"Hizkuntza gehiago…"</string>
-    <string name="user_dict_fast_scroll_alphabet">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
     <string name="settings_category_clipboard_history">Arbelaren historia</string>
     <string name="settings_category_correction">Zuzenketak</string>
     <string name="settings_category_suggestions">Iradokizunak</string>
@@ -128,7 +125,6 @@
     <string name="autospace_after_punctuation_summary">Sartu automatikoki zuriunea puntuazioen ondoren hitz berri bat idaztean</string>
     <string name="prefs_long_press_keyboard_to_change_lang">Aldatu idazketa-metodoa zuriune teklarekin</string>
     <string name="prefs_keyboard_height_scale">Teklatuaren altuera eskala</string>
-    <string name="use_system_language_to_select_input_method_subtypes">"Erabili sistemaren hizkuntzak"</string>
     <string name="select_input_method">"Aukeratu idazketa-metodoa"</string>
     <string name="undo">"Desegin"</string>
     <string name="redo">"Berregin"</string>
@@ -188,8 +184,6 @@
     <string name="layout_symbols" tools:keep="@string/layout_symbols">ikurrak</string>
     <string name="user_dict_settings_add_weight_value">Pisua:</string>
     <string name="theme_name_brown" tools:keep="@string/theme_name_brown">Marroia</string>
-    <string name="theme_name_user_night" tools:keep="@string/theme_name_user_night">Erabiltzaileak definituta (gauekoa)</string>
-    <string name="select_user_colors_summary">Hautatu koloreak testurako eta atzeko planoetarako</string>
     <string name="subtype_xdq">Kaitag</string>
     <string name="dialog_close">Itxi</string>
     <string name="text_tap_languages">Sakatu hizkuntza ezarpenak irekitzeko</string>
@@ -229,7 +223,6 @@
     <string name="message_add_custom_layout">Hautatu fitxategi bat formatu bateragarri batean. Formatuei buruzko informazioa eskuragarri dago %s.</string>
     <string name="button_load_custom">Kargatu fitxategia</string>
     <string name="file_read_error">Ezin da fitxategia irakurri</string>
-    <string name="button_copy_existing_layout">Kopiatu lehendik dagoen diseinua</string>
     <string name="delete_layout">Benetan ezabatu %s diseinu pertsonalizatua?</string>
     <string name="edit_layout">Sakatu diseinu gordina editatzeko</string>
     <string name="layout_symbols_arabic" tools:keep="@string/layout_symbols_arabic">Ikurrak (Arabiarrak)</string>
@@ -250,9 +243,7 @@
     <string name="dictionary_link_text">hemen</string>
     <string name="available_dictionary_experimental">%s (esperimentala)</string>
     <string name="dictionary_file_error">Errorea: hautatutako fitxategia ez da baliozko hiztegi-fitxategi bat</string>
-    <string name="dictionary_file_wrong_locale">Hautatutako fitxategia %1$srentzat da, baina %2$s espero zen. Oraindik %2$s erabiltzen al duzu?</string>
     <string name="dictionary_file_wrong_script">Errorea: script-a ez da bateragarria teklatu honekin</string>
-    <string name="dictionary_file_wrong_locale_ok">Erabili oraindik</string>
     <string name="dictionary_load_error">Errore bat gertatu da hiztegi-fitxategia kargatzean</string>
     <string name="user_dict_word_already_present">Hitz hau %s erabiltzailearen hiztegian dago jada. Mesedez, idatzi beste bat.</string>
     <string name="user_dict_add_word_button">Gehitu hitz bat</string>
@@ -292,7 +283,7 @@
     <string name="hidden_features_summary">Erakutsi oharkabean pasa daitezkeen ezaugarriak</string>
     <string name="hidden_features_text">gailuak babestutako biltegiratzea</string>
     <string name="var_toolbar_direction">Tresna-barraren norabide aldakorra</string>
-    <string name="hidden_features_message">► Arbeleko tekla luze sakatuz (iradokizunen zerrendako aukerakoa) sistemako arbeleko edukia itsatsi egiten da. &lt;br&gt; &lt;br&gt; Iradokizun-zerrendako tresna-barrako teklak luze sakatuz gero, iradokizun-zerrendan finkatzen dira. &lt;br&gt; &lt;br&gt; Luze sakatu koma tekla arbelaren ikuspegia, emoji ikuspegia, esku bakarreko modua, ezarpenak edo hizkuntza aldatzeko atzitzeko: &lt;br&gt; • Emoji ikuspegia eta hizkuntza aldatzea desagertuko dira dagokion tekla baduzu. gaituta; &lt;br&gt; • Diseinu batzuetan ez da koma-tekla, posizio berean dagoen tekla baizik (adibidez, \'q\' da Dvorak diseinurako). &lt;br&gt; &lt;br&gt; Ezkutuko modua gaituta dagoenean, ez da hitzik ikasiko eta ez da emojirik gehituko azken berrietan. &lt;br&gt; &lt;br&gt; Sakatu ezkutuko ikonoa tresna-barrara sartzeko. &lt;br&gt; &lt;br&gt; Irristatu teklaren sarrera: Irristatu shift batetik beste tekla batera maiuskulazko tekla bakarra idazteko: &lt;br&gt; • Honek \'?123\' teklak ere balio du sinboloen teklatuan ikur bakarra idazteko eta erlazionatutako gakoak. &lt;br&gt; &lt;br&gt; Luze sakatu iradokizunen zerrendako iradokizun bat iradokizun gehiago erakusteko, eta ezabatzeko botoia iradokizun hau kentzeko. &lt;br&gt; &lt;br&gt; Irristatu gorantz iradokizun batetik iradokizun gehiago irekitzeko, eta askatu iradokizuna hautatzeko. &lt;br&gt; &lt;br&gt; Luze sakatu arbeleko historiako sarrera bat ainguratzeko (jar ezazu arbelean aingura kendu arte). &lt;br&gt; &lt;br&gt; Hiztegiak gehi ditzakezu fitxategi-esploratzaile batean irekita: &lt;br&gt; • Honek &lt;i&gt;content-uris&lt;/i&gt;-ekin bakarrik funtzionatzen du eta ez &lt;i&gt;file-uris&lt;/i&gt;-ekin , hau da, baliteke fitxategi-esploratzaile batzuekin ez funtzionatzea. &lt;br&gt; &lt;br&gt; &lt;i&gt;Arazte modua / APK arazketa&lt;/i&gt; &lt;br&gt; &lt;br&gt; • Luze sakatu iradokizun bat iturburu-hiztegia erakusteko.&lt;br&gt; &lt;br&gt; • Arazketa APK erabiltzean, dezakezu bilatu Arazte-ezarpenak Hobespen aurreratuen barruan, nahiz eta erabilgarritasuna mugatua den hiztegiak erregistroan isurtzea izan ezik. &lt;br&gt; &lt;br&gt; • Aplikazioaren hutsegite bat gertatuz gero, Ezarpenak irekitzean hutsegiteen erregistroak nahi dituzun galdetuko zaizu. &lt;br&gt; &lt;br&gt; • Idazketa eleanitza erabiltzean, zuriune-barrak unean erabiltzen den hizkuntza zehazteko erabiltzen den konfiantza-balioa erakutsiko du. &lt;br&gt; &lt;br&gt; • Iradokizunek goian zenbaki txiki batzuk izango dituzte barne puntuazio eta iturburu-hiztegiren bat erakutsiz (desgaitu daiteke). &lt;br&gt; &lt;br&gt; Root sarbidearekin eskuzko babeskopiak egiten dituzten erabiltzaileentzat: Android 7-tik aurrera, partekatutako hobespen-fitxategia ez dago lehenetsitako kokapenean, aplikazioa %s erabiltzen ari delako. &lt;br&gt; Hau beharrezkoa da ezarpenak irakurri ahal izateko gailua desblokeatu aurretik, adibidez. abioan. &lt;br&gt; Fitxategia /data/user_de/0/package_id/shared_prefs/ helbidean dago, baina gailuaren eta Android bertsioaren araberakoa izan daiteke.</string>
+    <string name="hidden_features_message">► Tresna-barran finkatuta dauden teklak luze sakatuz sistemako arbeleko edukia itsatsi egiten da. &lt;br&gt; &lt;br&gt; Iradokizun-zerrendako tresna-barrako teklak luze sakatuz gero, iradokizun-zerrendan finkatzen dira. &lt;br&gt; &lt;br&gt; Luze sakatu koma tekla arbelaren ikuspegia, emoji ikuspegia, esku bakarreko modua, ezarpenak edo hizkuntza aldatzeko atzitzeko: &lt;br&gt; • Emoji ikuspegia eta hizkuntza aldatzea desagertuko dira dagokion tekla baduzu. gaituta; &lt;br&gt; • Diseinu batzuetan ez da koma-tekla, posizio berean dagoen tekla baizik (adibidez, \'q\' da Dvorak diseinurako). &lt;br&gt; &lt;br&gt; Ezkutuko modua gaituta dagoenean, ez da hitzik ikasiko eta ez da emojirik gehituko azken berrietan. &lt;br&gt; &lt;br&gt; Sakatu ezkutuko ikonoa tresna-barrara sartzeko. &lt;br&gt; &lt;br&gt; Irristatu teklaren sarrera: Irristatu shift batetik beste tekla batera maiuskulazko tekla bakarra idazteko: &lt;br&gt; • Honek \'?123\' teklak ere balio du sinboloen teklatuan ikur bakarra idazteko eta erlazionatutako gakoak. &lt;br&gt; &lt;br&gt; Luze sakatu iradokizunen zerrendako iradokizun bat iradokizun gehiago erakusteko, eta ezabatzeko botoia iradokizun hau kentzeko. &lt;br&gt; &lt;br&gt; Irristatu gorantz iradokizun batetik iradokizun gehiago irekitzeko, eta askatu iradokizuna hautatzeko. &lt;br&gt; &lt;br&gt; Luze sakatu arbeleko historiako sarrera bat ainguratzeko (jar ezazu arbelean aingura kendu arte). &lt;br&gt; &lt;br&gt; Hiztegiak gehi ditzakezu fitxategi-esploratzaile batean irekita: &lt;br&gt; • Honek &lt;i&gt;content-uris&lt;/i&gt;-ekin bakarrik funtzionatzen du eta ez &lt;i&gt;file-uris&lt;/i&gt;-ekin , hau da, baliteke fitxategi-esploratzaile batzuekin ez funtzionatzea. &lt;br&gt; &lt;br&gt; &lt;i&gt;Arazte modua / APK arazketa&lt;/i&gt; &lt;br&gt; &lt;br&gt; • Luze sakatu iradokizun bat iturburu-hiztegia erakusteko.&lt;br&gt; &lt;br&gt; • Arazketa APK erabiltzean, dezakezu bilatu Arazte-ezarpenak Hobespen aurreratuen barruan, nahiz eta erabilgarritasuna mugatua den hiztegiak erregistroan isurtzea izan ezik. &lt;br&gt; &lt;br&gt; • Aplikazioaren hutsegite bat gertatuz gero, Ezarpenak irekitzean hutsegiteen erregistroak nahi dituzun galdetuko zaizu. &lt;br&gt; &lt;br&gt; • Idazketa eleanitza erabiltzean, zuriune-barrak unean erabiltzen den hizkuntza zehazteko erabiltzen den konfiantza-balioa erakutsiko du. &lt;br&gt; &lt;br&gt; • Iradokizunek goian zenbaki txiki batzuk izango dituzte barne puntuazio eta iturburu-hiztegiren bat erakutsiz (desgaitu daiteke). &lt;br&gt; &lt;br&gt; Root sarbidearekin eskuzko babeskopiak egiten dituzten erabiltzaileentzat: Android 7-tik aurrera, partekatutako hobespen-fitxategia ez dago lehenetsitako kokapenean, aplikazioa %s erabiltzen ari delako. &lt;br&gt; Hau beharrezkoa da ezarpenak irakurri ahal izateko gailua desblokeatu aurretik, adibidez. abioan. &lt;br&gt; Fitxategia /data/user_de/0/package_id/shared_prefs/ helbidean dago, baina gailuaren eta Android bertsioaren araberakoa izan daiteke.</string>
     <string name="subtype_probhat_bn_BD">%s (Probhat)</string>
     <string name="layout_error">Diseinu errorea: %s</string>
     <string name="theme_name_black" tools:keep="@string/theme_name_black">Beltza</string>
@@ -357,7 +348,7 @@
     <string name="after_symbol_and_space">Sartu edo zuriune sakatuta ikurren ikuspegiko beste tekla batzuen ondoren</string>
     <string name="show_popup_keys_main">Gehitu oso ohikoak diren aldaerak (lehenetsia)</string>
     <string name="remove_redundant_popups">Kendu popup erredundanteak</string>
-    <string name="remove_redundant_popups_summary">Ezabatu oinarrizko diseinuan dauden popup teklak</string>
+    <string name="remove_redundant_popups_summary">Kendu oinarrizko diseinuan dauden popup teklak</string>
     <string name="space_swipe_toggle_numpad_entry">Aktibatu/desaktibatu zenbaki-teklatua</string>
     <string name="prefs_space_bar_text">Testu pertsonalizatua zuriune-barran</string>
     <string name="layout_clip_bottom_row" tools:keep="@string/layout_clip_bottom_row">Arbelaren beheko errenkada</string>
@@ -381,10 +372,8 @@
     <string name="key_code">Tekla-kodea</string>
     <string name="long_press_code">Sakatze luzeko kodea</string>
     <string name="prefs_always_show_suggestions_except_web_text">Ez erakutsi beti iradokizunik web edizioko eremuetarako</string>
-    <string name="split_spacer_scale_landscape">Banatze-tartea (horizontala)</string>
     <string name="settings_category_space">Zuriunea</string>
     <string name="use_apps_dict_summary">Erabili instalatutako aplikazioen izenak iradokizunak eta zuzenketak egiteko</string>
-    <string name="enable_split_keyboard_landscape">Gaitu teklatu banatua (horizontala)</string>
     <string name="vibrate_in_dnd_mode">Egin dar-dar ez molestatzeko moduan</string>
     <string name="prefs_always_show_suggestions_except_web_text_summary">Web ediziorako eremuak (batez ere nabigatzaileetan aurkitzen direnak) oso ohiko arrazoia dira iradokizunen konfigurazioa beti erakusten duten arazoetarako</string>
     <string name="auto_correct_shortcuts">Zuzenketa automatikorako lasterbideak</string>
@@ -406,7 +395,7 @@
     <string name="layout_number_row_basic" tools:keep="@string/layout_number_row_basic">Zenbakien errenkada (oinarrizkoa)</string>
     <string name="subtype_baishakhi_bn_IN">%s (Baishakhi)</string>
     <string name="get_colors_message">%s-n koloreak aurki eta parteka ditzakezu.</string>
-    <string name="prefs_key_emoji_max_sdk">Override Emoji bertsioa</string>
+    <string name="prefs_key_emoji_max_sdk">Ez jaramonik egin Emoji bertsioari</string>
     <string name="prefs_emoji_skin_tone">Emojien azalaren tonu lehenetsia</string>
     <string name="subtype_generic_phonetic">%s (Phonetic)</string>
     <string name="after_numpad_and_space">Sartu edo zuriunea sakatuta, numpad-eko beste teklen ondoren</string>
@@ -418,8 +407,6 @@
     <string name="settings_screen_secondary_layouts">Bigarren mailako diseinuak</string>
     <string name="layout_in_use">Abisua: hori da une honetan erabiltzen ari den diseinua</string>
     <string name="layout_functional_keys_tablet" tools:keep="@string/layout_functional_keys_tablet">Tekla funtzionalak (pantaila handia)</string>
-    <string name="prefs_bottom_padding_scale_landscape">Beheko betegarriaren eskala (horizontala)</string>
-    <string name="prefs_side_padding_scale_landscape">Alboko betegarriaren eskala (horizontala)</string>
     <string name="prefs_side_padding_scale">Alboko betegarriaren eskala</string>
     <string name="customize_background_image_landscape">Ezarri atzeko planoko irudia (horizontala)</string>
     <string name="summary_customize_background_image_landscape">Ezartzen ez bada, irudia bertikala erabiliko da</string>
@@ -429,7 +416,42 @@
     <string name="prefs_emoji_font_scale">Emojien eskala</string>
     <string name="prefs_emoji_skin_tone_neutral">Neutroa</string>
     <string name="subtype_dru">Dargwa (Urakhi)</string>
-    <string name="get_layouts_message">% s-n diseinuak aurki eta parteka ditzakezu.</string>
+    <string name="get_layouts_message">%s-n diseinuak aurki eta parteka ditzakezu.</string>
     <string name="discussion_section_link">eztabaiden atala</string>
     <string name="name_invalid">Izen baliogabea</string>
+    <string name="show_emoji_descriptions">Erakutsi emojiaren deskribapena luze sakatzean</string>
+    <string name="suggest_emojis_summary">Erabili emoji hiztegia iradokizun normaletan</string>
+    <string name="suggest_emojis">Iradokitako emojiak</string>
+    <string name="toolbar_hiding_global">Ezkutatu arbela eta emojien tresna-barrak ere</string>
+    <string name="toolbar_mode_toolbar_keys">Tresna-barrako gakoak bakarrik</string>
+    <string name="toolbar_mode_expandable">Tresna-barrako gakoak eta iradokizunak</string>
+    <string name="toolbar_mode_hidden">Ezkutuan</string>
+    <string name="toolbar_mode_suggestion_strip">Iradokizunak bakarrik</string>
+    <string name="subtype_with_layout_generic">%1$s (%2$s)</string>
+    <string name="landscape">Horizontala</string>
+    <string name="label_zwj_key" tools:keep="@string/label_zwj_key">Zero zabalerako karakterea</string>
+    <string name="customize_toolbar_key_code_reset_message">Benetan garbitu nahi duzu pertsonalizatutako tekla kodeak?</string>
+    <string name="prefs_language_swipe_distance">Aldatu hizkuntza lerratzeko distantzia</string>
+    <string name="toolbar_mode">Tresna-barra modua</string>
+    <string name="space_swipe_hide_keyboard_entry">Ezkutatu teklatua</string>
+    <string name="suggest_punctuation">Puntuazio iradokizunak</string>
+    <string name="suggest_punctuation_summary">Erakutsi puntuazioa beste iradokizunik ez dagoenean</string>
+    <string name="about_wiki_link">Joan Wikira</string>
+    <string name="about_wiki_link_description">Edozein erabiltzailek hobetu dezake Wikia!</string>
+    <string name="popup_order_and_hint_source">Popup teklen ordena eta iturria</string>
+    <string name="inline_emoji_search">Sareko emojien bilaketa</string>
+    <string name="inline_emoji_search_summary">Iradoki emojiak bakarrik hitz baten aurretik bi puntu daudenean</string>
+    <string name="emoji_dictionary_required">Emoji hiztegia behar da funtzio honek funtziona dezan. .dict formatuan dauden hiztegiak %s deskargatu daitezke.</string>
+    <string name="clipboard_history_pinned_first">Erakutsi ainguratutako elementuak goian</string>
+    <string name="number_row_in_symbols">Erakutsi zenbaki-lerroa sinboloen ikuspegian</string>
+    <string name="save_subtype_per_app">Gororatu hizkuntza aplikazioan</string>
+    <string name="custom_emoji_font">Ezarri emoji iturria fitxategitik</string>
+    <string name="subtype_mhr">Mari (ekialdekoa)</string>
+    <string name="subtype_khipro_bn">%s (Khipro)</string>
+    <string name="layout_emoji_bottom_row_with_action" tools:keep="@string/layout_emoji_bottom_row_with_action">Emojien beheko errenkada ekintza-teklarekin</string>
+    <string name="layout_clip_bottom_row_with_action" tools:keep="@string/layout_clip_bottom_row_with_action">Arbelaren beheko errenkada ekintza-teklarekin</string>
+    <string name="prefs_bottom_row_scale">Beheko lerroaren eskala</string>
+    <string name="toolbar_swipe_down_to_hide">Ezkutatu teklatua irristatuz</string>
+    <string name="toolbar_swipe_down_to_hide_summary">Irristatu tresna barran behera teklatua ixteko</string>
+    <string name="auto_correct_capitalized_suggestions">Zuzendu automatikoki larriz idatzitako iradokizunak</string>
 </resources>

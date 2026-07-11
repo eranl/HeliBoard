@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 package helium314.keyboard.settings
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -15,8 +14,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,28 +25,33 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import helium314.keyboard.compat.locale
 import helium314.keyboard.keyboard.KeyboardSwitcher
+import helium314.keyboard.keyboard.internal.KeyboardIconsSet
 import helium314.keyboard.latin.BuildConfig
 import helium314.keyboard.latin.InputAttributes
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.FileUtils
 import helium314.keyboard.latin.define.DebugFlags
 import helium314.keyboard.latin.settings.Settings
+import helium314.keyboard.latin.utils.BackButton
 import helium314.keyboard.latin.utils.DeviceProtectedUtils
 import helium314.keyboard.latin.utils.ExecutorUtils
+import helium314.keyboard.latin.utils.GestureDataGatheringSettings
+import helium314.keyboard.latin.utils.JniUtils
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.latin.utils.UncachedInputMethodManagerUtils
 import helium314.keyboard.latin.utils.cleanUnusedMainDicts
 import helium314.keyboard.latin.utils.prefs
 import helium314.keyboard.settings.dialogs.ConfirmationDialog
 import helium314.keyboard.settings.dialogs.NewDictionaryDialog
+import helium314.keyboard.settings.screens.gesturedata.END_DATE_EPOCH_MILLIS
+import helium314.keyboard.settings.screens.gesturedata.TWO_WEEKS_IN_MILLIS
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileInputStream
-import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -59,7 +61,7 @@ import java.util.zip.ZipOutputStream
 //  https://developer.android.com/codelabs/jetpack-compose-performance#2
 //  https://developer.android.com/topic/performance/baselineprofiles/overview
 // todo: consider viewModel, at least for LanguageScreen and ColorsScreen it might help making them less awkward and complicated
-class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+open class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val prefs by lazy { this.prefs() }
     val prefChanged = MutableStateFlow(0) // simple counter, as the only relevant information is that something changed
     fun prefChanged() = prefChanged.value++
@@ -77,7 +79,9 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
         }
         ExecutorUtils.getBackgroundExecutor(ExecutorUtils.KEYBOARD).execute { cleanUnusedMainDicts(this) }
         crashReportFiles.value = findCrashReports(!BuildConfig.DEBUG && !DebugFlags.DEBUG_ENABLED)
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        if (!UncachedInputMethodManagerUtils.isThisImeCurrent(this, imm))
+            KeyboardIconsSet.instance.loadIcons(this) // otherwise we may crash when displaying toolbar keys
 
         settingsContainer = SettingsContainer(this)
 
@@ -102,17 +106,13 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
                                     title = { Text(stringResource(R.string.android_spell_checker_settings)) },
                                     windowInsets = WindowInsets(0),
                                     navigationIcon = {
-                                        IconButton(onClick = { this@SettingsActivity.finish() }) {
-                                            Icon(
-                                                painterResource(R.drawable.ic_arrow_back),
-                                                stringResource(R.string.spoken_description_action_previous)
-                                            )
-                                        }
+                                        BackButton { this@SettingsActivity.finish() }
                                     },
                                 )
                                 settingsContainer[Settings.PREF_USE_CONTACTS]!!.Preference()
                                 settingsContainer[Settings.PREF_USE_APPS]!!.Preference()
                                 settingsContainer[Settings.PREF_BLOCK_POTENTIALLY_OFFENSIVE]!!.Preference()
+                                settingsContainer[Settings.PREF_SPELLCHECK_SUGGEST]!!.Preference()
                             }
                         }
                     else {
@@ -130,11 +130,13 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
                                     val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
                                     intent.addCategory(Intent.CATEGORY_OPENABLE)
                                     intent.putExtra(Intent.EXTRA_TITLE, "crash_reports.zip")
-                                    intent.setType("application/zip")
+                                    intent.type = "application/zip"
                                     crashFilePicker.launch(intent)
                                 },
                                 content = { Text("Crash report files found") },
                             )
+                        } else if (JniUtils.sHaveGestureLib && System.currentTimeMillis() < END_DATE_EPOCH_MILLIS + TWO_WEEKS_IN_MILLIS) {
+                            GestureDataGatheringSettings.GestureDataPromotionReminderDialog()
                         }
                     }
                     if (dictUri != null) {
@@ -203,7 +205,7 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
     private fun saveCrashReports(uri: Uri) {
         val files = findCrashReports(false)
         if (files.isEmpty()) return
-        try {
+        runCatching {
             contentResolver.openOutputStream(uri)?.use {
                 val bos = BufferedOutputStream(it)
                 val z = ZipOutputStream(bos)
@@ -220,7 +222,6 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
                     file.delete()
                 }
             }
-        } catch (ignored: IOException) {
         }
     }
 
@@ -238,3 +239,6 @@ class SettingsActivity : ComponentActivity(), SharedPreferences.OnSharedPreferen
         prefChanged()
     }
 }
+
+// duplicate of SettingsActivity so we can launch it when the app icon is disabled in Android 9 and older
+class SettingsActivity2 : SettingsActivity()

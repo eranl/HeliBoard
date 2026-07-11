@@ -4,7 +4,7 @@ There are two distinct formats:
 * the _simple_ format is a text file with one key label per line, and two consecutive line breaks indicating a switch to the next row, [example](app/src/main/assets/layouts/main/qwerty.txt)
 * the _json_ format taken from [FlorisBoard](https://github.com/florisboard/florisboard/blob/master/CONTRIBUTING.md#adding-the-layout), but only "normal" keys are supported (i.e. no action keys and similar), [example](app/src/main/assets/layouts/main/azerty.json)
 
-You can add both directly in the app, see the related [FAQ](https://github.com/Helium314/HeliBoard/wiki/Customization#layouts).
+You can add both directly in the app, see the related [Wiki page](https://github.com/HeliBorg/HeliBoard/wiki/2.-Layouts).
 
 ## General notes
 Adding too many keys or too long texts will make the keyboard look awkward or broken, and even crash the app under some specific conditions (popup keys are especially prone for this).
@@ -24,6 +24,7 @@ If the layout has exactly 2 keys in the bottom row, these keys will replace comm
 ## Json format
 * Normal json layout with [lenient](https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json-builder/is-lenient.html) parsing, and ignoring lines starting with `//`.
   * For anything else than small changes and copy/pasting text the in-app editor is unsuitable. A proper text editor (e.g. Kate or Notepad++) can significantly simplify work on json files.
+  * Roccobot's Layout Maker is a browser-based editor for json layout files. You can find it [here](https://roccobot.github.io/HeliBoard-RLM/), or in the [discussion section](https://github.com/HeliBorg/HeliBoard/discussions/2494).
 * Allows more flexibility than the simple format, e.g. changing keys depending on input type, shift state or layout direction
 * You can use character layouts from [FlorisBoard](https://github.com/florisboard/florisboard/blob/master/CONTRIBUTING.md#adding-the-layout)
   * Support is not 100% there yet, notably `kana_selector` and `char_width_selector` do not work.
@@ -54,9 +55,9 @@ If the layout has exactly 2 keys in the bottom row, these keys will replace comm
   * There are some more values, but they do nothing
 * `code`: code point that is entered when the key is pressed, determined from the label by default, not available for `multi_text_key`
   * There are special negative values available, e.g. the ones used by functional keys, see [KeyCode.kt](/app/src/main/java/helium314/keyboard/keyboard/internal/keyboard_parser/floris/KeyCode.kt). There are several not yet supported key codes in there, you can see in the function `checkAndConvertCode` which ones are working.
-  * Special notes for the modifier keys `CTRL`, `ALT`, `FN`, `META`
-    * Currently there is no special lock-treatment, so you need to hold the key and press another key at the same time (like on a hardware keyboard)
-    * this means you should avoid putting popups on modifier keys (or press the other key quickly)
+  * Notes for the modifier keys `CTRL`, `ALT`, `FN`, `META` and the left/right/lock versions
+    * The lock versions (`CTRL_LOCK`, `ALT_LOCK`, `FN_LOCK`, `META_LOCK`) will stay active until pressed again. The normal versions will stay active until released or a code input happens (whatever comes later). Avoid having both lock and non-lock versions of the same key on a keyboard, they interact badly.
+    * Some applications will only react to a specific `_LEFT` or `_RIGHT` version of a meta key
 * `codePoints`: when multiple code points should be entered, only available for `multi_text_key`
 * `label`: text to display on the key, determined from code if empty
   * There are some special values, see the [label section](#labels)
@@ -73,7 +74,7 @@ If the layout has exactly 2 keys in the bottom row, these keys will replace comm
     * `0.1` for phones
     * `0.09` for tablets
   * If the sum of widths in a row is greater than 1, keys are rescaled to fit on the screen
-* `labelFlags`: allows specific effects, see [here](app/src/main/res/values/attrs.xml#L251-L287) in the section _keyLabelFlags_ for names and numeric values
+* `labelFlags`: allows specific effects, see [here](app/src/main/res/values/attrs.xml#L250-L282) in the section _keyLabelFlags_ for names and numeric values
   * Since json does not support hexadecimal-values, you have to use the decimal values in the comments in the same line.
   * In case you want to apply multiple flags, you will need to combine them using [bitwise OR](https://en.wikipedia.org/wiki/Bitwise_operation#OR). In most cases this means you can just add the individual values, only exceptions are `fontDefault`, `followKeyLabelRatio`, `followKeyHintLabelRatio`, and `autoScale`.
 
@@ -106,6 +107,12 @@ Usually the label is what is displayed on the key. However, there are some speci
 You can also specify special key codes like `a|!code/key_action_previous` or `abc|!code/-10043`, but it's cleaner to use a json layout and specify the code explicitly. Note that when specifying a code in the label, and a code in a json layout, the code in the label will be ignored.
 * It's also possible to specify an icon, like `!icon/previous_key|!code/key_action_previous`.
   * You can find available icon names in [KeyboardIconsSet](/app/src/main/java/helium314/keyboard/keyboard/internal/KeyboardIconsSet.kt). You can also use toolbar key icons using the uppercase name of the [toolbar key](/app/src/main/java/helium314/keyboard/latin/utils/ToolbarUtils.kt#L109), e.g. `!icon/redo`
+* There are some further special labels to be used in popup keys (i.e. one of the popup keys should have the label)
+  * `!noPanelAutoPopupKey!`: no popups are shown, a long press will result in the first normal popup of the key being selected
+  * `!needsDividers!`: dividers are shown between popup keys
+  * `!hasLabels!`: reduces text size in popup keys for nicer display of labels instead of letters
+  * `!autoColumnOrder!`: use with a number, e.g. _!autoColumnOrder!4_ will result in 4 popup columns
+  * `!fixedColumnOrder!`: use with a number, e.g. _!fixedColumnOrder!4_ will result in 4 popup columns. Keys will not be re-ordered if the result is a single line.
 
 ## Adding new layouts / languages
 * You need a layout file in one of the formats above, and add it to [layouts](app/src/main/assets/layouts)

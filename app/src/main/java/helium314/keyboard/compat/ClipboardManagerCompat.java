@@ -14,7 +14,7 @@ public class ClipboardManagerCompat {
             try {
                 cm.clearPrimaryClip();
             } catch (Exception e) {
-                // workaround for system-caused crash in https://github.com/Helium314/HeliBoard/issues/203
+                // workaround for system-caused crash in https://github.com/HeliBorg/HeliBoard/issues/203
                 cm.setPrimaryClip(ClipData.newPlainText("", ""));
             }
         } else {
@@ -24,10 +24,11 @@ public class ClipboardManagerCompat {
 
     public static Long getClipTimestamp(ClipData cd) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return cd.getDescription().getTimestamp();
-        } else {
-            return null;
+            final long timestamp = cd.getDescription().getTimestamp();
+            if (timestamp > 0) // timestamp is 0 if not set
+                return timestamp;
         }
+        return System.currentTimeMillis();
     }
 
     public static Boolean getClipSensitivity(final ClipDescription cd) {
@@ -36,5 +37,4 @@ public class ClipboardManagerCompat {
         }
         return null; // can't determine
     }
-
 }

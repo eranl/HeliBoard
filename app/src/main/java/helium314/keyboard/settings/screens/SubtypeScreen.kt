@@ -34,16 +34,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import helium314.keyboard.keyboard.internal.KeyboardIconsSet
-import helium314.keyboard.keyboard.internal.keyboard_parser.POPUP_KEYS_ALL
-import helium314.keyboard.keyboard.internal.keyboard_parser.POPUP_KEYS_MAIN
-import helium314.keyboard.keyboard.internal.keyboard_parser.POPUP_KEYS_MORE
-import helium314.keyboard.keyboard.internal.keyboard_parser.POPUP_KEYS_NORMAL
-import helium314.keyboard.keyboard.internal.keyboard_parser.hasLocalizedNumberRow
-import helium314.keyboard.keyboard.internal.keyboard_parser.morePopupKeysResId
+import helium314.keyboard.keyboard.internal.keyboard_parser.LocaleKeyboardInfos
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.Constants.Separators
 import helium314.keyboard.latin.common.Constants.Subtype.ExtraValue
@@ -65,20 +60,22 @@ import helium314.keyboard.latin.utils.SubtypeLocaleUtils
 import helium314.keyboard.latin.utils.SubtypeLocaleUtils.displayName
 import helium314.keyboard.latin.utils.SubtypeSettings
 import helium314.keyboard.latin.utils.SubtypeUtilsAdditional
-import helium314.keyboard.latin.utils.appendLink
 import helium314.keyboard.latin.utils.getActivity
 import helium314.keyboard.latin.utils.getDictionaryLocales
 import helium314.keyboard.latin.utils.getSecondaryLocales
 import helium314.keyboard.latin.utils.getStringResourceOrName
+import helium314.keyboard.latin.utils.htmlToAnnotated
 import helium314.keyboard.latin.utils.mainLayoutName
 import helium314.keyboard.latin.utils.prefs
+import helium314.keyboard.latin.utils.withHtmlLink
 import helium314.keyboard.settings.ActionRow
-import helium314.keyboard.settings.DefaultButton
-import helium314.keyboard.settings.DeleteButton
+import helium314.keyboard.latin.utils.DefaultButton
+import helium314.keyboard.latin.utils.DeleteButton
 import helium314.keyboard.settings.DropDownField
 import helium314.keyboard.settings.SearchScreen
 import helium314.keyboard.settings.SettingsActivity
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
+import helium314.keyboard.latin.utils.previewDark
 import helium314.keyboard.settings.WithSmallTitle
 import helium314.keyboard.settings.dialogs.ConfirmationDialog
 import helium314.keyboard.settings.dialogs.LayoutEditDialog
@@ -88,7 +85,7 @@ import helium314.keyboard.settings.dialogs.ReorderDialog
 import helium314.keyboard.settings.initPreview
 import helium314.keyboard.settings.layoutFilePicker
 import helium314.keyboard.settings.layoutIntent
-import helium314.keyboard.settings.previewDark
+import helium314.keyboard.settings.GetIconOrEmpty
 import java.util.Locale
 
 @Composable
@@ -197,7 +194,7 @@ fun SubtypeScreen(
                             Defaults.PREF_MORE_POPUP_KEYS
                         )!!
                         ActionRow(onClick = { showMorePopupsDialog = true }) {
-                            Text(stringResource(morePopupKeysResId(value)),
+                            Text(stringResource(LocaleKeyboardInfos.morePopupKeysResId(value)),
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(start = 10.dp)
@@ -208,7 +205,7 @@ fun SubtypeScreen(
                         }
                     }
                 }
-                if (hasLocalizedNumberRow(currentSubtype.locale, ctx)) {
+                if (LocaleKeyboardInfos.hasLocalizedNumberRow(currentSubtype.locale, ctx)) {
                     val checked = currentSubtype.getExtraValueOf(ExtraValue.LOCALIZED_NUMBER_ROW)?.toBoolean()
                     WithSmallTitle(stringResource(R.string.number_row)) {
                         ActionRow {
@@ -327,8 +324,8 @@ fun SubtypeScreen(
             PopupOrderDialog(
                 onDismissRequest = { showHintOrderDialog = false },
                 initialValue = setting ?: prefs.getString(
-                    Settings.PREF_POPUP_KEYS_LABELS_ORDER,
-                    Defaults.PREF_POPUP_KEYS_LABELS_ORDER
+                    Settings.PREF_POPUP_KEYS_HINT_ORDER,
+                    Defaults.PREF_POPUP_KEYS_HINT_ORDER
                 )!!,
                 title = stringResource(R.string.hint_source),
                 showDefault = setting != null,
@@ -341,13 +338,14 @@ fun SubtypeScreen(
             )
         }
         if (showMorePopupsDialog) {
-            val items = listOf(POPUP_KEYS_NORMAL, POPUP_KEYS_MAIN, POPUP_KEYS_MORE, POPUP_KEYS_ALL)
+            val items = listOf(LocaleKeyboardInfos.POPUP_KEYS_NORMAL, LocaleKeyboardInfos.POPUP_KEYS_MAIN,
+                LocaleKeyboardInfos.POPUP_KEYS_MORE, LocaleKeyboardInfos.POPUP_KEYS_ALL)
             val explicitValue = currentSubtype.getExtraValueOf(ExtraValue.MORE_POPUPS)
             val value = explicitValue ?: prefs.getString(Settings.PREF_MORE_POPUP_KEYS, Defaults.PREF_MORE_POPUP_KEYS)
             ListPickerDialog(
                 onDismissRequest = { showMorePopupsDialog = false },
                 items = items,
-                getItemName = { stringResource(morePopupKeysResId(it)) },
+                getItemName = { stringResource(LocaleKeyboardInfos.morePopupKeysResId(it)) },
                 selectedItem = value,
                 onItemSelected = { setCurrentSubtype(currentSubtype.with(ExtraValue.MORE_POPUPS, it)) }
             )
@@ -383,7 +381,7 @@ private fun PopupOrderDialog(
         displayItem = { item ->
             var checked by rememberSaveable { mutableStateOf(item.state) }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                KeyboardIconsSet.instance.GetIcon(item.name)
+                KeyboardIconsSet.instance.GetIconOrEmpty(item.name)
                 val text = item.name.lowercase().getStringResourceOrName("popup_keys_", ctx)
                 Text(text, Modifier.weight(1f))
                 Switch(
@@ -440,7 +438,7 @@ private fun MainLayoutRow(
             }
             if (showLayoutDeleteDialog) {
                 val others = SubtypeSettings.getAdditionalSubtypes().filter { st -> st.mainLayoutName() == it }
-                    .any { it.toSettingsSubtype() != currentSubtype }
+                    .any { st -> st.toSettingsSubtype() != currentSubtype }
                 ConfirmationDialog(
                     onDismissRequest = { showLayoutDeleteDialog = false },
                     confirmButtonText = stringResource(R.string.delete),
@@ -481,19 +479,11 @@ private fun MainLayoutRow(
             )
         }
         if (showAddLayoutDialog) {
-            // layoutString contains "%s" since we didn't supply a formatArg
-            val layoutString = stringResource(R.string.message_add_custom_layout)
-            val linkText = stringResource(R.string.dictionary_link_text)
-            val discussionSectionText = stringResource(R.string.get_layouts_message)
-            val annotated = buildAnnotatedString {
-                append(layoutString.substringBefore("%s"))
-                appendLink(linkText, Links.LAYOUT_FORMAT_URL)
-                append(layoutString.substringAfter("%s"))
-                appendLine()
-                append(discussionSectionText.substringBefore("%s"))
-                appendLink(stringResource(R.string.discussion_section_link), Links.CUSTOM_LAYOUTS)
-                append(discussionSectionText.substringAfter("%s"))
-            }
+            val wikiLink = stringResource(R.string.dictionary_link_text).withHtmlLink(Links.LAYOUT_WIKI_URL)
+            val layoutText = stringResource(R.string.message_add_custom_layout, wikiLink).htmlToAnnotated()
+            val discussionLink = stringResource(R.string.discussion_section_link).withHtmlLink(Links.CUSTOM_LAYOUTS)
+            val discussionSectionText = stringResource(R.string.get_layouts_message, discussionLink).htmlToAnnotated()
+            val annotated = layoutText + AnnotatedString("\n") + discussionSectionText
 
             ConfirmationDialog(
                 onDismissRequest = { showAddLayoutDialog = false },

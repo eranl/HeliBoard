@@ -6,21 +6,22 @@
 
 package helium314.keyboard.keyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
 import helium314.keyboard.accessibility.AccessibilityUtils;
 import helium314.keyboard.accessibility.PopupKeysKeyboardAccessibilityDelegate;
-import helium314.keyboard.keyboard.emoji.OnKeyEventListener;
+import helium314.keyboard.keyboard.emoji.EmojiViewCallback;
 import helium314.keyboard.keyboard.internal.KeyDrawParams;
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode;
 import helium314.keyboard.latin.R;
@@ -39,7 +40,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
     protected final KeyDetector mKeyDetector;
     private Controller mController = EMPTY_CONTROLLER;
     protected KeyboardActionListener mListener;
-    protected OnKeyEventListener mKeyEventListener;
+    protected EmojiViewCallback mEmojiViewCallback;
     private int mOriginX;
     private int mOriginY;
     private Key mCurrentKey;
@@ -122,7 +123,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
     public void showPopupKeysPanel(final View parentView, final Controller controller,
             final int pointX, final int pointY, final KeyboardActionListener listener) {
         mListener = listener;
-        mKeyEventListener = null;
+        mEmojiViewCallback = null;
         showPopupKeysPanelInternal(parentView, controller, pointX, pointY);
     }
 
@@ -131,12 +132,13 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
      */
     @Override
     public void showPopupKeysPanel(final View parentView, final Controller controller,
-            final int pointX, final int pointY, final OnKeyEventListener listener) {
+            final int pointX, final int pointY, final EmojiViewCallback emojiViewCallback) {
         mListener = null;
-        mKeyEventListener = listener;
+        mEmojiViewCallback = emojiViewCallback;
         showPopupKeysPanelInternal(parentView, controller, pointX, pointY);
     }
 
+    @SuppressLint("RtlHardcoded") // a key on the left is on the left, independent of layout direction
     private void showPopupKeysPanelInternal(final View parentView, final Controller controller,
             final int pointX, final int pointY) {
         mController = controller;
@@ -148,15 +150,33 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
                 + getPaddingBottom();
 
         parentView.getLocationInWindow(mCoordinates);
-        // Ensure the horizontal position of the panel does not extend past the parentView edges.
-        final int maxX = parentView.getMeasuredWidth() - container.getMeasuredWidth();
-        final int panelX = Math.max(0, Math.min(maxX, x)) + CoordinateUtils.x(mCoordinates);
-        final int panelY = y + CoordinateUtils.y(mCoordinates);
-        container.setX(panelX);
-        container.setY(panelY);
+        final int containerY = y + CoordinateUtils.y(mCoordinates);
+        container.setY(containerY);
 
-        mOriginX = x + container.getPaddingLeft();
-        mOriginY = y + container.getPaddingTop();
+        // This is needed for cases where there's also a text popup above this keyboard
+        final int panelMaxX = parentView.getMeasuredWidth() - getMeasuredWidth();
+        var panelFinalX = Math.max(0, Math.min(panelMaxX, x));
+        var center = panelFinalX + getMeasuredWidth() / 2;
+        var layoutGravity = center < pointX - getKeyboard().mMostCommonKeyWidth / 2?
+                        Gravity.RIGHT : center > pointX + getKeyboard().mMostCommonKeyWidth / 2? Gravity.LEFT : Gravity.CENTER_HORIZONTAL;
+
+        int containerAdjustedX = x;
+        if (getMeasuredWidth() < container.getMeasuredWidth()) {
+            containerAdjustedX = layoutGravity == Gravity.LEFT? panelFinalX : layoutGravity == Gravity.RIGHT
+                ? panelFinalX + getMeasuredWidth() - container.getMeasuredWidth()
+                : panelFinalX + (getMeasuredWidth() - container.getMeasuredWidth()) / 2;
+        }
+
+        // Ensure the horizontal position of the panel does not extend past the parentView edges.
+        int containerMaxX = parentView.getMeasuredWidth() - container.getMeasuredWidth();
+        int containerFinalX = Math.max(0, Math.min(containerMaxX, containerAdjustedX));
+        int containerX = containerFinalX + CoordinateUtils.x(mCoordinates);
+        container.setX(containerX);
+        setTranslationX(panelFinalX - containerFinalX);
+        controller.setLayoutGravity(layoutGravity);
+
+        mOriginX = panelFinalX;
+        mOriginY = y + container.getPaddingTop() + (int) getY();
         controller.onShowPopupKeysPanel(this);
         final PopupKeysKeyboardAccessibilityDelegate accessibilityDelegate = mAccessibilityDelegate;
         if (accessibilityDelegate != null
@@ -222,8 +242,8 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
                             false /* isKeyRepeat */);
                 }
             }
-        } else if (mKeyEventListener != null) {
-            mKeyEventListener.onReleaseKey(key);
+        } else if (mEmojiViewCallback != null) {
+            mEmojiViewCallback.onReleaseKey(key);
         }
     }
 
@@ -278,6 +298,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
         return y - mOriginY;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(final MotionEvent me) {
         final int action = me.getActionMasked();
@@ -313,29 +334,5 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
             return accessibilityDelegate.onHoverEvent(event);
         }
         return super.onHoverEvent(event);
-    }
-
-    private View getContainerView() {
-        return (View)getParent();
-    }
-
-    @Override
-    public void showInParent(final ViewGroup parentView) {
-        removeFromParent();
-        parentView.addView(getContainerView());
-    }
-
-    @Override
-    public void removeFromParent() {
-        final View containerView = getContainerView();
-        final ViewGroup currentParent = (ViewGroup)containerView.getParent();
-        if (currentParent != null) {
-            currentParent.removeView(containerView);
-        }
-    }
-
-    @Override
-    public boolean isShowingInParent() {
-        return (getContainerView().getParent() != null);
     }
 }
