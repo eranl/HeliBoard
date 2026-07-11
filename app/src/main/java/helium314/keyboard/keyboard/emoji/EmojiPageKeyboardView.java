@@ -6,6 +6,7 @@
 
 package helium314.keyboard.keyboard.emoji;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -13,7 +14,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.widget.LinearLayout;
 import helium314.keyboard.keyboard.PopupTextView;
 import helium314.keyboard.latin.utils.Log;
@@ -113,6 +113,7 @@ public final class EmojiPageKeyboardView extends KeyboardView implements
         mPopupKeysKeyboardContainer = inflater.inflate(popupKeysKeyboardLayoutId, null);
         mDescriptionView = mPopupKeysKeyboardContainer.findViewById(R.id.description_view);
         mPopupKeysKeyboardView = mPopupKeysKeyboardContainer.findViewById(R.id.popup_keys_keyboard_view);
+        setFitsSystemWindows(false);
     }
 
     @Override
@@ -120,7 +121,7 @@ public final class EmojiPageKeyboardView extends KeyboardView implements
         final Keyboard keyboard = getKeyboard();
         if (keyboard instanceof DynamicGridKeyboard) {
             final int width = keyboard.mOccupiedWidth + getPaddingLeft() + getPaddingRight();
-            final int occupiedHeight = ((DynamicGridKeyboard) keyboard).getDynamicOccupiedHeight();
+            final int occupiedHeight = ((DynamicGridKeyboard) keyboard).getOccupiedHeight();
             final int height = occupiedHeight + getPaddingTop() + getPaddingBottom();
             setMeasuredDimension(width, height);
             return;
@@ -267,21 +268,19 @@ public final class EmojiPageKeyboardView extends KeyboardView implements
     /**
      * {@inheritDoc}
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(final MotionEvent e) {
-        switch (e.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN:
+        return switch (e.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN -> {
                 mPointerId = e.getPointerId(0);
-                return onDown(e);
-            case MotionEvent.ACTION_UP:
-                return onUp(e);
-            case MotionEvent.ACTION_MOVE:
-                return onMove(e);
-            case MotionEvent.ACTION_CANCEL:
-                return onCancel(e);
-            default:
-                return false;
-        }
+                yield onDown(e);
+            }
+            case MotionEvent.ACTION_UP -> onUp(e);
+            case MotionEvent.ACTION_MOVE -> onMove(e);
+            case MotionEvent.ACTION_CANCEL -> onCancel(e);
+            default -> false;
+        };
     }
 
     private Key getKey(final int x, final int y) {
@@ -439,23 +438,25 @@ public final class EmojiPageKeyboardView extends KeyboardView implements
         final int x = (int)e.getX();
         final int y = (int)e.getY();
         final Key key = getKey(x, y);
-        final boolean isShowingPopupKeysPanel = isShowingPopupKeysPanel();
+        final boolean isShowingPopupKeyboard = isShowingPopupKeysPanel() && mPopupKeysKeyboardView.getVisibility() == VISIBLE;
 
         // Touched key has changed, release previous key's callbacks and
         // re-register them for the new key.
-        if (key != mCurrentKey && !isShowingPopupKeysPanel) {
+        if (key != mCurrentKey && !isShowingPopupKeyboard) {
             releaseCurrentKey(false);
             mCurrentKey = key;
+            cancelLongPress();
+            if (isShowingPopupKeysPanel()) {
+                onCancelPopupKeysPanel();
+            }
             if (key == null) {
                 return false;
             }
             registerPress(key);
-
-            cancelLongPress();
             registerLongPress(key);
         }
 
-        if (isShowingPopupKeysPanel) {
+        if (isShowingPopupKeyboard) {
             final long eventTime = e.getEventTime();
             final int translatedX = mPopupKeysPanel.translateX(x);
             final int translatedY = mPopupKeysPanel.translateY(y);

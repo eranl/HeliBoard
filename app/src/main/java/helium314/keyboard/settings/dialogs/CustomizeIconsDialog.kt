@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 package helium314.keyboard.settings.dialogs
 
-import android.graphics.drawable.VectorDrawable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -28,25 +27,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import helium314.keyboard.keyboard.internal.KeyboardIconsSet
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.settings.customIconNames
-import helium314.keyboard.latin.utils.dpToPx
 import helium314.keyboard.latin.utils.getStringResourceOrName
 import helium314.keyboard.latin.utils.prefs
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.initPreview
-import helium314.keyboard.settings.previewDark
-import helium314.keyboard.settings.screens.GetIcon
+import helium314.keyboard.latin.utils.previewDark
 import kotlinx.serialization.json.Json
+import androidx.core.content.edit
+import helium314.keyboard.settings.GetIconOrEmpty
+import helium314.keyboard.settings.painterResourceCompat
 
 @Composable
 fun CustomizeIconsDialog(
@@ -88,7 +84,7 @@ fun CustomizeIconsDialog(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.clickable { showIconDialog = iconName to displayName }
                     ) {
-                        KeyboardIconsSet.instance.GetIcon(iconName)
+                        KeyboardIconsSet.instance.GetIconOrEmpty(iconName)
                         Text(displayName, Modifier.weight(1f))
                     }
                 }
@@ -117,7 +113,7 @@ fun CustomizeIconsDialog(
                 runCatching {
                     val newIcons = customIconNames(prefs).toMutableMap()
                     newIcons[iconName] = selectedIcon?.let { ctx.resources.getResourceEntryName(it) } ?: return@runCatching
-                    prefs.edit().putString(prefKey, Json.encodeToString(newIcons)).apply()
+                    prefs.edit { putString(prefKey, Json.encodeToString(newIcons)) }
                     KeyboardIconsSet.instance.loadIcons(ctx)
                 }
                 reloadItem(iconName)
@@ -128,8 +124,8 @@ fun CustomizeIconsDialog(
                 runCatching {
                     val icons2 = customIconNames(prefs).toMutableMap()
                     icons2.remove(iconName)
-                    if (icons2.isEmpty()) prefs.edit().remove(prefKey).apply()
-                    else prefs.edit().putString(prefKey, Json.encodeToString(icons2)).apply()
+                    if (icons2.isEmpty()) prefs.edit { remove(prefKey) }
+                    else prefs.edit { putString(prefKey, Json.encodeToString(icons2)) }
                     KeyboardIconsSet.instance.loadIcons(ctx)
                 }
                 reloadItem(iconName)
@@ -141,7 +137,6 @@ fun CustomizeIconsDialog(
                     state = gridState
                 ) {
                     items(icons, key = { it }) { resId ->
-                        val drawable = ContextCompat.getDrawable(ctx, resId)?.mutate() ?: return@items
                         val color = if (resId == selectedIcon) MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.onSurface
                         CompositionLocalProvider(
@@ -151,12 +146,7 @@ fun CustomizeIconsDialog(
                                 Modifier.size(40.dp).clickable { selectedIcon = resId },
                                 contentAlignment = Alignment.Center
                             ) {
-                                if (drawable is VectorDrawable)
-                                    Icon(painterResource(resId), null, Modifier.fillMaxSize(0.8f))
-                                else {
-                                    val px = 40.dpToPx(ctx.resources)
-                                    Icon(drawable.toBitmap(px, px).asImageBitmap(), null, Modifier.fillMaxSize(0.8f))
-                                }
+                                Icon(painterResourceCompat(resId), null, Modifier.fillMaxSize(0.8f))
                             }
                         }
                     }
@@ -170,7 +160,7 @@ fun CustomizeIconsDialog(
             onConfirmed = {
                 showDeletePrefConfirmDialog = false
                 onDismissRequest()
-                prefs.edit().remove(prefKey).apply()
+                prefs.edit { remove(prefKey) }
                 KeyboardIconsSet.instance.loadIcons(ctx)
             },
             content = { Text(stringResource(R.string.customize_icons_reset_message)) }

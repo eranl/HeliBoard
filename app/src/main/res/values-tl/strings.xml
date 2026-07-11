@@ -82,11 +82,9 @@
     <string name="show_setup_wizard_icon_summary">"Ipakita ang icon ng application sa launcher"</string>
     <string name="dictionary_category_title">"Mga add-on na diksyunaryo"</string>
     <string name="dictionary_available">"Available ang diksyunaryo"</string>
-    <string name="last_update">"Huling na-update"</string>
     <string name="settings">"Mga Setting"</string>
     <string name="delete">"I-delete"</string>
     <string name="version_text">"Bersyon %1$s"</string>
-    <string name="user_dict_settings_add_dialog_title">"Idagdag sa diksyunaryo"</string>
     <string name="user_dict_settings_add_shortcut_option_name">"Shortcut:"</string>
     <string name="user_dict_settings_add_locale_option_name">"Wika:"</string>
     <string name="user_dict_settings_add_word_hint">"Mag-type ng salita"</string>
@@ -94,8 +92,6 @@
     <string name="user_dict_settings_edit_dialog_title">"I-edit ang salita"</string>
     <string name="user_dict_settings_all_languages">"Para sa lahat ng wika"</string>
     <string name="user_dict_settings_more_languages">"Higit pang mga wika…"</string>
-    <string name="user_dict_fast_scroll_alphabet">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
-    <string name="use_system_language_to_select_input_method_subtypes">"Gamitin ang mga wika ng system"</string>
     <string name="select_input_method">"Pumili ng pamamaraan ng pag-input"</string>
     <string name="undo">"I-undo"</string>
     <string name="redo">"Gawing muli"</string>

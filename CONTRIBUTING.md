@@ -1,6 +1,6 @@
 # Getting Started
 
-HeliBoard project is based on Gradle and Android Gradle Plugin. To get started, you can install [Android Studio](https://developer.android.com/studio), and import project 'from Version Control / Git / Github' by providing this git repository [URL](https://github.com/Helium314/HeliBoard) (or git SSH [URL](git@github.com:Helium314/heliboard.git)).
+HeliBoard project is based on Gradle and Android Gradle Plugin. To get started, you can install [Android Studio](https://developer.android.com/studio), and import project 'from Version Control / Git / Github' by providing this git repository [URL](https://github.com/HeliBorg/HeliBoard) (or git SSH [URL](git@github.com:Helium314/heliboard.git)).
 Of course you can also use any other compatible IDE, or work with text editor and command line.
 Once everything is up correctly, you're ready to go!
 
@@ -16,18 +16,32 @@ Some hints for finding what you're looking for:
 * Layouts: stored in `layouts` folder in assets, interpreted by `KeyboardParser` and `TextKeyData`
   * Popups: either on layouts, or in `locale_key_texts` (mostly letter variations for specific languages that are not dependent on layout)
 * Touch and swipe input handling: `PointerTracker`
-* Handling of key inputs: `InputLogic`
-* Suggestions: `DictionaryFacilitatorImpl`, `Suggest`, `InputLogic`, and `SuggestionStripView` (in order from creation to display)
-* Forwarding entered text / keys to the app / text field: `RichInputConnection`
+* Handling of keycode / text inputs: `InputLogic`
+  * chain: `PointerTracker` -> `KeyboardActionListenerImpl` -> `LatinIME` -> `InputLogic`
+* Suggestions: `DictionaryFacilitatorImpl`, `Suggest`, `InputLogic`, and `SuggestionStripView` (in order from creation to display, omitting the native library)
+* Communication with the app / text field (inputs, reading current text): `RichInputConnection`
 * Receiving events and information from the app / text field: `LatinIME`
 * Settings are in `SettingsValues`, with some functionality in `Settings` and the default values in `Default`
 
 # Guidelines
 
+Note that the maintainer only has very limited time, and thus review might take a while.
+This especially applies to large PRs (hundreds of lines), which recently started to become more common. Sorry, but there is simply not enough time to review everything.  
+What's more likely to be reviewed soon:
+* Simple changes (but depends on what effect they have, as in some places it's easy to introduce unintended changes)
+* Wanted / accepted changes (labels [_PR_](https://github.com/HeliBorg/HeliBoard/labels/PR), [_contributor needed_](https://github.com/HeliBorg/HeliBoard/issues?q=label%3A%22contributor%20needed%22), [_help wanted_](https://github.com/HeliBorg/HeliBoard/labels/help%20wanted))
+* Changes where the hard work is mostly investigation / research rather than coding
+  * e.g. compiling text lists to dictionaries, customizable icons / key backgrounds, OnePlus disabling keyboard on reboot, ...
+
+What will likely take some time (depends very much on how much other stuff is coming in):
+* Large changes (especially when connected to rather niche functionality)
+* Changes in code that is prone to introducing unintended effects
+  * `InputLogic`, `Suggest`, `RichInputConnection` are especially dangerous here, and also hard to test (behavior may depend on app and possibly OS version)
+
 ## Recommended
 
 If you want to contribute, it's a good idea to make sure your idea is actually wanted in HeliBoard.
-Best check related issues before you start working on a PR. If the issue has the [labels](https://github.com/Helium314/HeliBoard/labels) [_PR_](https://github.com/Helium314/HeliBoard/labels/PR) or [_contributor needed_](https://github.com/Helium314/HeliBoard/issues?q=label%3A%22contributor%20needed%22) (even closed ones), contributions are wanted. If you don't find a related issue, it's recommended to open one, but ultimately it's your choice.
+Best check related issues before you start working on a PR. If the issue has the [labels](https://github.com/HeliBorg/HeliBoard/labels) [_PR_](https://github.com/HeliBorg/HeliBoard/labels/PR) or [_contributor needed_](https://github.com/HeliBorg/HeliBoard/issues?q=label%3A%22contributor%20needed%22) (even closed ones), contributions are wanted. If you don't find a related issue, it's recommended to open one, but ultimately it's your choice.
 Asking before starting a PR may help you for getting pointers to potentially relevant code, and deciding how to implement your desired changes.
 
 HeliBoard is a complex application and used by users with a large variety of opinions on how things should be.
@@ -39,6 +53,8 @@ When contributing to the app, please:
 * Try making use of in-place mechanisms instead of re-inventing the wheel. Your contribution should only add as much complexity as necessary, the code is overly complicated already 😶.
 * Keep your changes to few places, as opposed to sprinkling them over many parts of the code. This helps with keeping down complexity during review, and with maintainability of the app.
 * Make a draft PR when you intend to still work on it. Submitting an unfinished PR can be a good idea when you're not sure how to best continue and would like some comments.
+* When you fix a bug without opening an issue, please provide a way to reproduce the bug (see [bug report template](.github/ISSUE_TEMPLATE/bug_report.md))
+* Noticeable adjustments (keyboard UI, default layouts, ...) should either provide a benefit for everyone, or be optional.
 
 Further things to consider (though irrelevant for most PRs):
 * APK size:

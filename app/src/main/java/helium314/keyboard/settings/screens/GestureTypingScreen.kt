@@ -21,9 +21,10 @@ import helium314.keyboard.settings.SearchSettingsScreen
 import helium314.keyboard.settings.SettingsActivity
 import helium314.keyboard.settings.preferences.SliderPreference
 import helium314.keyboard.settings.preferences.SwitchPreference
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.initPreview
-import helium314.keyboard.settings.previewDark
+import helium314.keyboard.latin.utils.previewDark
+import androidx.core.content.edit
 
 @Composable
 fun GestureTypingScreen(
@@ -80,7 +81,7 @@ fun createGestureTypingSettings(context: Context) = listOf(
             val default = Settings.readGestureDynamicPreviewDefault(ctx)
             val followingSystem = it == default
             // allow the default to be overridden
-            ctx.prefs().edit().putBoolean(Settings.PREF_GESTURE_DYNAMIC_PREVIEW_FOLLOW_SYSTEM, followingSystem).apply()
+            ctx.prefs().edit { putBoolean(Settings.PREF_GESTURE_DYNAMIC_PREVIEW_FOLLOW_SYSTEM, followingSystem) }
             KeyboardSwitcher.getInstance().setThemeNeedsReload()
         }
     },

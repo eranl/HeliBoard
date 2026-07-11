@@ -8,6 +8,7 @@ package helium314.keyboard.keyboard;
 
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -57,7 +58,6 @@ import helium314.keyboard.latin.settings.Settings;
 import helium314.keyboard.latin.utils.KtxKt;
 import helium314.keyboard.latin.utils.LanguageOnSpacebarUtils;
 import helium314.keyboard.latin.utils.Log;
-import helium314.keyboard.latin.utils.SubtypeLocaleUtils;
 import helium314.keyboard.latin.utils.TypefaceUtils;
 
 import java.util.ArrayList;
@@ -93,7 +93,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     // Stuff to draw altCodeWhileTyping keys.
     private final ObjectAnimator mAltCodeKeyWhileTypingFadeoutAnimator;
     private final ObjectAnimator mAltCodeKeyWhileTypingFadeinAnimator;
-    private int mAltCodeKeyWhileTypingAnimAlpha = Constants.Color.ALPHA_OPAQUE;
 
     // Drawing preview placer view
     private final DrawingPreviewPlacerView mDrawingPreviewPlacerView;
@@ -107,7 +106,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     private final KeyPreviewChoreographer mKeyPreviewChoreographer;
 
     // More keys keyboard
-    private final Paint mBackgroundDimAlphaPaint = new Paint();
+    private final Paint mBackgroundDimAlphaPaint = new Paint(); // todo: not used at all
     private final View mPopupKeysKeyboardContainer;
     private final View mPopupKeysKeyboardForActionContainer;
     private final WeakHashMap<Key, Keyboard> mPopupKeysKeyboardCache = new WeakHashMap<>();
@@ -346,7 +345,9 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             Log.w(TAG, "Cannot find root view");
             return;
         }
-        final ViewGroup windowContentView = rootView.findViewById(android.R.id.content);
+        ViewGroup windowContentView = rootView.findViewById(android.R.id.content);
+        if (mDrawingPreviewPlacerView.getParent() instanceof ViewGroup vg)
+            vg.removeView(mDrawingPreviewPlacerView); // when moving keyboard from input method content view to floating container
         // Note: It'd be very weird if we get null by android.R.id.content.
         if (windowContentView == null) {
             Log.w(TAG, "Cannot find android.R.id.content view to add DrawingPreviewPlacerView");
@@ -366,7 +367,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             return;
         }
         mKeyPreviewDrawParams.setVisibleOffset(-keyboard.mVerticalGap);
-        if (withPreview && !key.noKeyPreview() && mKeyPreviewDrawParams.isPopupEnabled()) {
+        if (withPreview && key.hasPreview() && mKeyPreviewDrawParams.isPopupEnabled()) {
             showKeyPreview(key);
         }
     }
@@ -388,7 +389,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     public void onKeyReleased(@NonNull final Key key, final boolean withAnimation) {
         key.onReleased();
         invalidateKey(key);
-        if (!key.noKeyPreview()) {
+        if (key.hasPreview()) {
             if (withAnimation) {
                 dismissKeyPreview(key);
             } else {
@@ -492,7 +493,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             // will cause zero-division error at
             // {@link PopupKeysKeyboardParams#setParameters(int,int,int,int,int,int,boolean,int)}.
             final boolean isSinglePopupKeyWithPreview = mKeyPreviewDrawParams.isPopupEnabled()
-                    && !key.noKeyPreview() && popupKeys.length == 1
+                    && key.hasPreview() && popupKeys.length == 1
                     && mKeyPreviewDrawParams.getVisibleWidth() > 0;
             final PopupKeysKeyboard.Builder builder = new PopupKeysKeyboard.Builder(
                     getContext(), key, getKeyboard(), isSinglePopupKeyWithPreview,
@@ -511,8 +512,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
 
         final int[] lastCoords = CoordinateUtils.newInstance();
         tracker.getLastCoordinates(lastCoords);
-        final boolean keyPreviewEnabled = mKeyPreviewDrawParams.isPopupEnabled()
-                && !key.noKeyPreview();
+        final boolean keyPreviewEnabled = mKeyPreviewDrawParams.isPopupEnabled() && key.hasPreview();
         // The popup keys keyboard is usually horizontally aligned with the center of the parent key.
         // If showPopupKeysKeyboardAtTouchedPoint is true and the key preview is disabled, the more
         // keys keyboard is placed at the touch point of the parent key.
@@ -578,6 +578,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         return mTimerHandler.isInDoubleTapShiftKeyTimeout();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
         if (getKeyboard() == null) {
@@ -658,6 +659,19 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         invalidateKey(shortcutKey);
     }
 
+    public void updateLockState(final int keyCode, final boolean locked) {
+        final Keyboard keyboard = getKeyboard();
+        if (keyboard == null) {
+            return;
+        }
+        final Key lockKey = keyboard.getKey(keyCode);
+        if (lockKey == null) {
+            return;
+        }
+        lockKey.setLocked(locked);
+        invalidateKey(lockKey);
+    }
+
     // the whole language on spacebar thing could probably be simplified quite a bit
     public void startDisplayLanguageOnSpacebar(final boolean subtypeChanged,
             final int languageOnSpacebarFormatType,
@@ -691,7 +705,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
     protected void onDrawKeyTopVisuals(@NonNull final Key key, @NonNull final Canvas canvas,
             @NonNull final Paint paint, @NonNull final KeyDrawParams params) {
         if (key.altCodeWhileTyping() && key.isEnabled()) {
-            params.mAnimAlpha = mAltCodeKeyWhileTypingAnimAlpha;
+            params.mAnimAlpha = Constants.Color.ALPHA_OPAQUE;
         }
         super.onDrawKeyTopVisuals(key, canvas, paint, params);
         final int code = key.getCode();
@@ -734,7 +748,7 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         final List<Locale> secondaryLocales = Settings.getValues().mSecondaryLocales;
         // avoid showing same language twice
         final List<Locale> secondaryLocalesToUse = withoutDuplicateLanguages(secondaryLocales, subtype.getLocale().getLanguage());
-        if (secondaryLocalesToUse.size() > 0) {
+        if (!secondaryLocalesToUse.isEmpty()) {
             StringBuilder sb = new StringBuilder(subtype.getMiddleDisplayName());
             final Locale displayLocale = ConfigurationCompatKt.locale(getResources().getConfiguration());
             for (Locale locale : secondaryLocales) {
@@ -797,7 +811,6 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
         final int width = key.getWidth();
         final int height = key.getHeight();
         paint.setTextAlign(Align.CENTER);
-        paint.setTypeface(mTypeface == null ? Typeface.DEFAULT : mTypeface);
         paint.setTextSize(mLanguageOnSpacebarTextSize);
         final String customText = Settings.getValues().mSpaceBarText;
         final String spaceText;
@@ -805,10 +818,11 @@ public final class MainKeyboardView extends KeyboardView implements DrawingProxy
             spaceText = customText;
         } else if (DebugFlags.DEBUG_ENABLED) {
             final String l = KeyboardSwitcher.getInstance().getLocaleAndConfidenceInfo();
-            spaceText = l != null ? l : layoutLanguageOnSpacebar(paint, keyboard.mId.mSubtype, width);
+            spaceText = l != null ? l : layoutLanguageOnSpacebar(paint, keyboard.mId.getSubtype(), width);
         }
         else
-            spaceText = layoutLanguageOnSpacebar(paint, keyboard.mId.mSubtype, width);
+            spaceText = layoutLanguageOnSpacebar(paint, keyboard.mId.getSubtype(), width);
+        paint.setTypeface(KeyboardTypeface.resolve(spaceText, Typeface.DEFAULT));
         // Draw language text with shadow
         final float descent = paint.descent();
         final float textHeight = -paint.ascent() + descent;

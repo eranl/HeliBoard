@@ -42,7 +42,7 @@
     <string name="gesture_input_summary">Szó beírása a betűkön való csúsztatással</string>
     <string name="gesture_preview_trail">Kézmozdulat nyomának megjelenítése</string>
     <string name="gesture_floating_preview_text">"Dinamikus lebegő előnézet"</string>
-    <string name="gesture_space_aware">"Kifejezés-kézmozdulat"</string>
+    <string name="gesture_space_aware">Kifejezés-ujjmozdulat</string>
     <string name="gesture_space_aware_summary">A szóköz feletti csúsztatás szóközt szúr be</string>
     <string name="subtype_en_GB">Angol (brit)</string>
     <string name="subtype_en_US">Angol (amerikai)</string>
@@ -65,7 +65,7 @@
     <string name="prefs_enable_emoji_alt_physical_key_summary">Fizikai Alt-billentyű megjeleníti a emodzsipalettát</string>
     <string name="button_default">"Alapértelmezett"</string>
     <string name="setup_welcome_title">Üdvözöljük a(z) %s alkalmazásban</string>
-    <string name="setup_welcome_additional_description">kézmozdulat-gépeléssel</string>
+    <string name="setup_welcome_additional_description">ujjmozdulat-gépeléssel</string>
     <string name="setup_start_action">"Első lépések"</string>
     <string name="setup_steps_title">%s beállítása</string>
     <string name="setup_step1_title">%s engedélyezése</string>
@@ -81,11 +81,9 @@
     <string name="show_setup_wizard_icon_summary">"Alkalmazásikon megjelenítése az indítóban"</string>
     <string name="dictionary_category_title">Szótárbővítmények</string>
     <string name="dictionary_available">"Van rendelkezésre álló szótár"</string>
-    <string name="last_update">"Legutóbb frissítve"</string>
     <string name="settings">"Beállítások"</string>
     <string name="delete">"Törlés"</string>
     <string name="version_text">%s verzió</string>
-    <string name="user_dict_settings_add_dialog_title">"Hozzáadás a szótárhoz"</string>
     <string name="user_dict_settings_add_shortcut_option_name">Gyorsbillentyű:</string>
     <string name="user_dict_settings_add_locale_option_name">"Nyelv:"</string>
     <string name="user_dict_settings_add_word_hint">"Írjon be egy szót"</string>
@@ -93,7 +91,6 @@
     <string name="user_dict_settings_edit_dialog_title">"Szó szerkesztése"</string>
     <string name="user_dict_settings_all_languages">Minden nyelvhez</string>
     <string name="user_dict_settings_more_languages">"További nyelvek…"</string>
-    <string name="user_dict_fast_scroll_alphabet">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
     <string name="settings_category_clipboard_history">Vágólapelőzmények</string>
     <string name="settings_category_correction">Javítások</string>
     <string name="settings_category_suggestions">Javaslatok</string>
@@ -179,7 +176,6 @@
     <string name="one_handed" tools:keep="@string/one_handed">Egykezes mód</string>
     <string name="down" tools:keep="@string/down">Lefelé</string>
     <string name="theme_name_darker" tools:keep="@string/theme_name_darker">Sötétebb</string>
-    <string name="select_user_colors_summary">Színek kiválasztása a szöveghez és háttérhez</string>
     <string name="select_color_functional_key_background">Funkcióbillentyű háttere</string>
     <string name="select_input_method">Beviteli mód választása</string>
     <string name="hidden_features_message">► A rögzített eszköztár billentyűinek nyomva tartása további funkciókat eredményez: \\&lt;br\\&gt;\n• vágólap ￫ beillesztés \\&lt;br\\&gt;\n• mozgás balra/jobbra ￫ szó balra/jobbra \\&lt;br\\&gt;\n• mozgás fel/le ￫ lapozás felfelé/lefelé \\&lt;br\\&gt;\n• szó balra/jobbra ￫ sor elejére/végére \\&lt;br\\&gt;\n• lapozás fel/le ￫ oldal elejére/végére \\&lt;br\\&gt;\n• másolás ￫ kivágás \\&lt;br\\&gt;\n• szó kijelölése ↔ összes kijelölése \\&lt;br\\&gt;\n• visszavonás ↔ mégis \\&lt;br\\&gt; \\&lt;br\\&gt;\n► A javaslatsáv eszköztárában lévő billentyűket nyomva tartva rögzítheti a javaslatsávon. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Tartsa nyomva a vessző billentyűt a vágólapnézet, emodzsinézet, egykezes mód, beállítások vagy a nyelvváltás eléréséhez: \\&lt;br\\&gt;\n• Az Emodzsinézet és a nyelvváltás eltűnik, ha a megfelelő billentyű engedélyezve van; \\&lt;br\\&gt;\n• Egyes elrendezéseknél ez nem a vessző billentyű, hanem az ugyanabban a pozícióban lévő billentyű (pl. Dvorak elrendezésnél a „q” billentyű). \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Ha az inkognitó mód engedélyezve van, a rendszer nem tanul szavakat, és nem ad hozzá emodzsikat a közelmúltban használtakhoz. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Nyomja meg az Inkognitóikont az eszköztár eléréséhez. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Csúsztatott billentyűbevitel: Csúsztassa az ujját a shift billentyű irányából egy másik billentyű felé, hogy egyetlen nagybetűt gépeljen: \\&lt;br\\&gt;\n• Ez működik a „?123” billentyűvel is, ha egyetlen szimbólumot szeretne beírni a szimbólum billentyűzetről, és a kapcsolódó billentyűkkel is. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Tartsa lenyomva a shift vagy a szimbólum billentyűt, nyomjon meg egy vagy több billentyűt, majd engedje fel a shift vagy a szimbólum billentyűt, hogy visszatérjen az előző billentyűzethez. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Tartson nyomva egy javaslatot a javaslatsávon, hogy több javaslatot jelenítsen meg, valamint egy törlés billentyűt a javaslat eltávolításához. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Csúsztassa az ujját egy javaslatról felfelé, hogy több javaslatot nyisson meg, és engedje fel a kívánt javaslaton a kiválasztásához. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Tartson nyomva egy elemet a vágólap előzményeiben, hogy rögzítse (a vágólapon marad, amíg fel nem oldja a rögzítést). \\&lt;br\\&gt; \\&lt;br\\&gt;\n► A vágólapnézetben csúsztassa balra az ujját egy bejegyzés eltávolításához (kivéve, ha az rögzítve van). \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Jelöljön ki szöveget, és nyomja meg a shift billentyűt a nagybetűs, kisbetűs és szavakkal kezdődő nagybetűs módok közötti váltáshoz. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Hozzáadhat szótárakat, ha megnyitja azokat egy fájlböngészőben: \\&lt;br\\&gt;\n• Ez csak \\&lt;i\\&gt;content-uris\\&lt;/i\\&gt; és nem \\&lt;i\\&gt;file-uris\\&lt;/i\\&gt; esetén működik, ami azt jelenti, hogy egyes fájlböngészőkkel nem működhet. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Azon felhasználók számára, akik root hozzáféréssel kézzel végeznek biztonsági mentéseket: \\&lt;br\\&gt;\n• Az Android 7-től kezdve a megosztott beállítások fájlja nem az alapértelmezett helyen van, mivel az alkalmazás %s-t használ. Ez azért szükséges, hogy a beállításokat a készülék feloldása előtt is lehessen olvasni, pl. a rendszerindításkor; \\&lt;br\\&gt;\n• A fájl a /data/user\\_de/0/package\\_id/shared\\_prefs/ helyen található, bár ez a készüléktől és az Android verziótól függően változhat. \\&lt;br\\&gt; \\&lt;br\\&gt;\n\\&lt;i\\&gt;\\&lt;b\\&gt;Hibakeresési mód / hibakeresési APK\\&lt;/b\\&gt;\\&lt;/i\\&gt; \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Tartson nyomva egy javaslatot, hogy megjelenítse a forrásszótárt. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Ha hibakeresési APK-t használ, a Hibakeresési beállításokat a Speciális beállításokban találja, bár a hasznossága korlátozott, kivéve a szótárak naplózását. \\&lt;br\\&gt;\n• Egy kiadási APK-hoz többször meg kell érintenie a verziószámot a \\&lt;i\\&gt;Névjegy\\&lt;/i\\&gt; menüpontban, majd a hibakeresési beállításokat a \\&lt;i\\&gt;Speciális beállítások\\&lt;/i\\&gt; menüpontban találja. \\&lt;br\\&gt;\n• A \\&lt;i\\&gt;Javaslatok információinak megjelenítése\\&lt;/i\\&gt; engedélyezésekor a javaslatok tetején néhány apró szám jelenik meg, amelyek a belső pontszámot és a forrásszótárt mutatják. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Az alkalmazás összeomlása esetén a Beállítások megnyitásakor a rendszer rákérdez, hogy szeretné-e az összeomlási naplókat. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► Ha többnyelvű gépelést használ, a szóközsávon egy megbízhatósági érték jelenik meg, amelyet az jelenleg használt nyelv meghatározására használnak. \\&lt;br\\&gt; \\&lt;br\\&gt;\n► A javaslatok tetején néhány apró szám jelenik meg, amelyek a belső pontszámot és a forrásszótárt mutatják (letiltható).</string>
@@ -190,28 +186,24 @@
     <string name="layout_phone" tools:keep="@string/layout_phone">Telefon</string>
     <string name="setup_step3_action">Billentyűzet testreszabása</string>
     <string name="dictionary_file_error">Hiba: A kiválasztott fájl nem egy érvényes szótárfájl</string>
-    <string name="dictionary_file_wrong_locale">A kiválasztott fájl a következőhöz való: %1$s, de %2$s szabványúnak kellene lennie. Biztosan a következőhöz akarja használni: %2$s?</string>
     <string name="dictionary_file_wrong_script">Hiba: a parancsfájl nem kompatibilis a billentyűzettel</string>
-    <string name="dictionary_file_wrong_locale_ok">Használat</string>
     <string name="dictionary_load_error">Hiba a szótár betöltésekor</string>
     <string name="user_dict_word_already_present">Ez a szó már benne van a(z) %s felhasználói szótárban. Írjon egy másikat.</string>
     <string name="theme_colors">Színek</string>
     <string name="theme_name_light" tools:keep="@string/theme_name_light">Világos</string>
     <string name="settings_screen_about">Névjegy</string>
     <string name="dialog_close">Bezárás</string>
-    <string name="use_system_language_to_select_input_method_subtypes">Rendszer nyelveinek használása</string>
     <string name="text_tap_languages">Koppintson a nyelvre a beállítások megnyitásához</string>
     <string name="hidden_features_title">Rejtett funkciók leírása</string>
     <string name="layout_symbols" tools:keep="@string/layout_symbols">Szimbólumok</string>
     <string name="theme_name_user" tools:keep="@string/theme_name_user">Felhasználó által meghatározott</string>
-    <string name="theme_name_user_night" tools:keep="@string/theme_name_user_night">Felhasználó által meghatározott (éjszakai)</string>
     <string name="show_horizontal_space_swipe">Vízszintes csúsztatás a szóközön</string>
     <string name="show_vertical_space_swipe">Függőleges csúsztatás a szóközön</string>
     <string name="button_restore">Visszaállítás</string>
     <string name="secondary_locale">Többnyelvű gépelés</string>
-    <string name="load_gesture_library_summary">Adjon meg egy natív könyvtárat a kézmozdulat-gépeléshez</string>
+    <string name="load_gesture_library_summary">Adjon meg egy natív könyvtárat a ujjmozdulat-gépeléshez</string>
     <string name="load_gesture_library">Kézmozdulat-gépelési könyvtár betöltése</string>
-    <string name="load_gesture_library_message">Szükség lesz a(z) „%s” nevű könyvtárra. Az összeférhetetlen könyvtárak összeomlást okozhatnak a kézmozdulat-gépelés használatakor.\n\nFigyelem: külső kód betöltése biztonsági kockázatot jelenthet. Csak olyan forrásból származó könyvtárat használjon, amelyben megbízik.</string>
+    <string name="load_gesture_library_message">Szükség lesz a(z) „%s” nevű könyvtárra. Az összeférhetetlen könyvtárak összeomlást okozhatnak a ujjmozdulat-gépelés használatakor.\n\nFigyelem: külső kód betöltése biztonsági kockázatot jelenthet. Csak olyan forrásból származó könyvtárat használjon, amelyben megbízik.</string>
     <string name="checksum_mismatch_message">Ismeretlen könyvtárfájl. Biztos benne, hogy egy megbízható forrásból szerezte be és a következőhöz való: „%s”?</string>
     <string name="load_gesture_library_button_load">Könyvtár betöltése</string>
     <string name="load_gesture_library_button_delete">Könyvtár törlése</string>
@@ -228,7 +220,6 @@
     <string name="message_add_custom_layout">Válasszon ki egy kompatibilis formátumú fájlt. A formátumokkal kapcsolatos információk a(z) %s oldalon találhatók.</string>
     <string name="button_load_custom">Fájl betöltése</string>
     <string name="file_read_error">Fájl nem olvasható</string>
-    <string name="button_copy_existing_layout">Már létező elrendezés másolása</string>
     <string name="delete_layout">Biztosan törli a(z) %s nevű egyéni elrendezést?</string>
     <string name="layout_error">Elrendezési hiba: %s</string>
     <string name="layout_symbols_shifted" tools:keep="@string/layout_symbols_shifted">Több szimbólum</string>
@@ -303,7 +294,6 @@
     <string name="prefs_always_show_suggestions_except_web_text">Ne jelenítsen meg mindig javaslatokat a webes szerkesztőmezőkben</string>
     <string name="emoji" tools:keep="@string/emoji">Emodzsi</string>
     <string name="backspace_reverts_autocorrect">Backspace billentyű visszavonja az automatikus javítást</string>
-    <string name="enable_split_keyboard_landscape">Osztott billentyűzet engedélyezése (fekvő)</string>
     <string name="gesture_fast_typing_cooldown_instant">Mindig azonnal induljon el</string>
     <string name="suggest_clipboard_content">Vágólap tartalmának javaslása</string>
     <string name="suggest_clipboard_content_summary">A közelmúltban másolt vágólaptartalom megjelenítése javaslatként</string>
@@ -359,22 +349,20 @@
     <string name="label_shift_key" tools:keep="@string/label_shift_key">Shift</string>
     <string name="vibrate_in_dnd_mode">Rezgés ne zavarjanak módban is</string>
     <string name="show_emoji_descriptions">Emodzsi leírásának megjelenítése nyomva tartáskor</string>
-    <string name="show_emoji_descriptions_summary">Emodzsiszótár szükséges</string>
     <string name="settings_category_space">Szóköz</string>
-    <string name="split_spacer_scale_landscape">Osztott távolság (fekvő)</string>
     <string name="use_apps_dict">Alkalmazásnevek keresése</string>
     <string name="use_apps_dict_summary">Telepített alkalmazások neveinek használata a javaslatokhoz és javításokhoz</string>
-    <string name="suggest_punctuation">Írásjeljavaslatok</string>
+    <string name="suggest_punctuation">Írásjel-javaslatok</string>
     <string name="suggest_punctuation_summary">Ha nincs más javaslat, akkor jelenítse meg az írásjeleket</string>
     <string name="gesture_floating_preview_static">Lebegő előnézet</string>
-    <string name="gesture_floating_preview_static_summary">Ajánlott szó megjelenítése kézmozdulat-gépelés közben</string>
-    <string name="gesture_floating_preview_dynamic_summary">Előnézet mozgatása kézmozdulat-gépelés közben</string>
+    <string name="gesture_floating_preview_static_summary">Ajánlott szó megjelenítése ujjmozdulat-gépelés közben</string>
+    <string name="gesture_floating_preview_dynamic_summary">Előnézet mozgatása ujjmozdulat-gépelés közben</string>
     <string name="gesture_trail_fadeout_duration">Mozdulat nyomának megjelenési ideje</string>
     <string name="timestamp_format_title">Időbélyeg-billentyű formátuma</string>
     <string name="locales_with_dict">Szótárral rendelkező nyelvek</string>
     <string name="autospace_after_suggestion">Automatikus szóközbeszúrás egy javaslat kiválasztása után</string>
-    <string name="autospace_before_gesture_typing">Automatikus szóközbeszúrás a kézmozdulat-gépeléssel történő bevitel előtt</string>
-    <string name="autospace_after_gesture_typing">Automatikus szóközbeszúrás a kézmozdulat-gépelésl után</string>
+    <string name="autospace_before_gesture_typing">Automatikus szóközbeszúrás a ujjmozdulat-gépeléssel történő bevitel előtt</string>
+    <string name="autospace_after_gesture_typing">Automatikus szóközbeszúrás a ujjmozdulat-gépelés után</string>
     <string name="shift_removes_autospace">Shift billentyű leütésekor nincs automatikus szóköz</string>
     <string name="shift_removes_autospace_summary">A Shift billentyű eltávolítja a függőben lévő automatikus szóközt</string>
     <string name="show_popup_keys_main">Nagyon gyakori változatok hozzáadása (alapértelmezett)</string>
@@ -402,7 +390,7 @@
     <string name="after_clip">A vágólap előzménybejegyzésének kiválasztása</string>
     <string name="after_symbol_and_space">Enter- vagy szóközbillentyű leütése más billentyűk után a szimbólumnézetben</string>
     <string name="after_numpad_and_space">Enter- vagy szóközbillentyű leütése más billentyűk után a számbillentyűzeten</string>
-    <string name="all_colors_warning">Ez a beállítás minden belsőleg használt színt megjeleníti. A színek listája bármikor változhat. Az alapértelmezett szín véletlenszerű, és a nevek nem kerülnek lefordításra.</string>
+    <string name="all_colors_warning">Ez a beállítás felfedi az összes belsőleg használt színt. A színek listája bármikor megváltozhat. Az alapértelmezett beállítás a normál színekből származik, és a színek nevei nem lesznek lefordítva.</string>
     <string name="get_colors_message">A színeket a következő helyen találja és oszthatja meg: %s.</string>
     <string name="get_layouts_message">Az elrendezéseket a következő helyen találja és oszthatja meg: %s.</string>
     <string name="about_wiki_link">Ugrás a Wikire</string>
@@ -434,7 +422,6 @@
     <string name="subtype_mns">Mansi</string>
     <string name="long_press_code">Nyomva tartott kód</string>
     <string name="gesture_fast_typing_cooldown">Gyorsgépelési szünet</string>
-    <string name="prefs_bottom_padding_scale_landscape">Alsó margó mérete (fekvő)</string>
     <string name="label_zwj_key" tools:keep="@string/label_zwj_key">Nulla szélességű összekötő</string>
     <string name="label_zwnj_key" tools:keep="@string/label_zwnj_key">Nulla szélességű nem-összekötő</string>
     <string name="prefs_side_padding_scale">Oldalsó margó mérete</string>
@@ -443,5 +430,118 @@
     <string name="quick_pin_toolbar_keys_summary">Ez letiltja a többi nyomva tartásos műveletet a nem rögzített eszköztárbillentyűknél</string>
     <string name="layout_emoji_bottom_row" tools:keep="@string/layout_emoji_bottom_row">Emodzsi alsó sorának elrendezése</string>
     <string name="layout_clip_bottom_row" tools:keep="@string/layout_clip_bottom_row">Vágólap alsó sorának elrendezése</string>
-    <string name="prefs_side_padding_scale_landscape">Oldalsó margó mérete (fekvő)</string>
+    <string name="save_subtype_per_app">Emlékezzen a kiválasztott nyelvre alkalmazásonként</string>
+    <string name="subtype_khipro_bn">%s (Khipro)</string>
+    <string name="clipboard_history_pinned_first">Kitűzött elemek megjelenítése felül</string>
+    <string name="inline_emoji_search">Beágyazott emodzsi keresése</string>
+    <string name="inline_emoji_search_summary">Emodzsik javaslása csak akkor, ha a szó kettősponttal kezdődik</string>
+    <string name="emoji_dictionary_required">Ehhez a funkcióhoz emodzsi-szótár szükséges. A .dict formátumú szótárak letölthetők a következő helyről: %s.</string>
+    <string name="subtype_mhr">Mari (keleti)</string>
+    <string name="layout_emoji_bottom_row_with_action" tools:keep="@string/layout_emoji_bottom_row_with_action">Emodzsik alsó sora akciógombbal</string>
+    <string name="layout_clip_bottom_row_with_action" tools:keep="@string/layout_clip_bottom_row_with_action">Vágólap alsó sora akciógombbal</string>
+    <string name="number_row_in_symbols">Számsor megjelenítése a szimbólumnézetben</string>
+    <string name="custom_emoji_font">Egyéni emodzsi-betűtípus beállítása fájlból</string>
+    <string name="layout_functional_keys_khipro" tools:keep="@string/layout_functional_keys">Funkcióbillentyűk (Khipro)</string>
+    <string name="emoji_search_title">Emodzsi keresése</string>
+    <string name="search_field_placeholder">Keresés</string>
+    <string name="gesture_data_screen">Kézmozdulat-adatok gyűjtése</string>
+    <string name="gesture_data_description">&lt;b&gt;Üdvözöljük az ujjmozdulat-adatgyűjtési képernyőn!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt; Ez egy &lt;a href=https://nlnet.nl/project/GestureTyping&gt;NLnet által finanszírozott projekt&lt;/a&gt; része, amelynek célja egy teljesen nyílt forráskódú ujjmozdulat-gépelési könyvtár létrehozása, amely képes kiváltani a Google zárt forráskódú megoldását.&lt;br/&gt; Az eredmény a tervek szerint az AOSP-alapú billentyűzetek egyszerű helyettesítője lesz, de más billentyűzetekkel (pl. FlorisBoard) is használható lesz.&lt;br/&gt;&lt;br/&gt; A könyvtár fejlesztéséhez rendkívül hasznos, ha különböző nyelvű és különböző felhasználóktól származó részletes ujjmozdulat-adatok állnak rendelkezésre.&lt;br/&gt; Az adatok gyűjtésével és beküldésével Ön is hozzájárulhat egy nyílt adatkészlethez, amelyet a könyvtár fejlesztéséhez használunk fel. Az adatkészletet a gyűjtési fázis %s időpontban történő lezárása után CC BY-SA 4.0 licenc alatt tesszük közzé. A gyűjtött adatokat a képernyő alján található megosztás ikonnal küldheti be.</string>
+    <string name="gesture_data_info">Mi ez?</string>
+    <string name="gesture_data_description_modes">A hozzájárulás „biztonságos” módja az &lt;i&gt;aktív gyűjtési&lt;/i&gt; mód, ahol egy adott szót kell beírnia ujjmozdulat-gépeléssel.&lt;br&gt; Használhatja a &lt;i&gt;háttérben történő gyűjtési&lt;/i&gt; módot is, ahol más alkalmazásokban végzett normál ujjmozdulat-gépeléséből származó mintákat adhat meg. Ennek a módszernek az érzékenysége miatt ez választható, konfigurálható, és tartozik hozzá egy ellenőrző képernyő a beküldendő adatokhoz.</string>
+    <string name="gesture_data_description_privacy">Adatvédelem\n\n Az Ön által beküldött adatok a következőkből állnak: célszó, billentyűzetkiosztás és méretek, ujjmozdulat (időpontok és koordináták), a jelenlegi könyvtár javaslatai, a használt szótárak kivonata, alkalmazásverzió, adatgyűjtési mód, az ujjmozdulat-gépelési könyvtár típusa (alapértelmezett Google-e), valamint minden mozdulathoz egy azonosító.\n A beküldött adatokat a lehető leghamarabb letöltjük és töröljük a ProtonMail fiókból, ahol tároljuk őket. Az adatgyűjtési szakasz lezárulta után az összesített adatkészletet Creative Commons BY-SA 4.0 licenc alatt tesszük közzé.\n\n Az Ön magánéletének védelme érdekében nem szerepel majd név szerint szerzőként. Közreműködését „The HeliBoard Gesture Data Project Contributors” néven tüntetjük fel. Az ezen a képernyőn előállított adatok alapján nem lehet majd beazonosítani az Ön személyazonosságát. Azonban előfordulhat, hogy megállapítható, mely mozdulatok származnak ugyanattól a személytől (például egyedi billentyűzetkiosztás, méretek, nyelv vagy egyéni gépelési stílus alapján).</string>
+    <string name="gesture_data_privacy">Adatvédelem</string>
+    <string name="gesture_data_get_data">Újjmozdulat-adatfájl megosztása</string>
+    <string name="gesture_data_delete_data">Újjmozdulat-adatok törlése</string>
+    <string name="gesture_data_send_mail">Küldés e-mailben</string>
+    <string name="gesture_data_copy_mail">E-mail-cím másolása</string>
+    <string name="gesture_data_mail_use">Vegye figyelembe, hogy az e-mail-cím adatbeküldésre szolgál, ezért nem garantált a gyors vagy rendszeres válaszadás.</string>
+    <string name="gesture_data_please_type">Gépelje be ujjmozdulattal:</string>
+    <string name="gesture_data_next_save">Észlelt szó: %s. koppintson, ha biztos benne, hogy helyesen gépelt</string>
+    <string name="gesture_data_next">Szó kihagyása</string>
+    <string name="gesture_data_active_count">%1$s szó ebben a munkamenetben, %2$s szó összesen (%3$s már beküldve vagy törölve)</string>
+    <string name="gesture_data_review_screen_title">Ellenőrzés és ujjmozdulatok megosztása</string>
+    <string name="gesture_data_words_selected">%s szó</string>
+    <string name="gesture_data_date_range">Időszak</string>
+    <string name="gesture_data_much_data">Sok beküldetlen adata van. Küldje be, majd távolítsa el a régi adatokat.</string>
+    <string name="gesture_data_how_to_use">Használati útmutató</string>
+    <string name="gesture_data_active_description">Koppintson az &lt;i&gt;Aktív adatgyűjtés indítása&lt;/i&gt; gombra, szükség esetén váltson szótárat, majd kezdje el beírni a megjelenített szót ujjmozdulattal.&lt;br/&gt; Ha a mozdulat egyezik a szóval, az adat el lesz mentve és megjelenik a következő szó. Ellenkező esetben újra próbálkozhat, kihagyhatja a szót, vagy megerősítheti a helyességet.&lt;br/&gt; Csak az alkalmazásba épített vagy a &lt;a href=%s&gt;szótár-tárhelyen&lt;/a&gt; elérhető szótárakat használhatja, más szavak nem lesznek felhasználva.</string>
+    <string name="gesture_data_active_start">Aktív adatgyűjtés indítása</string>
+    <string name="gesture_data_active_stop">Aktív adatgyűjtés leállítása</string>
+    <string name="gesture_data_ends_at">Az adatgyűjtési fázis %s időpontban véget ér. Addig lehet beküldenie a gyűjtött adatait.</string>
+    <string name="gesture_data_ended">Az adatgyűjtési fázis %s időpontban lezárult. Megoszthatja a meglévő adatait, de újakat már nem adhat hozzá.</string>
+    <string name="gesture_data_share_all">Mind a(z) %s szó megosztása</string>
+    <string name="gesture_data_share_new">%s korábban be nem küldött szó megosztása</string>
+    <string name="gesture_data_delete_dialog">Önnek %1$s új és %2$s már megosztott szóhoz van adata.</string>
+    <string name="gesture_data_delete_dialog_all">Mind a(z) %s szó törlése</string>
+    <string name="gesture_data_delete_dialog_confirm">Biztos benne? Ez a művelet %s szót fog törölni. Ellenőrizze, hogy a megosztott adatok valóban be lettek-e küldve!</string>
+    <string name="gesture_data_delete_dialog_submitted">%s beküldött szó törlése</string>
+    <string name="gesture_data_many_not_shared_words">Több mint %s szó vár beküldésre</string>
+    <string name="gesture_data_email_body">FONTOS:\n\n Üdvözöljük!\n Emlékeztetőül: ezeket az adatokat nyilvánosan közzétesszük CC BY-SA 4.0 licenc alatt, és az Ön magánéletének védelme érdekében nem tüntetjük fel szerzőként.\n\n Köszönjük, hogy megosztotta velünk az adatainak jogait. Jó célra fogjuk használni!\n\n Vegye figyelembe, hogy ezen értesítés szövegének módosítása nem változtatja meg az adatok felhasználási módját. Ez nem egy módosítható szerződés, csak egy baráti emlékeztető!\n Ha üzenetet is szeretne küldeni az adatok mellé, írja azt az alábbi vonal alá.\n ---------------------------------------------</string>
+    <string name="timestamp_description">Az időbélyeg kulcsot egy egyéni elrendezéssel adhatja hozzá a „timestamp” kulccsal vagy a -10043 kulcs kóddal</string>
+    <string name="gesture_data_promotion_message">Üdvözöljük!\n Mivel telepítette az ujjmozdulatokall történő íráshoz szükséges könyvtárat, talán érdekelheti a HeliBoard projektje, amelynek célja egy teljesen nyílt ujjmozdulat-gépelési könyvtár létrehozása. Ön is segítheti a munkánkat saját ujjmozdulataival. További információkért látogasson el az ujjmozdulatok gyűjtésének képernyőjére.</string>
+    <string name="gesture_data_reminder_message">Üdvözöljük!\n Korábban használta az ujjmozdulatok gyűjtését, de már jó ideje nem adott hozzá adatokat. Szeretne ismét közreműködni?</string>
+    <string name="ask_later">Később döntöm el</string>
+    <string name="gesture_data_take_me_there">Ugrás az ujjmozdulatok gyüjtésére</string>
+    <string name="prefs_bottom_row_scale">Alsó sor magassága</string>
+    <string name="gesture_data_links">Információk az aktív adatgyűjtésről:</string>
+    <string name="toolbar_swipe_down_to_hide">Billentyűzet elrejtése ujjmozdulattal</string>
+    <string name="toolbar_swipe_down_to_hide_summary">Csúsztassa lefelé az ujját az eszköztáron a billentyűzet bezárásához</string>
+    <string name="gesture_data_please_switch_keyboard">Váltson a következőre: %s</string>
+    <string name="gesture_data_share_limit">A méretkorlátok túllépésének elkerülése érdekében csak az első %s szó lesz exportálva</string>
+    <string name="folded">Összehajtva</string>
+    <string name="custom_punctuation_suggestions">Írásjel-javaslatok beállítása</string>
+    <string name="space_swipe_touchpad_mode_entry">Érintőtábla-mód</string>
+    <string name="touchpad_sensitivity">Érintőtábla érzékenysége</string>
+    <string name="touchpad_edge_scroll">Görgetés az érintőtábla szélein</string>
+    <string name="touchpad_edge_scroll_description">Automatikus görgetés a billentyűzet szélein való csúsztatáskor</string>
+    <string name="spell_check_suggestions">Helyesírás-ellenőrző javaslatainak megjelenítése</string>
+    <string name="spell_check_suggestions_summary">Javaslatok megjelenítése pirosan aláhúzott szavak kiválasztásakor. Az alkalmazást alapértelmezett helyesírás-ellenőrzőként kell beállítani.</string>
+    <string name="prefs_key_gap_scale">Billentyűköz méretezése</string>
+    <string name="toolbar_only_with_hw_keyboard">Csak az eszköztár megjelenítése a fizikai billentyűzettel</string>
+    <string name="toolbar_only_with_hw_keyboard_summary">A virtuális billentyűzet megjelenítését még engedélyezni kell a rendszerbeállításokban</string>
+    <string name="floating" tools:keep="@string/floating">Lebegő billentyűzet</string>
+    <string name="clipboard_history_files">Képek és egyéb fájlok hozzáadása a vágólap előzményeihez</string>
+    <string name="clipboard_history_max_file_size">Vágólap méretkorlátja</string>
+    <string name="item_description">Leírás: %s</string>
+    <string name="item_type">Típus: %s</string>
+    <string name="abbreviation_unit_mb">%s MB</string>
+    <string name="subtype_generic_4row">%s (4-soros)</string>
+    <string name="gesture_data_share_duplicate">A már beküldött adatokat újra megoszthatja, ha nem biztos abban, hogy a fogadásuk sikeres volt. Az adatok feldolgozása során észleljük és eltávolítjuk a másodlatokat.</string>
+    <string name="gesture_data_active">Aktív adatgyűjtés</string>
+    <string name="background_gesture_data_links">Információk a háttérben történő adatgyűjtésről:</string>
+    <string name="gesture_data_background_gathering_switch">Háttérben történő adatgyűjtés használata</string>
+    <string name="gesture_data_background_gathering_allowed_apps">Engedélyezett alkalmazások: %s</string>
+    <string name="gesture_data_background_gathering_manual_save">Elvetés alapértelmezés szerint</string>
+    <string name="gesture_data_background_gathering_manual_save_summary">Az adatok mentése kézzel, az eszköztár gombjával történik</string>
+    <string name="gesture_data_background_gathering_info">További információk</string>
+    <string name="gesture_data_background_gathering_info_message">A háttérben történő adatgyűjtés bekapcsolása lehetővé teszi a Heliboard számára, hogy rögzítse a más alkalmazásokban beírt ujjmozdulatokat. Ez nagyon hasznos az ujjmozdulat-gépelési projekt számára, mivel jelentős mennyiségű adatot tud előállítani, bár az aktív gyűjtésnél alacsonyabb minőségben. A háttérben történő adatgyűjtés nem helyettesíti az aktívan gyűjtött adatokat, csupán kiegészítésként szolgál, mivel az adatok minősége fontosabb a mennyiségnél.\n\n A háttérben történő adatgyűjtés során nagy eséllyel gyűlhetnek olyan adatok is, amelyeket túlságosan privátnak tarthat a megosztáshoz, még anonim közzététel esetén is. Emiatt szeretnénk tisztázni, hogy mikor történik ujjmozdulat-adatgyűjtés, és hogyan befolyásolhatja azt.\n\n A képernyő jobb alsó sarkában található hivatkozások között talál egy videót, amely bővebben elmagyarázza a háttérben történő adatgyűjtést.</string>
+    <string name="gesture_data_background_gathering_indicator">Adatgyűjtés jelzője</string>
+    <string name="gesture_data_background_gathering_indicator_message">Amikor csak lehetséges az ujjmozdulat-adatok rögzítése, egy jelzőikont fog látni a billentyűzet bal alsó sarkában. Ha a kör ki van töltve, legalább egy ujjmozdulat rögzítve lett, és mentésre vár. Az adatok mentése vagy az eszköztár gombjával (lásd: &lt;i&gt;%1$s&lt;/i&gt;) vagy automatikusan történik (ha a(z) &lt;i&gt;%2$s&lt;/i&gt; le van tiltva). Az automatikus mentés általában a szövegmezők közötti váltáskor vagy a billentyűzet bezárásakor történik, de előfordulhat akkor is, ha a szövegmező valamilyen más okból megváltozik. Az adatok mentésekor a jelző egy rövid időre zöldre vált.</string>
+    <string name="gesture_data_background_gathering_control">Hogyan szabályozható, hogy mi legyen mentve</string>
+    <string name="gesture_data_background_gathering_control_message">A beállításoktól függetlenül a háttérben történő adatgyűjtés inkognitó módban le van tiltva. Szintén le van tiltva az érzékenyként megjelölt beviteli mezők (jelszavak, e-mail-címek, vagy bármikor, amikor a beviteli mező arra kéri a billentyűzetet, hogy ne tanulja meg a szavakat) esetében. Csak a fő szótárban (beépített vagy a(z) &lt;a href=%5$s&gt;szótár-tárhelyről&lt;/a&gt; származó) szereplő szavak lesznek gyűjtve. &lt;br&gt;&lt;br&gt; A(z) &lt;i&gt;%1$s&lt;/i&gt; segítségével kiválaszthatja, hogy mely alkalmazásokban szeretné engedélyezni a háttérben történő adatgyűjtést. Az alapértelmezett beállítás minden alkalmazást letilt, és alkalmazásonként külön engedélyezhető. Választhatja azt is, hogy minden alkalmazást engedélyez, és alkalmazásonként tiltja le. Ez kényelmesebb, de automatikusan engedélyezi az adatgyűjtést az újonnan telepített alkalmazásokból is. Ez olyan adatok gyűjtését is eredményezheti, amire nem számított. &lt;br&gt;&lt;br&gt; A(z) &lt;i&gt;%2$s&lt;/i&gt; segítségével kizárhat bizonyos érzékeny szavakat. Egy kizárt szó ujjmozdulattal történő beírásakor a jelzőikon továbbra is a kitöltött ikont („mentésre váró adatok”) fogja megjeleníteni, de az adatok el lesznek dobva, miközben normál esetben mentve lenne. A tiltott szavak mentése előtt már rögzített letiltott szavak eldobásra kerülnek az adatok exportálásakor.&lt;br&gt; Vegye figyelembe, hogy a háttérben történő adatgyűjtés csak olyan szavakat rögzít, amelyek már szerepelnek egy fő szótárban, így valószínűleg csak olyan gyakori szavakat kell letiltania, amelyek felhasználhatók az Ön személyazonosságának azonosítására, például: az Ön neve, utcája, városa, területe stb. &lt;br&gt;&lt;br&gt; Ha a(z) &lt;i&gt;%3$s&lt;/i&gt; engedélyezve van, akkor az adatok csak akkor lesznek mentve, ha Ön úgy dönt a(z) &lt;i&gt;%4$s&lt;/i&gt; eszköztárgomb használatával (lásd alább). Ha az adatok nincsenek mentve, a függőben lévő adatok törlődnek a beviteli mező megváltoztatásakor vagy a billentyűzet bezárásakor.&lt;br&gt; Az alkalmazások és szavak kizárása ebben a módban is érvényes. &lt;br&gt;&lt;br&gt; A(z) &lt;i&gt;%4$s&lt;/i&gt; eszköztárgomb az adatgyűjtés szabályozására használható. A megnyomás hatása az jelenlegi állapottól függ: Ha a háttérben történő adatgyűjtés le van tiltva, akkor engedélyezve lesz.&lt;br&gt; Egy hosszú megnyomás öt percre letiltja a gyűjtést.&lt;br&gt; A háttérben történő adatgyűjtést hamarabb is újra engedélyezheti egy normál gombnyomással.&lt;br&gt; Ha a(z) &lt;i&gt;%3$s&lt;/i&gt; engedélyezve van, akkor a függőben lévő adatok mentve lesznek.&lt;br&gt; Ellenkező esetben a függőben lévő adatok el lesznek dobva.&lt;br&gt;</string>
+    <string name="gesture_data_background_gathering_review_message">A(z) &lt;i&gt;%1$s&lt;/i&gt; képernyő használatával ellenőrizheti és szűrheti a gyűjtött adatokat, törölheti a túl érzékenynek tartottakat, és megoszthatja azokat. A törlés- és megosztás gombok a szűrt adatokra fognak vonatkozni, vagy a kiválasztásra, ha hosszú megnyomással választja ki a szavakat. (Vegye figyelembe, hogy a(z) &lt;i&gt;%1$s&lt;/i&gt; képernyőn kívüli „normál” megosztási ikon csak az aktív gyűjtésből származó adatokat osztja meg.)&lt;br&gt; A megosztott adatok sorrendje véletlenszerű, így az egyes szavakon kívül semmi más nem következtethető ki belőlük.&lt;br&gt; Ha meg szeretné tekinteni egy ujjmozdulathoz tárolt teljes adatmennyiséget, megoszthatja egy fájlban, és betöltheti a fájlt a &lt;a href=%2$s&gt;Swipe-O-Scope&lt;/a&gt; eszközbe.</string>
+    <string name="gesture_data_background_apps_button">Engedélyezett alkalmazások kezelése</string>
+    <string name="gesture_data_background_apps">Alkalmazások kiválasztása a háttérben történő adatgyűjtéshez</string>
+    <string name="gesture_data_background_apps_include_default">Alkalmazások belefoglalása alapértelmezés szerint</string>
+    <string name="gesture_data_background_excluded_words_button">Kizárt szavak kezelése</string>
+    <string name="gesture_data_background_dictionary">Szótár: %s</string>
+    <string name="gesture_data_background_position">Pozíció: %s</string>
+    <string name="gesture_data_background_exclude_words">Szó kizárása a háttérben történő adatgyűjtésből</string>
+    <string name="gesture_data_long_press_select_hint">Nyomja meg hosszan a kijelöléshez</string>
+    <string name="background_gathering" tools:keep="@string/background_gathering">Háttérben történő adatgyűjtés</string>
+    <string name="gesture_data_show_active">Aktívan gyűjtött adatok megjelenítése</string>
+    <string name="gesture_data_show_background">Háttéradatok megjelenítése</string>
+    <string name="gesture_data_include_shared">Már beküldött adatok belefoglalása</string>
+    <string name="gesture_data_shared">beküldve</string>
+    <string name="gesture_data_saving">Mentés… %s%%</string>
+    <string name="gesture_data_first_enable_dialog">Üdvözöljük a háttérben történő adatgyűjtésben!&lt;br&gt; Szeretné hozzáadni a(z) &lt;i&gt;%1$s&lt;/i&gt; gombot az eszköztárhoz? Ezzel szabályozhatja az adatgyűjtést, amiről bővebben a(z) &lt;i&gt;%2$s&lt;/i&gt; gomb használatával olvashat. &lt;br&gt;&lt;br&gt; Alapértelmezés szerint a háttérben történő adatgyűjtés minden alkalmazás esetében ki van kapcsolva. Ez azt jelenti, hogy semmilyen adat nem kerül begyűjtésre, amíg ki nem választja az engedélyezett alkalmazásokat. Ezt a %3$s menüben módosíthatja.</string>
+    <string name="gesture_data_add_key">Eszköztár-gomb hozzáadása</string>
+    <string name="gesture_data_no_known_dict">A háttérben történő adatgyűjtés csak olyan szavakat rögzít, amelyek beépített, vagy a &lt;a href=%s&gt;szótár-tárhelyről&lt;/a&gt; elérhető szótárakból származnak. Jelenleg nincs ilyen szótár engedélyezve.</string>
+    <string name="gesture_data_swipe_o_scope">Eszköz az ujjmozdulat-adatok megjelenítéséhez: &lt;a href=%s&gt;Swipe-O-Scope&lt;/a&gt;</string>
+    <string name="auto_correct_capitalized_suggestions">Nagybetűs javaslatok automatikus javítása</string>
+    <string name="auto_correct_capitalized_suggestions_description">A javaslatok Shift gombbal történő nagybetűsítése után az automatikus javítás aktiválódik</string>
+    <string name="prefs_hint_font_scale">Billentyűtippek betűméretének méretezése</string>
+    <string name="about_community_links">Közösségi hivatkozások</string>
+    <string name="about_community_links_description">Témák, elrendezésszerkesztő, beszélgetések, …</string>
+    <string name="subtype_tok">Toki Pona</string>
 </resources>

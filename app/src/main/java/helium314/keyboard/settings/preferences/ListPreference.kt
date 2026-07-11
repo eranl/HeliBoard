@@ -19,6 +19,7 @@ fun <T: Any> ListPreference(
     setting: Setting,
     items: List<Pair<String, T>>,
     default: T,
+    onDefault: (() -> Unit)? = null,
     onChanged: (T) -> Unit = { }
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
@@ -40,7 +41,8 @@ fun <T: Any> ListPreference(
             },
             selectedItem = selected,
             title = { Text(setting.title) },
-            getItemName = { it.first }
+            getItemName = { it.first },
+            onDefault = onDefault
         )
     }
 }

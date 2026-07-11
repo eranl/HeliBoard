@@ -9,53 +9,18 @@ package helium314.keyboard.latin.utils;
 import android.text.InputType;
 import android.text.TextUtils;
 
-import helium314.keyboard.latin.WordComposer;
 import helium314.keyboard.latin.common.Constants;
-import helium314.keyboard.latin.common.StringUtils;
 import helium314.keyboard.latin.settings.SpacingAndPunctuations;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public final class CapsModeUtils {
     private CapsModeUtils() {
         // This utility class is not publicly instantiable.
     }
-
-    /**
-     * Apply an auto-caps mode to a string.
-     *
-     * This intentionally does NOT apply manual caps mode. It only changes the capitalization if
-     * the mode is one of the auto-caps modes.
-     * @param s The string to capitalize.
-     * @param capitalizeMode The mode in which to capitalize.
-     * @param locale The locale for capitalizing.
-     * @return The capitalized string.
-     */
-    public static String applyAutoCapsMode(final String s, final int capitalizeMode,
-            final Locale locale) {
-        if (WordComposer.CAPS_MODE_AUTO_SHIFT_LOCKED == capitalizeMode) {
-            return s.toUpperCase(locale);
-        } else if (WordComposer.CAPS_MODE_AUTO_SHIFTED == capitalizeMode) {
-            return StringUtils.capitalizeFirstCodePoint(s, locale);
-        } else {
-            return s;
-        }
-    }
-
-    /**
-     * Return whether a constant represents an auto-caps mode (either auto-shift or auto-shift-lock)
-     * @param mode The mode to test for
-     * @return true if this represents an auto-caps mode, false otherwise
-     */
-    public static boolean isAutoCapsMode(final int mode) {
-        return WordComposer.CAPS_MODE_AUTO_SHIFTED == mode
-                || WordComposer.CAPS_MODE_AUTO_SHIFT_LOCKED == mode;
-    }
-
     /**
      * Helper method to find out if a code point is starting punctuation.
-     *
+     * <p>
      * This include the Unicode START_PUNCTUATION category, but also some other symbols that are
      * starting, like the inverted question mark or the double quote.
      *
@@ -74,7 +39,7 @@ public final class CapsModeUtils {
      * the text. Only the mode bits set in <var>reqModes</var> will be
      * checked. Note that the caps mode flags here are explicitly defined
      * to match those in {@link InputType}.
-     *
+     * <p>
      * This code is a straight copy of TextUtils.getCapsMode (modulo namespace and formatting
      * issues). This will change in the future as we simplify the code for our use and fix bugs.
      *

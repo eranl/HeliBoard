@@ -21,12 +21,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import helium314.keyboard.latin.Dictionary
+import helium314.keyboard.latin.dictionary.Dictionary
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.Links
 import helium314.keyboard.latin.common.LocaleUtils
@@ -35,16 +35,17 @@ import helium314.keyboard.latin.common.splitOnWhitespace
 import helium314.keyboard.latin.utils.DictionaryInfoUtils
 import helium314.keyboard.latin.utils.SubtypeLocaleUtils
 import helium314.keyboard.latin.utils.SubtypeSettings
-import helium314.keyboard.latin.utils.appendLink
 import helium314.keyboard.latin.utils.getDictionaryLocales
+import helium314.keyboard.latin.utils.htmlToAnnotated
 import helium314.keyboard.latin.utils.locale
+import helium314.keyboard.latin.utils.withHtmlLink
 import helium314.keyboard.settings.SearchScreen
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.dialogs.ConfirmationDialog
 import helium314.keyboard.settings.dialogs.DictionaryDialog
 import helium314.keyboard.settings.dictionaryFilePicker
 import helium314.keyboard.settings.initPreview
-import helium314.keyboard.settings.previewDark
+import helium314.keyboard.latin.utils.previewDark
 import java.io.File
 import java.util.Locale
 
@@ -56,7 +57,7 @@ fun DictionaryScreen(
     val enabledLanguages = SubtypeSettings.getEnabledSubtypes(true).map { it.locale().language }
     val cachedDictFolders = DictionaryInfoUtils.getCacheDirectories(ctx).map { it.name }
     val comparer = compareBy<Locale>({ it.language !in enabledLanguages }, { it.toLanguageTag() !in cachedDictFolders }, { it.displayName })
-    val dictionaryLocales = listOf(Locale(SubtypeLocaleUtils.NO_LANGUAGE)) + getDictionaryLocales(ctx).sortedWith(comparer)
+    val dictionaryLocales = listOf<Locale?>(null) + getDictionaryLocales(ctx).sortedWith(comparer)
     var selectedLocale: Locale? by remember { mutableStateOf(null) }
     var showAddDictDialog by remember { mutableStateOf(false) }
     val dictPicker = dictionaryFilePicker(selectedLocale)
@@ -66,20 +67,20 @@ fun DictionaryScreen(
         filteredItems = { term ->
             if (term.isBlank()) dictionaryLocales
             else dictionaryLocales.filter { loc ->
-                    loc.language != SubtypeLocaleUtils.NO_LANGUAGE
-                            && loc.localizedDisplayName(ctx.resources).replace("(", "")
-                                .splitOnWhitespace().any { it.startsWith(term, true) }
+                    loc != null
+                    && loc.localizedDisplayName(ctx.resources).replace("(", "")
+                        .splitOnWhitespace().any { it.startsWith(term, true) }
                 }
         },
         itemContent = { locale ->
-            if (locale.language == SubtypeLocaleUtils.NO_LANGUAGE) {
+            if (locale == null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier
+                        .clickable { showAddDictDialog = true }
                         .padding(vertical = 4.dp, horizontal = 16.dp)
                         .fillMaxWidth()
-                        .clickable { showAddDictDialog = true }
                 ) {
                     Text(
                         stringResource(R.string.add_new_dictionary_title),
@@ -88,7 +89,8 @@ fun DictionaryScreen(
                 }
             } else {
                 Column(
-                    Modifier.clickable { selectedLocale = locale }
+                    Modifier
+                        .clickable { selectedLocale = locale }
                         .padding(vertical = 6.dp, horizontal = 16.dp)
                         .fillMaxWidth()
                 ) {
@@ -96,7 +98,7 @@ fun DictionaryScreen(
                     val types = dicts.mapTo(mutableListOf()) { it.name.substringBefore("_${DictionaryInfoUtils.USER_DICTIONARY_SUFFIX}") }
                     if (hasInternal && !types.contains(Dictionary.TYPE_MAIN))
                         types.add(0, stringResource(R.string.internal_dictionary_summary))
-                    Text(locale.localizedDisplayName(ctx.resources))
+                    Text(locale.localizedDisplayName(LocalResources.current))
                     Text(
                         types.joinToString(", "),
                         style = MaterialTheme.typography.bodyMedium,
@@ -117,14 +119,9 @@ fun DictionaryScreen(
             },
             title = { Text(stringResource(R.string.add_new_dictionary_title)) },
             content = {
-                // addDictString contains "%s" since we didn't supply a formatArg
-                val addDictString = stringResource(R.string.add_dictionary)
-                val annotated = buildAnnotatedString {
-                    append(addDictString.substringBefore("%s"))
-                    appendLink(stringResource(R.string.dictionary_link_text), Links.DICTIONARY_URL)
-                    append(addDictString.substringAfter("%s"))
-                }
-                Text(annotated)
+                val link = stringResource(R.string.dictionary_link_text).withHtmlLink(Links.DICTIONARY_URL)
+                val addDictString = stringResource(R.string.add_dictionary, link)
+                Text(addDictString.htmlToAnnotated())
             }
         )
     }

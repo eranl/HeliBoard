@@ -4,6 +4,7 @@ package helium314.keyboard.latin.utils
 import helium314.keyboard.keyboard.Key
 import helium314.keyboard.keyboard.internal.KeySpecParser
 import helium314.keyboard.keyboard.internal.KeyboardParams
+import helium314.keyboard.keyboard.internal.PopupKeySpec
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyLabel.rtlLabel
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.PopupSet
 import helium314.keyboard.latin.common.Constants.Separators
@@ -26,7 +27,7 @@ fun createPopupKeysArray(popupSet: PopupSet<*>?, params: KeyboardParams, label: 
     // often PopupKeys are empty, so we want to avoid unnecessarily creating sets
     val popupKeysDelegate = lazy { mutableSetOf<String>() }
     val popupKeys by popupKeysDelegate
-    val types = if (params.mId.isAlphabetKeyboard) params.mPopupKeyTypes else allPopupKeyTypes
+    val types = if (params.mId.element.isAlphabet) params.mPopupKeyOrder else allPopupKeyTypes
     types.forEach { type ->
         when (type) {
             POPUP_KEYS_NUMBER -> popupSet?.numberLabel?.let { popupKeys.add(it) }
@@ -61,8 +62,22 @@ fun createPopupKeysArray(popupSet: PopupSet<*>?, params: KeyboardParams, label: 
 }
 
 fun getHintLabel(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? {
+    val hintLabel = getHintText(popupSet, params, label) ?: return null
+    if (hintLabel in toolbarKeyStrings.values || hintLabel.isEmpty())
+        return null // better show nothing instead of the toolbar key label
+
+    return KeySpecParser.getLabel(transformLabel(hintLabel, params))
+        // avoid e.g. !autoColumnOrder! as label
+        //  this will avoid having labels on comma and period keys
+        ?.takeIf { label -> !label.startsWith("!") || label.count { it == '!' } != 2 } // excluding the special labels
+}
+
+fun getHintIcon(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? =
+    KeySpecParser.getIconName(getHintText(popupSet, params, label))
+
+private fun getHintText(popupSet: PopupSet<*>?, params: KeyboardParams, label: String): String? {
     var hintLabel: String? = null
-    for (type in params.mPopupKeyLabelSources) {
+    for (type in params.mPopupKeyHintOrder) {
         when (type) {
             POPUP_KEYS_NUMBER -> popupSet?.numberLabel?.let { hintLabel = it }
             POPUP_KEYS_LAYOUT -> popupSet?.getPopupKeyLabels(params)?.let { hintLabel = it.firstOrNull() }
@@ -70,21 +85,15 @@ fun getHintLabel(popupSet: PopupSet<*>?, params: KeyboardParams, label: String):
             POPUP_KEYS_LANGUAGE -> params.mLocaleKeyboardInfos.getPopupKeys(label)?.let { hintLabel = it.firstOrNull() }
             POPUP_KEYS_LANGUAGE_PRIORITY -> params.mLocaleKeyboardInfos.getPriorityPopupKeys(label)?.let { hintLabel = it.firstOrNull() }
         }
-        if (hintLabel != null) break
+        if (hintLabel != null) return hintLabel
     }
-    if (hintLabel in toolbarKeyStrings.values || hintLabel.isNullOrEmpty())
-        return null // better show nothing instead of the toolbar key label
-
-    return KeySpecParser.getLabel(transformLabel(hintLabel!!, params))
-        // avoid e.g. !autoColumnOrder! as label
-        //  this will avoid having labels on comma and period keys
-        ?.takeIf { !it.startsWith("!") || it.count { it == '!' } != 2 } // excluding the special labels
+    return null
 }
 
 private fun transformLabel(label: String, params: KeyboardParams): String =
-    if (label.startsWith("$$$")) { // currency keys, todo: handing is similar to textKeyData, could it be merged?
+    if (label.startsWith("$$$")) { // currency keys, todo: handling is similar to textKeyData, could it be merged?
         if (label == "$$$") {
-            if (params.mId.passwordInput()) "$"
+            if (params.mId.isPasswordInput) "$"
             else params.mLocaleKeyboardInfos.currencyKey.first
         } else {
             val index = label.substringAfter("$$$").toIntOrNull()
@@ -92,7 +101,7 @@ private fun transformLabel(label: String, params: KeyboardParams): String =
                 params.mLocaleKeyboardInfos.currencyKey.second[index - 1]
             else label
         }
-    } else if (params.mId.mSubtype.isRtlSubtype) {
+    } else if (params.mId.subtype.isRtlSubtype) {
         label.rtlLabel(params)
     } else label
 
@@ -102,4 +111,14 @@ fun getEnabledPopupKeys(string: String): List<String> {
         val split = it.split(Separators.KV)
         if (split.last() == "true") split.first() else null
     }
+}
+
+// keep old label / icon, or switch to first found label or icon
+// this is not really correct because it does not respect hint label order (fixing that is a little more effort)
+fun findPopupHintLabelOrIcon(popupKeys: Array<PopupKeySpec>?, oldHintLabel: String?, oldHintIconName: String?): Pair<String?, String?> {
+    if (popupKeys == null || (oldHintLabel == null && oldHintIconName == null)) return null to null
+    if (oldHintLabel != null && popupKeys.any { it.mLabel == oldHintLabel }) return oldHintLabel to null
+    if (oldHintIconName != null && popupKeys.any { it.mIconName == oldHintIconName }) return null to oldHintIconName
+    val first = popupKeys.firstOrNull { it.mLabel != null || it.mIconName != null }
+    return first?.mLabel to first?.mIconName
 }

@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 
 import helium314.keyboard.keyboard.Keyboard;
 import helium314.keyboard.latin.common.ComposedData;
+import helium314.keyboard.latin.dictionary.Dictionary;
+import helium314.keyboard.latin.dictionary.DictionaryStats;
 import helium314.keyboard.latin.settings.SettingsValuesForSuggestion;
 import helium314.keyboard.latin.utils.SuggestionResults;
 
@@ -73,7 +75,7 @@ public interface DictionaryFacilitator {
      * <p>
      * WARNING: The service methods that call start/finish are very spammy.
      */
-    void onFinishInput(Context context);
+    void onFinishInput();
 
     /** whether a dictionary is set */
     boolean isActive();
@@ -129,9 +131,7 @@ public interface DictionaryFacilitator {
     @Nullable String localesAndConfidences();
 
     /** completely removes the word from user history (currently not if event is a backspace event) */
-    void unlearnFromUserHistory(final String word,
-            @NonNull final NgramContext ngramContext, final long timeStampInSeconds,
-            final int eventType);
+    void unlearnFromUserHistory(String word, @NonNull NgramContext ngramContext, long timeStampInSeconds, UnlearnEvent event);
 
     @NonNull SuggestionResults getSuggestionResults(final ComposedData composedData,
             final NgramContext ngramContext, @NonNull final Keyboard keyboard,
@@ -149,4 +149,6 @@ public interface DictionaryFacilitator {
     void dumpDictionaryForDebug(final String dictName);
 
     @NonNull List<DictionaryStats> getDictionaryStats(final Context context);
+
+    enum UnlearnEvent { BACKSPACE, REJECTION, REVERT }
 }

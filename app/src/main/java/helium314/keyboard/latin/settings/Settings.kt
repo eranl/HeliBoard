@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 package helium314.keyboard.latin.settings
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.provider.Settings.Global
+import androidx.core.content.edit
+import helium314.keyboard.latin.utils.prefs
 import kotlinx.serialization.json.Json
 
 fun customIconNames(prefs: SharedPreferences) = runCatching {
     Json.decodeFromString<Map<String, String>>(prefs.getString(Settings.PREF_CUSTOM_ICON_NAMES, Defaults.PREF_CUSTOM_ICON_NAMES)!!)
 }.getOrElse { emptyMap() }
 
+@SuppressLint("DiscouragedApi")
 fun customIconIds(context: Context, prefs: SharedPreferences) = customIconNames(prefs)
     .mapNotNull { entry ->
         val id = runCatching { context.resources.getIdentifier(entry.value, "drawable", context.packageName) }.getOrNull()
@@ -28,3 +32,29 @@ fun createPrefKeyForBooleanSettings(prefix: String, index: Int, number: Int): St
 
 fun getTransitionAnimationScale(context: Context) =
     Global.getFloat(context.contentResolver, Global.TRANSITION_ANIMATION_SCALE, 1f)
+
+fun isFloatingKeyboardEnabled(context: Context) =
+    context.prefs().getBoolean(Settings.PREF_FLOATING_ENABLED_PREFIX + context.resources.displayMetrics.widthPixels, false)
+
+fun setFloatingKeyboardEnabled(context: Context, enabled: Boolean) =
+    context.prefs().edit { putBoolean(Settings.PREF_FLOATING_ENABLED_PREFIX + context.resources.displayMetrics.widthPixels, enabled) }
+
+fun readFloatingHeight(context: Context): Int {
+    val screenWidth = context.resources.displayMetrics.widthPixels
+    val key = Settings.PREF_FLOATING_HEIGHT_PREFIX + screenWidth
+    return context.prefs().getInt(key, context.resources.displayMetrics.heightPixels / 3)
+}
+
+fun readFloatingWidth(context: Context): Int {
+    val screenWidth = context.resources.displayMetrics.widthPixels
+    val key = Settings.PREF_FLOATING_WIDTH_PREFIX + screenWidth
+    return context.prefs().getInt(key, screenWidth / 2)
+}
+
+fun setFloatingSize(context: Context, width: Int, height: Int) {
+    val screenWidth = context.resources.displayMetrics.widthPixels
+    context.prefs().edit {
+        putInt(Settings.PREF_FLOATING_WIDTH_PREFIX + screenWidth, width)
+        putInt(Settings.PREF_FLOATING_HEIGHT_PREFIX + screenWidth, height)
+    }
+}

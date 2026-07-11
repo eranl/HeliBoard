@@ -18,12 +18,14 @@ import android.text.TextUtils;
 import android.text.style.CharacterStyle;
 
 import helium314.keyboard.keyboard.KeyboardSwitcher;
+import helium314.keyboard.latin.common.ConstantsKt;
 import helium314.keyboard.latin.define.DebugFlags;
 import helium314.keyboard.latin.settings.Settings;
 import helium314.keyboard.latin.utils.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.CorrectionInfo;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
@@ -31,6 +33,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.inputmethod.InputConnectionCompat;
+import androidx.core.view.inputmethod.InputContentInfoCompat;
 
 import helium314.keyboard.latin.common.Constants;
 import helium314.keyboard.latin.common.StringUtils;
@@ -118,7 +122,7 @@ public final class RichInputConnection implements PrivateCommandPerformer {
      * This variable is a temporary object used in {@link #commitText(CharSequence,int)}
      * to avoid object creation.
      */
-    private SpannableStringBuilder mTempObjectForCommitText = new SpannableStringBuilder();
+    private final SpannableStringBuilder mTempObjectForCommitText = new SpannableStringBuilder();
 
     private final InputMethodService mParent;
     private InputConnection mIC;
@@ -364,9 +368,9 @@ public final class RichInputConnection implements PrivateCommandPerformer {
         return mExpectedSelStart > 0;
     }
 
-    public boolean noTextAfterCursor() {
+    public boolean hasTextAfterCursor() {
         final CharSequence after = getTextAfterCursor(1, 0);
-        return TextUtils.isEmpty(after);
+        return !TextUtils.isEmpty(after);
     }
 
     /**
@@ -697,7 +701,7 @@ public final class RichInputConnection implements PrivateCommandPerformer {
             mIC.setComposingText(text, newCursorPosition);
             if (!Settings.getValues().mInputAttributes.mShouldShowSuggestions && text.length() > 0) {
                 // We have a field that disables suggestions, but still committed text is set.
-                // This might lead to weird bugs (e.g. https://github.com/Helium314/HeliBoard/issues/225), so better do
+                // This might lead to weird bugs (e.g. https://github.com/HeliBorg/HeliBoard/issues/225), so better do
                 // a sanity check whether the wanted text has been set.
                 // Note that the check may also fail because the text field is not yet updated, so we don't want to check everything!
                 final CharSequence lastChar = mIC.getTextBeforeCursor(1, 0);
@@ -749,7 +753,7 @@ public final class RichInputConnection implements PrivateCommandPerformer {
 
     public void selectAll() {
         if (!isConnected()) return;
-        if (mExpectedSelStart != mExpectedSelEnd && mExpectedSelStart == 0 && noTextAfterCursor()) { // all text already selected
+        if (mExpectedSelStart != mExpectedSelEnd && mExpectedSelStart == 0 && !hasTextAfterCursor()) { // all text already selected
             mIC.setSelection(mExpectedSelEnd, mExpectedSelEnd);
         } else mIC.performContextMenuAction(android.R.id.selectAll);
     }
@@ -850,7 +854,7 @@ public final class RichInputConnection implements PrivateCommandPerformer {
      *
      * @param spacingAndPunctuations the rules for spacing and punctuation
      * @param script the script we consider to be writing words, as one of ScriptUtils.SCRIPT_*
-     * @return a range containing the text surrounding the cursor
+     * @return a range containing the text surrounding the cursor (does NOT include the current selection, if any)
      */
     @Nullable public TextRange getWordRangeAtCursor(final SpacingAndPunctuations spacingAndPunctuations,
             final String script) {
@@ -1023,13 +1027,13 @@ public final class RichInputConnection implements PrivateCommandPerformer {
     }
 
     public int getCharCountToDeleteBeforeCursor() {
-        final int lastCodePoint = getCodePointBeforeCursor();
-        if (StringUtils.mightBeEmoji(lastCodePoint)) {
-            final String text = mCommittedTextBeforeComposingText.toString() + mComposingText;
-            final int emojiLength = StringUtilsKt.getFullEmojiAtEnd(text).length();
-            if (emojiLength > 0) return emojiLength;
+        int lastCodePoint = getCodePointBeforeCursor();
+        if (StringUtils.mightBeEmoji(lastCodePoint) || Character.isSupplementaryCodePoint(lastCodePoint) || ConstantsKt.getCombiningRange().contains(lastCodePoint)) {
+            CharSequence text = getTextBeforeCursor(NUM_CHARS_TO_GET_BEFORE_CURSOR, 0);
+            if (TextUtils.isEmpty(text)) return 1;
+            return StringUtilsKt.getLastGrapheme(text.toString()).length();
         }
-        return Character.isSupplementaryCodePoint(lastCodePoint) ? 2 : 1;
+        return 1;
     }
 
     public boolean hasLetterBeforeLastSpaceBeforeCursor() {
@@ -1175,5 +1179,12 @@ public final class RichInputConnection implements PrivateCommandPerformer {
         final int cursorUpdateMode = (enableMonitor ? InputConnection.CURSOR_UPDATE_MONITOR : 0)
             | (requestImmediateCallback ? InputConnection.CURSOR_UPDATE_IMMEDIATE : 0);
         return mIC.requestCursorUpdates(cursorUpdateMode);
+    }
+
+    // doesn't work in many apps that support normal clipboard pasting, possibly just because they don't have mime types in editorInfo
+    public void commitContent(InputContentInfoCompat contentInfo, @NonNull EditorInfo editorInfo) {
+        mIC = mParent.getCurrentInputConnection();
+        if (isConnected())
+            InputConnectionCompat.commitContent(mIC, editorInfo, contentInfo, InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION, null);
     }
 }
