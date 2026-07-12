@@ -78,9 +78,10 @@ class InputTest {
         touchKey(KeyCode.SHIFT, MotionEvent.ACTION_UP)
 
         touchKey(KeyCode.SHIFT, MotionEvent.ACTION_DOWN, 50L)
-        touchKey('F'.code, MotionEvent.ACTION_MOVE)
-        touchKey('F'.code, MotionEvent.ACTION_UP)
-        assertEquals("F", ShadowInputMethodService.text)
+        assertEquals(KeyboardElement.ALPHABET, keyboardSwitcher.keyboard?.mId?.element)
+        touchKey('f'.code, MotionEvent.ACTION_MOVE)
+        touchKey('f'.code, MotionEvent.ACTION_UP)
+        assertEquals("f", ShadowInputMethodService.text)
         assertEquals(KeyboardElement.ALPHABET_SHIFT_LOCKED, keyboardSwitcher.keyboard?.mId?.element)
     }
 
