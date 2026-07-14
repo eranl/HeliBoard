@@ -384,7 +384,7 @@
     <!-- Title of the setting to show "..." as hints for more functionality on long-press -->
     <string name="show_popup_hints">Show functional hints</string>
     <!-- Description of the show_popup_hints setting -->
-    <string name="show_popup_hints_summary">Show hints if long-pressing a key triggers additional functionality</string>
+    <string name="show_popup_hints_summary">Show hint if long-pressing a functional key opens a popup</string>
     <!-- Option to remove popup keys that already exist on the base keyboard -->
     <string name="remove_redundant_popups">Remove redundant popups</string>
     <!-- Description of the remove_redundant_popups setting -->
