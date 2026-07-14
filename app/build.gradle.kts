@@ -1,6 +1,5 @@
 import com.android.build.api.variant.ApplicationVariant
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import kotlin.collections.listOf
 
 plugins {
     id("com.android.application")
