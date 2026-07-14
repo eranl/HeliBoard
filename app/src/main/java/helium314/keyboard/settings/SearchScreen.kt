@@ -32,7 +32,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -50,6 +49,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import helium314.keyboard.latin.R
+import helium314.keyboard.latin.utils.BackButton
+import helium314.keyboard.latin.utils.CloseIcon
+import helium314.keyboard.latin.utils.SearchIcon
 import helium314.keyboard.settings.preferences.PreferenceCategory
 
 @Composable
@@ -144,14 +146,9 @@ fun <T: Any?> SearchScreen(
                         title = title,
                         windowInsets = WindowInsets(0),
                         navigationIcon = {
-                            IconButton(onClick = {
+                            BackButton {
                                 if (showSearch) setShowSearch(false)
                                 else onClickBack()
-                            }) {
-                                Icon(
-                                    painterResource(R.drawable.ic_arrow_back),
-                                    stringResource(R.string.spoken_description_action_previous)
-                                )
                             }
                         },
                         actions = {

@@ -14,10 +14,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import helium314.keyboard.keyboard.KeyboardTypeface
 import helium314.keyboard.keyboard.KeyboardSwitcher
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.FileUtils
-import helium314.keyboard.latin.settings.Settings
 import helium314.keyboard.latin.utils.DeviceProtectedUtils
 import helium314.keyboard.settings.Setting
 import helium314.keyboard.settings.dialogs.ConfirmationDialog
@@ -25,11 +25,10 @@ import helium314.keyboard.settings.dialogs.InfoDialog
 import java.io.File
 
 @Composable
-fun CustomFontPreference(setting: Setting) {
+fun CustomFontPreference(setting: Setting, fontFile: File, title: Int) {
     val ctx = LocalContext.current
     var showDialog by rememberSaveable { mutableStateOf(false) }
     var showErrorDialog by rememberSaveable { mutableStateOf(false) }
-    val fontFile = Settings.getCustomFontFile(ctx)
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         val uri = it.data?.data ?: return@rememberLauncherForActivityResult
@@ -39,7 +38,7 @@ fun CustomFontPreference(setting: Setting) {
             Typeface.createFromFile(tempFile)
             fontFile.delete()
             tempFile.renameTo(fontFile)
-            Settings.clearCachedTypeface()
+            KeyboardTypeface.clearCache()
             KeyboardSwitcher.getInstance().setThemeNeedsReload()
         } catch (_: Exception) {
             showErrorDialog = true
@@ -64,12 +63,12 @@ fun CustomFontPreference(setting: Setting) {
             onNeutral = {
                 showDialog = false
                 fontFile.delete()
-                Settings.clearCachedTypeface()
+                KeyboardTypeface.clearCache()
                 KeyboardSwitcher.getInstance().setThemeNeedsReload()
             },
             neutralButtonText = stringResource(R.string.delete),
             confirmButtonText = stringResource(R.string.load),
-            title = { Text(stringResource(R.string.custom_font)) }
+            title = { Text(stringResource(title)) }
         )
     if (showErrorDialog)
         InfoDialog(stringResource(R.string.file_read_error)) { showErrorDialog = false }

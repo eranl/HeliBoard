@@ -2,6 +2,7 @@
 
 package helium314.keyboard.latin.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -26,9 +27,10 @@ object SubtypeSettings {
     /** @return enabled subtypes. If no subtypes are enabled, but a contextForFallback is provided,
      *  subtypes for system locales will be returned, or en-US if none found. */
     fun getEnabledSubtypes(fallback: Boolean = false): List<InputMethodSubtype> {
-        if (fallback && enabledSubtypes.isEmpty())
-            return getDefaultEnabledSubtypes()
-        return enabledSubtypes
+        val enabled = if (fallback && enabledSubtypes.isEmpty()) getDefaultEnabledSubtypes()
+            else enabledSubtypes
+        return if (Settings.getValues()?.mIsLocked != true) enabled // on app start SettingsValues are null
+        else enabled + SettingsSubtype.fallbackSubtype.toAdditionalSubtype()
     }
 
     fun isEnabled(subtype: InputMethodSubtype?): Boolean = subtype in enabledSubtypes || subtype in getDefaultEnabledSubtypes()
@@ -67,7 +69,26 @@ object SubtypeSettings {
 
     /** @return whether subtype was actually removed */
     fun removeEnabledSubtype(context: Context, subtype: InputMethodSubtype): Boolean {
-        if (!removeEnabledSubtype(context.prefs(), subtype.toSettingsSubtype())) return false
+        val prefs = context.prefs()
+        if (!removeEnabledSubtype(prefs, subtype.toSettingsSubtype())) {
+            if (SubtypeUtilsAdditional.isAdditionalSubtype(subtype))
+                return false
+            // We want to disable a built-in subtype, but can't. This might be because it was changed in method.xml, and we definitely should disable it
+            val enabledFromSettings = createSettingsSubtypes(context.prefs().getString(Settings.PREF_ENABLED_SUBTYPES, Defaults.PREF_ENABLED_SUBTYPES)!!)
+            val match = enabledFromSettings.firstOrNull {
+                !it.isAdditionalSubtype(context.prefs())
+                    && it.locale == subtype.locale()
+                    && it.mainLayoutName() == subtype.mainLayoutNameOrQwerty()
+            }
+            // the match is done on locale and main layout name, like in loadEnabledSubtypes
+            if (match == null || !removeEnabledSubtype(prefs, match)) {
+                Log.e(TAG, "tried to disable built-in ${subtype.toSettingsSubtype()}, but failed")
+                return false
+            }
+            else {
+                Log.w(TAG, "had to do some workaround to actually disable $match")
+            }
+        }
         if (!enabledSubtypes.remove(subtype)) reloadEnabledSubtypes(context)
         else RichInputMethodManager.getInstance().refreshSubtypeCaches()
         return true
@@ -75,7 +96,7 @@ object SubtypeSettings {
 
     fun getSelectedSubtype(prefs: SharedPreferences): InputMethodSubtype {
         val selectedSubtype = prefs.getString(Settings.PREF_SELECTED_SUBTYPE, Defaults.PREF_SELECTED_SUBTYPE)!!.toSettingsSubtype()
-        if (selectedSubtype.isAdditionalSubtype(prefs))
+        if (selectedSubtype.isAdditionalSubtype(prefs) || selectedSubtype == SettingsSubtype.fallbackSubtype)
             return selectedSubtype.toAdditionalSubtype()
         // no additional subtype, must be a resource subtype
 
@@ -130,6 +151,7 @@ object SubtypeSettings {
      * Update subtypes that contain the layout. If new name is null (layout deleted) and the
      * subtype is now identical to a resource subtype, remove the subtype from additional subtypes.
      */
+    @SuppressLint("UseKtx") // easier to read
     fun onRenameLayout(type: LayoutType, from: String, to: String?, context: Context) {
         val prefs = context.prefs()
         val editor = prefs.edit() // calling apply for each separate setting would result in an invalid intermediate state
@@ -193,6 +215,7 @@ object SubtypeSettings {
         loadEnabledSubtypes(context)
     }
 
+    @Suppress("SameReturnValue")
     private fun getDefaultEnabledSubtypes(): List<InputMethodSubtype> {
         if (systemSubtypes.isNotEmpty()) return systemSubtypes
         val subtypes = systemLocales.mapNotNull { locale ->

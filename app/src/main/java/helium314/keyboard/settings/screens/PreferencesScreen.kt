@@ -13,6 +13,7 @@ import helium314.keyboard.keyboard.KeyboardLayoutSet
 import helium314.keyboard.keyboard.KeyboardSwitcher
 import helium314.keyboard.latin.AudioAndHapticFeedbackManager
 import helium314.keyboard.latin.R
+import helium314.keyboard.latin.database.ClipboardDao
 import helium314.keyboard.latin.settings.Defaults
 import helium314.keyboard.latin.settings.Settings
 import helium314.keyboard.latin.utils.Log
@@ -27,9 +28,10 @@ import helium314.keyboard.settings.SearchSettingsScreen
 import helium314.keyboard.settings.SettingsActivity
 import helium314.keyboard.settings.preferences.SliderPreference
 import helium314.keyboard.settings.preferences.SwitchPreference
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.initPreview
-import helium314.keyboard.settings.previewDark
+import helium314.keyboard.settings.preferences.SwitchPreferenceWithEmojiDictWarning
+import helium314.keyboard.latin.utils.previewDark
 
 @Composable
 fun PreferencesScreen(
@@ -39,11 +41,12 @@ fun PreferencesScreen(
     val b = (LocalContext.current.getActivity() as? SettingsActivity)?.prefChanged?.collectAsState()
     if ((b?.value ?: 0) < 0)
         Log.v("irrelevant", "stupid way to trigger recomposition on preference change")
+    val clipboardHistoryEnabled = prefs.getBoolean(Settings.PREF_ENABLE_CLIPBOARD_HISTORY, Defaults.PREF_ENABLE_CLIPBOARD_HISTORY)
     val items = listOf(
         R.string.settings_category_input,
         Settings.PREF_SHOW_HINTS,
         if (prefs.getBoolean(Settings.PREF_SHOW_HINTS, Defaults.PREF_SHOW_HINTS))
-            Settings.PREF_POPUP_KEYS_LABELS_ORDER else null,
+            Settings.PREF_POPUP_KEYS_HINT_ORDER else null,
         Settings.PREF_POPUP_KEYS_ORDER,
         Settings.PREF_SHOW_POPUP_HINTS,
         Settings.PREF_SHOW_TLD_POPUP_KEYS,
@@ -57,6 +60,7 @@ fun PreferencesScreen(
         Settings.PREF_SOUND_ON,
         if (prefs.getBoolean(Settings.PREF_SOUND_ON, Defaults.PREF_SOUND_ON))
             Settings.PREF_KEYPRESS_SOUND_VOLUME else null,
+        Settings.PREF_SAVE_SUBTYPE_PER_APP,
         Settings.PREF_SHOW_EMOJI_DESCRIPTIONS,
         R.string.settings_category_additional_keys,
         Settings.PREF_SHOW_NUMBER_ROW,
@@ -65,14 +69,19 @@ fun PreferencesScreen(
         if (prefs.getBoolean(Settings.PREF_SHOW_HINTS, Defaults.PREF_SHOW_HINTS)
             && prefs.getBoolean(Settings.PREF_SHOW_NUMBER_ROW, Defaults.PREF_SHOW_NUMBER_ROW))
             Settings.PREF_SHOW_NUMBER_ROW_HINTS else null,
+        if (!prefs.getBoolean(Settings.PREF_SHOW_NUMBER_ROW, Defaults.PREF_SHOW_NUMBER_ROW))
+            Settings.PREF_SHOW_NUMBER_ROW_IN_SYMBOLS else null,
         Settings.PREF_SHOW_LANGUAGE_SWITCH_KEY,
         Settings.PREF_LANGUAGE_SWITCH_KEY,
         Settings.PREF_SHOW_EMOJI_KEY,
         Settings.PREF_REMOVE_REDUNDANT_POPUPS,
         R.string.settings_category_clipboard_history,
         Settings.PREF_ENABLE_CLIPBOARD_HISTORY,
-        if (prefs.getBoolean(Settings.PREF_ENABLE_CLIPBOARD_HISTORY, Defaults.PREF_ENABLE_CLIPBOARD_HISTORY))
-            Settings.PREF_CLIPBOARD_HISTORY_RETENTION_TIME else null
+        if (clipboardHistoryEnabled) Settings.PREF_CLIPBOARD_HISTORY_RETENTION_TIME else null,
+        if (clipboardHistoryEnabled) Settings.PREF_CLIPBOARD_HISTORY_PINNED_FIRST else null,
+        if (clipboardHistoryEnabled) Settings.PREF_CLIPBOARD_USE_FILES else null,
+        if (clipboardHistoryEnabled && prefs.getBoolean(Settings.PREF_CLIPBOARD_USE_FILES, Defaults.PREF_CLIPBOARD_USE_FILES))
+            Settings.PREF_CLIPBOARD_FILES_SIZE_LIMIT else null,
     )
     SearchSettingsScreen(
         onClickBack = onClickBack,
@@ -82,11 +91,14 @@ fun PreferencesScreen(
 }
 
 fun createPreferencesSettings(context: Context) = listOf(
+    Setting(context, Settings.PREF_SAVE_SUBTYPE_PER_APP, R.string.save_subtype_per_app) {
+        SwitchPreference(it, Defaults.PREF_SAVE_SUBTYPE_PER_APP)
+    },
     Setting(context, Settings.PREF_SHOW_HINTS, R.string.show_hints, R.string.show_hints_summary) {
         SwitchPreference(it, Defaults.PREF_SHOW_HINTS) { KeyboardSwitcher.getInstance().reloadKeyboard() }
     },
-    Setting(context, Settings.PREF_POPUP_KEYS_LABELS_ORDER, R.string.hint_source) {
-        ReorderSwitchPreference(it, Defaults.PREF_POPUP_KEYS_LABELS_ORDER)
+    Setting(context, Settings.PREF_POPUP_KEYS_HINT_ORDER, R.string.hint_source) {
+        ReorderSwitchPreference(it, Defaults.PREF_POPUP_KEYS_HINT_ORDER)
     },
     Setting(context, Settings.PREF_POPUP_KEYS_ORDER, R.string.popup_order) {
         ReorderSwitchPreference(it, Defaults.PREF_POPUP_KEYS_ORDER)
@@ -112,21 +124,14 @@ fun createPreferencesSettings(context: Context) = listOf(
     Setting(context, Settings.PREF_SOUND_ON, R.string.sound_on_keypress) {
         SwitchPreference(it, Defaults.PREF_SOUND_ON)
     },
-    Setting(
-        context, Settings.PREF_SHOW_EMOJI_DESCRIPTIONS, R.string.show_emoji_descriptions,
-        R.string.show_emoji_descriptions_summary
-    ) {
-        SwitchPreference(it, Defaults.PREF_SHOW_EMOJI_DESCRIPTIONS) {
-            KeyboardSwitcher.getInstance().reloadKeyboard()
-        }
-    },
-    Setting(context, Settings.PREF_ENABLE_CLIPBOARD_HISTORY,
-        R.string.enable_clipboard_history, R.string.enable_clipboard_history_summary)
-    {
-        SwitchPreference(it, Defaults.PREF_ENABLE_CLIPBOARD_HISTORY)
+    Setting(context, Settings.PREF_SHOW_EMOJI_DESCRIPTIONS, R.string.show_emoji_descriptions) {
+        SwitchPreferenceWithEmojiDictWarning(it, Defaults.PREF_SHOW_EMOJI_DESCRIPTIONS)
     },
     Setting(context, Settings.PREF_SHOW_NUMBER_ROW, R.string.number_row, R.string.number_row_summary) {
         SwitchPreference(it, Defaults.PREF_SHOW_NUMBER_ROW) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
+    },
+    Setting(context, Settings.PREF_SHOW_NUMBER_ROW_IN_SYMBOLS, R.string.number_row_in_symbols) {
+        SwitchPreference(it, Defaults.PREF_SHOW_NUMBER_ROW_IN_SYMBOLS) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
     Setting(context, Settings.PREF_LOCALIZED_NUMBER_ROW, R.string.localized_number_row, R.string.localized_number_row_summary) {
         SwitchPreference(it, Defaults.PREF_LOCALIZED_NUMBER_ROW) {
@@ -159,7 +164,14 @@ fun createPreferencesSettings(context: Context) = listOf(
     {
         SwitchPreference(it, Defaults.PREF_REMOVE_REDUNDANT_POPUPS) { KeyboardSwitcher.getInstance().setThemeNeedsReload() }
     },
+    Setting(context, Settings.PREF_ENABLE_CLIPBOARD_HISTORY,
+        R.string.enable_clipboard_history, R.string.enable_clipboard_history_summary)
+    {
+        val ctx = LocalContext.current
+        SwitchPreference(it, Defaults.PREF_ENABLE_CLIPBOARD_HISTORY) { ClipboardDao.getInstance(ctx)?.clearNonPinned() }
+    },
     Setting(context, Settings.PREF_CLIPBOARD_HISTORY_RETENTION_TIME, R.string.clipboard_history_retention_time) { setting ->
+        val ctx = LocalContext.current
         SliderPreference(
             name = setting.title,
             key = setting.key,
@@ -169,7 +181,29 @@ fun createPreferencesSettings(context: Context) = listOf(
                 else stringResource(R.string.abbreviation_unit_minutes, it.toString())
             },
             range = 1f..121f,
-        )
+        ) { ClipboardDao.getInstance(ctx)?.clearOldClips(true) }
+    },
+    Setting(context, Settings.PREF_CLIPBOARD_HISTORY_PINNED_FIRST, R.string.clipboard_history_pinned_first) {
+        SwitchPreference(it, Defaults.PREF_CLIPBOARD_HISTORY_PINNED_FIRST)
+    },
+    Setting(context, Settings.PREF_CLIPBOARD_USE_FILES, R.string.clipboard_history_files) {
+        val ctx = LocalContext.current
+        SwitchPreference(it, Defaults.PREF_CLIPBOARD_USE_FILES) {
+            ClipboardDao.getInstance(ctx)?.cleanupFiles(ctx.prefs())
+        }
+    },
+    Setting(context, Settings.PREF_CLIPBOARD_FILES_SIZE_LIMIT, R.string.clipboard_history_max_file_size) { setting ->
+        val ctx = LocalContext.current
+        SliderPreference(
+            name = setting.title,
+            key = setting.key,
+            default = Defaults.PREF_CLIPBOARD_FILES_SIZE_LIMIT,
+            description = {
+                if (it > 1000) stringResource(R.string.settings_no_limit)
+                else stringResource(R.string.abbreviation_unit_mb, it.toString())
+            },
+            range = 1f..1001f,
+        ) { ClipboardDao.getInstance(ctx)?.cleanupFiles(ctx.prefs()) }
     },
     Setting(context, Settings.PREF_VIBRATION_DURATION_SETTINGS, R.string.prefs_keypress_vibration_duration_settings) { setting ->
         SliderPreference(
@@ -200,8 +234,7 @@ fun createPreferencesSettings(context: Context) = listOf(
     },
 )
 
-// todo (later): not good to have it hardcoded, but reading a bunch of files may be noticeably slow
-private val localesWithLocalizedNumberRow = listOf("ar", "bn", "fa", "gu", "hi", "kn", "mr", "ne", "ur")
+private val localesWithLocalizedNumberRow = listOf("bn", "ckb", "gu", "hi", "kn", "mr", "ne", "th", "ur", "ar", "fa")
 
 @Preview
 @Composable

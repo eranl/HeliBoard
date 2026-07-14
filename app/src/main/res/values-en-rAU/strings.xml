@@ -82,11 +82,9 @@
     <string name="show_setup_wizard_icon_summary">"Display application icon in the launcher"</string>
     <string name="dictionary_category_title">"Add-on dictionaries"</string>
     <string name="dictionary_available">"Dictionary available"</string>
-    <string name="last_update">"Last updated"</string>
     <string name="settings">"Settings"</string>
     <string name="delete">"Delete"</string>
     <string name="version_text">"Version %1$s"</string>
-    <string name="user_dict_settings_add_dialog_title">"Add to dictionary"</string>
     <string name="user_dict_settings_add_shortcut_option_name">"Shortcut:"</string>
     <string name="user_dict_settings_add_locale_option_name">"Language:"</string>
     <string name="user_dict_settings_add_word_hint">"Type a word"</string>
@@ -94,8 +92,6 @@
     <string name="user_dict_settings_edit_dialog_title">"Edit word"</string>
     <string name="user_dict_settings_all_languages">"For all languages"</string>
     <string name="user_dict_settings_more_languages">"More languages…"</string>
-    <string name="user_dict_fast_scroll_alphabet">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
-    <string name="use_system_language_to_select_input_method_subtypes">"Use system languages"</string>
     <string name="select_input_method">"Choose input method"</string>
     <string name="undo">"Undo"</string>
     <string name="redo">"Redo"</string>
@@ -108,7 +104,6 @@
     <string name="label_search_key">"Search"</string>
     <string name="label_pause_key">"Pause"</string>
     <string name="label_wait_key">"Wait"</string>
-    <string name="split_spacer_scale_landscape">Split distance (landscape)</string>
     <string name="spell_checker_service_name">HeliBoard Spell Checker</string>
     <string name="ime_settings">HeliBoard Settings</string>
     <string name="android_spell_checker_settings">HeliBoard Spell Checker Settings</string>
@@ -120,7 +115,6 @@
     <string name="settings_category_suggestions">Suggestions</string>
     <string name="vibrate_in_dnd_mode">Vibrate in do not disturb mode</string>
     <string name="settings_category_correction">Corrections</string>
-    <string name="enable_split_keyboard_landscape">Enable split keyboard (landscape)</string>
     <string name="disable_personalized_dicts_message">Warning: Disabling this setting will clear learned data</string>
     <string name="settings_category_clipboard_history">Clipboard history</string>
     <string name="settings_category_space">Space</string>

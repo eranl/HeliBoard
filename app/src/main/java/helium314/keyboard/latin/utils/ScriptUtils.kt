@@ -181,6 +181,7 @@ object ScriptUtils {
             "hi", "mr", "ne" -> SCRIPT_DEVANAGARI
             "kn" -> SCRIPT_KANNADA
             "gu" -> SCRIPT_GUJARATI
+            "zz" -> SCRIPT_UNKNOWN
             else -> SCRIPT_LATIN // use as fallback
         }
     }

@@ -32,6 +32,8 @@ import helium314.keyboard.settings.screens.SecondaryLayoutScreen
 import helium314.keyboard.settings.screens.SubtypeScreen
 import helium314.keyboard.settings.screens.TextCorrectionScreen
 import helium314.keyboard.settings.screens.ToolbarScreen
+import helium314.keyboard.settings.screens.gesturedata.GestureDataScreen
+import helium314.keyboard.settings.screens.gesturedata.ReviewScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,6 +72,7 @@ fun SettingsNavHost(
                 onClickPreferences = { navController.navigate(SettingsDestination.Preferences) },
                 onClickToolbar = { navController.navigate(SettingsDestination.Toolbar) },
                 onClickGestureTyping = { navController.navigate(SettingsDestination.GestureTyping) },
+                onClickDataGathering = { navController.navigate(SettingsDestination.DataGathering) },
                 onClickAdvanced = { navController.navigate(SettingsDestination.Advanced) },
                 onClickAppearance = { navController.navigate(SettingsDestination.Appearance) },
                 onClickLanguage = { navController.navigate(SettingsDestination.Languages) },
@@ -93,6 +96,12 @@ fun SettingsNavHost(
         composable(SettingsDestination.GestureTyping) {
             GestureTypingScreen(onClickBack = ::goBack)
         }
+        composable(SettingsDestination.DataGathering) {
+            GestureDataScreen(onClickBack = ::goBack)
+        }
+        composable(SettingsDestination.DataReview) {
+            ReviewScreen(onClickBack = ::goBack)
+        }
         composable(SettingsDestination.Advanced) {
             AdvancedSettingsScreen(onClickBack = ::goBack)
         }
@@ -103,7 +112,7 @@ fun SettingsNavHost(
             AppearanceScreen(onClickBack = ::goBack)
         }
         composable(SettingsDestination.PersonalDictionary + "{locale}") {
-            val locale = it.arguments?.getString("locale")?.takeIf { it.isNotBlank() }?.constructLocale()
+            val locale = it.arguments?.getString("locale")?.takeIf { loc -> loc.isNotBlank() }?.constructLocale()
             PersonalDictionaryScreen(
                 onClickBack = ::goBack,
                 locale = locale
@@ -142,6 +151,8 @@ object SettingsDestination {
     const val Preferences = "preferences"
     const val Toolbar = "toolbar"
     const val GestureTyping = "gesture_typing"
+    const val DataGathering = "data_gathering" // remove when data gathering phase is done (end of 2026 latest)
+    const val DataReview = "data_review" // remove when data gathering phase is done (end of 2026 latest)
     const val Advanced = "advanced"
     const val Debug = "debug"
     const val Appearance = "appearance"

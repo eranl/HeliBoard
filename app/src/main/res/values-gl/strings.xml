@@ -81,11 +81,9 @@
     <string name="show_setup_wizard_icon_summary">"Mostra a icona da aplicación no Launcher"</string>
     <string name="dictionary_category_title">"Dicionarios complementarios"</string>
     <string name="dictionary_available">"Dicionario dispoñible"</string>
-    <string name="last_update">"Última actualización"</string>
     <string name="settings">"Configuración"</string>
     <string name="delete">"Eliminar"</string>
     <string name="version_text">"Versión %1$s"</string>
-    <string name="user_dict_settings_add_dialog_title">"Engadir ao dicionario"</string>
     <string name="user_dict_settings_add_shortcut_option_name">"Atallo:"</string>
     <string name="user_dict_settings_add_locale_option_name">"Idioma:"</string>
     <string name="user_dict_settings_add_word_hint">"Escribe unha palabra"</string>
@@ -93,8 +91,6 @@
     <string name="user_dict_settings_edit_dialog_title">"Editar palabra"</string>
     <string name="user_dict_settings_all_languages">"Para todos os idiomas"</string>
     <string name="user_dict_settings_more_languages">"Máis idiomas…"</string>
-    <string name="user_dict_fast_scroll_alphabet">" ABCDEFGHIJKLMNOPQRSTUVWXYZ"</string>
-    <string name="use_system_language_to_select_input_method_subtypes">"Usar idiomas do sistema"</string>
     <string name="select_input_method">"Escoller método de introdución de texto"</string>
     <string name="undo">"Desfacer"</string>
     <string name="redo">"Refacer"</string>
@@ -134,11 +130,9 @@
     <string name="theme_name_sand" tools:keep="@string/theme_name_sand">Area</string>
     <string name="theme_name_violette" tools:keep="@string/theme_name_violette">Violeta</string>
     <string name="theme_name_user" tools:keep="@string/theme_name_user">Persoal</string>
-    <string name="theme_name_user_night" tools:keep="@string/theme_name_user_night">Persoal (claro)</string>
     <string name="auto_user_color">Elixir cor automáticamente</string>
     <string name="main_colors">Mostrar só cores principais</string>
     <string name="all_colors">Mostrar todas as cores</string>
-    <string name="select_user_colors_summary">Elixe as cores do texto e fondo</string>
     <string name="select_color_background">Fodo do teclado</string>
     <string name="select_color_key">Texto da tecla</string>
     <string name="select_color_key_hint">Suxestión da tecla</string>
@@ -166,7 +160,7 @@
     <string name="settings_category_experimental">Experimental</string>
     <string name="settings_category_miscellaneous">Varios</string>
     <string name="split_spacer_scale">Distancia de separación</string>
-    <string name="switch_language">Cambiar de Idioma</string>
+    <string name="switch_language">Cambiar de idioma</string>
     <string name="language_switch_key_switch_both">Cambiar os dous</string>
     <string name="show_emoji_key">Tecla Emoji</string>
     <string name="settings_no_limit">Sen límite</string>
@@ -241,7 +235,6 @@
     <string name="message_add_custom_layout">Elixe un ficheiro cun formato compatible. Tes información sobre os formatos en %s.</string>
     <string name="button_load_custom">Cargar ficheiro</string>
     <string name="file_read_error">Non se puido ler o ficheiro</string>
-    <string name="button_copy_existing_layout">Copiar disposición existente</string>
     <string name="delete_layout">Queres eliminar a disposición persoal %s?</string>
     <string name="layout_error">Erro na disposición: %s</string>
     <string name="edit_layout">Toca para editar a disposición</string>
@@ -261,7 +254,6 @@
     <string name="add_dictionary">Elixe o dicionario a engadir. Os dicionarios en formato .dict están dispoñibles en %s.</string>
     <string name="dictionary_file_error">Erro: o ficheiro seleccionado non é un dicionario válido</string>
     <string name="dictionary_file_wrong_script">Erro: o script non é compatible con este teclado</string>
-    <string name="dictionary_file_wrong_locale_ok">Usar igualmente</string>
     <string name="dictionary_load_error">Erro ao cargar o ficheiro do dicionario</string>
     <string name="user_dict_word_already_present">Esta palabra xa está presente no dicionario %s da usuaria. Por favor escribe outra.</string>
     <string name="theme_name_black" tools:keep="@string/theme_name_black">Negro</string>
@@ -278,7 +270,6 @@
 \n%3$s</string>
     <string name="dictionary_link_text">aquí</string>
     <string name="select_color_functional_key_background">Fondo da tecla función</string>
-    <string name="dictionary_file_wrong_locale">O ficheiro seleccionado é para %1$s, mais agardábase %2$s. Usar igualmente para %2$s?</string>
     <string name="spell_checker_service_name">Revisor de Ortografía</string>
     <string name="android_spell_checker_settings">Axustes do revisor de Ortografía de HeliBoard</string>
     <string name="load_gesture_library_message">Vas precisar a biblioteca para \'%s\': As bibliotecas incompatibles podería estragar a app ao escribir.
@@ -302,7 +293,7 @@
     <string name="show_vertical_space_swipe">Xesto de desprazamento vertical na barra</string>
     <string name="show_horizontal_space_swipe">Xesto de desprazamento horizontal na barra</string>
     <string name="action_none">Ningún</string>
-    <string name="space_swipe_move_cursor_entry">Mover Cursor</string>
+    <string name="space_swipe_move_cursor_entry">Mover cursor</string>
     <string name="var_toolbar_direction">Dirección variable barra ferramentas</string>
     <string name="var_toolbar_direction_summary">Dirección inversa cando está seleccionado o tipo de teclado de dereita a esquerda</string>
     <string name="subtype_probhat_bn_BD">%s (Probhat)</string>
@@ -315,7 +306,7 @@
     <string name="subtype_generic_extended">%s (Extendido)</string>
     <string name="subtype_mns">Mansi</string>
     <string name="more_colors">Mostrar máis cores</string>
-    <string name="all_colors_warning">Este axuste expón todas as cores que se usan internamente. A lista de cores pode cambiar en calquera momento. A cor por defecto é aleatoria, e os nomes non serán traduciddos.</string>
+    <string name="all_colors_warning">Este axuste expón todas as cores que se usan internamente. A lista de cores pode cambiar en calquera momento. O valor por defecto deriva das cores normais, e os nomes non estarán traduciddos.</string>
     <string name="layout_functional_keys" tools:keep="@string/layout_functional_keys">Teclas función</string>
     <string name="layout_functional_keys_symbols_shifted" tools:keep="@string/layout_functional_keys_symbols_shifted">Teclas función (Máis símbolos)</string>
     <string name="layout_functional_keys_symbols" tools:keep="@string/layout_functional_keys_symbols">Teclas función (Símbolos)</string>
@@ -346,7 +337,7 @@
     <string name="suggest_clipboard_content">Suxerir contido do portapapeis</string>
     <string name="suggest_clipboard_content_summary">Mostra como suxestión ocontido copiado recentemente ao portapapeis</string>
     <string name="switch_keyboard_after">Cambiar ao teclado principal após…</string>
-    <string name="space_swipe_toggle_numpad_entry">Ver Teclado Numérico</string>
+    <string name="space_swipe_toggle_numpad_entry">Ver teclado numérico</string>
     <string name="show_popup_keys_main">Engadir variantes moi comúns (por defecto)</string>
     <string name="remove_redundant_popups">Retirar emerxentes redundantes</string>
     <string name="remove_redundant_popups_summary">Retira as letras emerxentes que xa están presentes na disposición base</string>
@@ -390,14 +381,10 @@
     <string name="custom_font">Establecer tipo de letra persoal desde ficheiro</string>
     <string name="customize_background_image_landscape">Establecer imaxe de fondo (paisaxe)</string>
     <string name="summary_customize_background_image_landscape">Se non se establece usarase a imaxe como retrato</string>
-    <string name="enable_split_keyboard_landscape">Activar teclado separado (paisaxe)</string>
-    <string name="split_spacer_scale_landscape">Distancia de separación (paisaxe)</string>
     <string name="split" tools:keep="@string/split">Telcado separado</string>
-    <string name="prefs_bottom_padding_scale_landscape">Escala da marxe inferior (paisaxe)</string>
     <string name="prefs_font_scale">Escala do tamaño da letra</string>
     <string name="prefs_emoji_font_scale">Escala da visualización de emoji</string>
     <string name="prefs_side_padding_scale">Escala da marxe lateral</string>
-    <string name="prefs_side_padding_scale_landscape">Escala da marxe lateral (paisaxe)</string>
     <string name="number_row_hints">Mostrar suxestións na fila de números</string>
     <string name="layout_in_use">Aviso: xa se está usando a disposición</string>
     <string name="get_colors_message">Podes atopar e compartir cores na %s.</string>
@@ -430,4 +417,96 @@
     <string name="subtype_st">Sesotho</string>
     <string name="prefs_emoji_key_fit">Escalar tamaño da tecla emoji ao tamaño da letra</string>
     <string name="backspace_reverts_autocorrect">Retroceso reverte a autocorrección</string>
+    <string name="popup_order_and_hint_source">Orde das teclas emerxentes e orixe das suxestións</string>
+    <string name="subtype_with_layout_generic">%1$s (%2$s)</string>
+    <string name="landscape">Paisaxe</string>
+    <string name="backup_restored">Restableceuse a copia</string>
+    <string name="use_apps_dict">Buscar nomes de apps</string>
+    <string name="use_apps_dict_summary">Usar nomes das apps instaladas para suxestións e correccións</string>
+    <string name="toolbar_mode">Modo da barra de ferramentas</string>
+    <string name="toolbar_mode_expandable">Teclas da barra de ferramentas e suxestións</string>
+    <string name="toolbar_mode_toolbar_keys">Só teclas da barra de ferramentas</string>
+    <string name="toolbar_mode_suggestion_strip">Só suxestións</string>
+    <string name="toolbar_mode_hidden">Oculta</string>
+    <string name="prefs_emoji_skin_tone">Tono de pel por defecto para emojis</string>
+    <string name="prefs_emoji_skin_tone_neutral">Neutro</string>
+    <string name="show_emoji_descriptions">Mostrar descrición do emoji con pulsación longa</string>
+    <string name="toolbar_hiding_global">Ocultar tamén as barras de ferramentas de emoji e portapapeis</string>
+    <string name="suggest_emojis">Suxerir emojis</string>
+    <string name="suggest_emojis_summary">Usar dicionario de emoji nas suxestións normais</string>
+    <string name="suggest_punctuation">Suxestións de puntuación</string>
+    <string name="suggest_punctuation_summary">Mostra a puntuación cando non hai outras suxestións dispoñibles</string>
+    <string name="about_wiki_link">Ir á Wiki</string>
+    <string name="about_wiki_link_description">Calquera usuaria de GitHub pode colaborar coa Wiki!</string>
+    <string name="space_swipe_hide_keyboard_entry">Ocultar teclado</string>
+    <string name="clipboard_history_pinned_first">Mostrar arriba os elementos fixados</string>
+    <string name="inline_emoji_search">Busca de emojis ao escribir</string>
+    <string name="inline_emoji_search_summary">Só suxerir emojis cando a palabra comece por dous puntos</string>
+    <string name="emoji_dictionary_required">Requírese un dicionario de emojis para que esta ferramenta funcione. Podes descargar dicionarios en formato .dict desde %s.</string>
+    <string name="save_subtype_per_app">Lembrar idioma por aplicación</string>
+    <string name="subtype_mhr">Mari (Eastern)</string>
+    <string name="subtype_khipro_bn">%s (Khipro)</string>
+    <string name="number_row_in_symbols">Mostrar fila de número na vista de símbolos</string>
+    <string name="custom_emoji_font">Escoller emojis persoais desde ficheiro</string>
+    <string name="layout_emoji_bottom_row_with_action" tools:keep="@string/layout_emoji_bottom_row_with_action">Fila inferior de emojis coa tecla de acción</string>
+    <string name="layout_clip_bottom_row_with_action" tools:keep="@string/layout_clip_bottom_row_with_action">Fila inferior do portapapeis coa tecla de acción</string>
+    <string name="timestamp_description">Podes engadir a telca de marca de tempo usando unha disposición persoal coa tecla \'marca de tempo\', ou código de tecla -10043</string>
+    <string name="prefs_bottom_row_scale">Escala da fila inferior</string>
+    <string name="layout_functional_keys_khipro" tools:keep="@string/layout_functional_keys">Teclas de función (Khipro)</string>
+    <string name="emoji_search_title">Buscar emoji</string>
+    <string name="search_field_placeholder">Buscar</string>
+    <string name="ask_later">Preguntar máis tarde</string>
+    <string name="gesture_data_screen">Obtendo datos dos xestos</string>
+    <string name="gesture_data_description">Esta é a pantalla de obtención dos datos para os xestos de escritura!&lt;br/&gt;&lt;br/&gt; É parte dun &lt;a href=https://nlnet.nl/project/GestureTyping&gt;proxecto financiado por NLnet&lt;/a&gt; que intenta producir unha biblioteca de escritura por xestos totalmente de código aberto e capaz de substituír a biblioteca de código oculto de Google.&lt;b/&gt; O resultado proxectado pretende ser unha substitución simple para teclados baseados en AOSP, pero tamén utilizable por outros teclados, ex. FloriBoard.&lt;br/&gt;&lt;br/&gt; Para desenvolver a biblioteca, é tremendamente útil ter datos de xestos en diferentes idiomas e diferentes persoas usuarias.&lt;br/&gt; Ao obter e enviar datos de xestos ao escribir contribúes ao conxunto de datos aberto que se usarán para o desenvolvemento. O conxunto de datos vaise publicar con licenza CC BY-SA 4.0 cando finalice a etapa de obtención de datos en %s. Unha vez recollidos os datos, podes envialos usando a icona compartir ao pé desta pantalla.</string>
+    <string name="gesture_data_info">Que é isto?</string>
+    <string name="gesture_data_description_modes">Actualmente só hai un modo de obtención activo, onde se mostra unha palabra concreta e escribes esta palabra usando a escritura con xestos.\nMáis tarde engadiremos o modo de obtención pasiva, onde podes engadir mostras desde a túa escritura corrente con cestos en outras apps. Debido a sensibilidade desta opción, terás que activar o acceso, será configurable e terá unha pantalla de revisión dos datos que vas a enviar.</string>
+    <string name="gesture_data_description_privacy">Privacidade\n\nOs datos enviados consisten nunha palabra clave, disposición do teclado e tamaño, xesto (marca temporal e coordenadas), suxestións da biblioteca actual, suma de comprobación do dicionario usado, versión da app, mode obtención dos datos, se o xesto está na biblioteca predeterminada de Google, así como un ID para cada xesto.\nOs datos enviados vanse descargar e eliminar dunha caixa de correo de ProtonMail onde se almacenan para facilitarnos o traballo. Após rematar a fase de obtención de datos, os datos acumulados durante todo o proceso van ser publicados baixo a licenza Creative Commons BY-SA 4.0.\n\nComo parte do intento de protexer a túa privacidade non se publicará explícitamente a túa autoría. O crédito outorgado vai ser \"Colaboradoras do Proxecto Heliboard de Datos de Xestos\". Non será posible ligar os datos que creaches nesta pantalla coa túa identidade. Emporiso, podería ser posible determinar que xestos foron creados pola mesma persoa. Isto pódese facer por exemplo tendo en conta se é un teclado cunha disposición de teclas persoal, tamaño do teclado, idioma ou estilo propio de xestos.</string>
+    <string name="gesture_data_privacy">Privacidade</string>
+    <string name="gesture_data_get_data">Compartir ficheiro de datos cos xestos</string>
+    <string name="gesture_data_delete_data">Limpar datos dos xestos</string>
+    <string name="gesture_data_send_mail">Enviar datos por correo</string>
+    <string name="gesture_data_copy_mail">Copiar enderezo de correo</string>
+    <string name="gesture_data_mail_use">Ten en conta que o enderezo de correo serve para o envío dos datos, pode que non teñas unha resposta pronta ou consistente.</string>
+    <string name="gesture_data_please_type">Por favor escribe cun xesto:</string>
+    <string name="gesture_data_next_save">Obtivemos %s. Preme se cres que o fixeches correctamente</string>
+    <string name="gesture_data_next">Omitir palabra</string>
+    <string name="gesture_data_active_count">%1$s palabras nesta sesión, %2$s palabras en total (%3$s xa enviadas ou eliminadas)</string>
+    <string name="gesture_data_review_screen_title">Revisar e compartir os datos dos xestos</string>
+    <string name="gesture_data_words_selected">%s palabras</string>
+    <string name="gesture_data_date_range">Rango de datas</string>
+    <string name="gesture_data_much_data">Tes moitos datos sen enviar. Por favor envíaos e despois elimina os datos antigos.</string>
+    <string name="gesture_data_how_to_use">Como se utiliza</string>
+    <string name="gesture_data_active_description">Toca en «Comezar a obtención activa», optativamente podes cambiar o dicionario, e comezar a escribir a palabra suxerida.&lt;br/&gt; Se o xesto concorda coa palabra, gárdanse os datos e móstrase a seguinte palabra. Se non, podes volver a intentalo ou omitir a palabra, ou confirmar que o xesto é correcto.&lt;br/&gt; Só podes usar dicionarios que están incluídos na app ou dispoñibles no &lt;a href=%s&gt;repositorio de dicionarios&lt;/a&gt;, non se poden usar outras palabras.</string>
+    <string name="gesture_data_active_start">Comezar a obtención activa</string>
+    <string name="gesture_data_active_stop">Deter a obtención activa</string>
+    <string name="gesture_data_ends_at">A fase de obtención de datos remata o %s. Por favor envía os teus datos antes desta data.</string>
+    <string name="gesture_data_ended">A fase de obtención de datos rematou o %s. Podes compartir os teus datos existentes, pero non engadir ningún novo.</string>
+    <string name="gesture_data_share_all">Comparte as %s palabras</string>
+    <string name="gesture_data_share_new">Comparte as %s palabras que aínda non enviaches</string>
+    <string name="gesture_data_delete_dialog">Tes datos de %1$s palabras novas e %2$s xa compartidas.</string>
+    <string name="gesture_data_delete_dialog_all">Eliminar todas as %s palabras</string>
+    <string name="gesture_data_delete_dialog_confirm">Tes certeza? Isto vai eliminar %s palabras. Comproba que enviaches os datos!</string>
+    <string name="gesture_data_delete_dialog_submitted">Eliminar %s palabras enviadas</string>
+    <string name="gesture_data_many_not_shared_words">Tes máis de %s palabras agardando a ser enviadas</string>
+    <string name="gesture_data_email_body">IMPORTANTE:\n\nOla!\nLembra que estes datos vanse publicar baixo licenza CC BY-SA 4.0, e por privacidade non mostraremos a túa autoría.\n\nGrazas por compartir con nós a propiedade dos teus datos. Faremos bo uso deles!\n\nTen en conta que cambiar a redacción deste aviso non cambia o que imos facer cos teus datos. Isto non é un contrato que se modifique, é só un recordatorio amigable!\nSe queres enviarnos unha mensaxe xunto cos teus datos, escribe aquí abaixo unhas liñas.\n-------------------------------------------------</string>
+    <string name="gesture_data_promotion_message">Ola!\nComo instalaches a biblioteca de escritura con xestos, pode que che interese colaborar co proxecto de HeliBoard para crear unha biblioteca de código aberto para escritura con xestos. Podes colaborar enviando datos de escritura. Para máis información visita a pantalla de obtención de datos de xestos.</string>
+    <string name="gesture_data_reminder_message">Ola!\nCon anterioridade usaches a obtención de datos de xestos, pero non engadiches ningún dato desde hai tempo. Queres volver a colaborar?</string>
+    <string name="gesture_data_take_me_there">Imos aló</string>
+    <string name="gesture_data_links">Información sobre a obtención de datos de xestos en:</string>
+    <string name="toolbar_swipe_down_to_hide">Ocultar teclado cun desprazamento</string>
+    <string name="toolbar_swipe_down_to_hide_summary">Despraza cara abaixo na barra de ferramentas para fechar o teclado</string>
+    <string name="custom_punctuation_suggestions">Establecer suxestións para a puntuación</string>
+    <string name="space_swipe_touchpad_mode_entry">Modo área táctil</string>
+    <string name="touchpad_sensitivity">Sensibilidade da área táctil</string>
+    <string name="folded">Pregado</string>
+    <string name="gesture_data_please_switch_keyboard">Por favor cambia a %s</string>
+    <string name="gesture_data_share_limit">Para evitar exceder o tamaño máximo, só se van exportar as primeiras %s palabras</string>
+    <string name="floating" tools:keep="@string/floating">Teclado flotante</string>
+    <string name="prefs_key_gap_scale">Escala do espazo entre teclas</string>
+    <string name="touchpad_edge_scroll">Desprazamento no bordo da zona táctil</string>
+    <string name="touchpad_edge_scroll_description">Desprazar o contido cando se pasa o dedo polo bordo do teclado</string>
+    <string name="toolbar_only_with_hw_keyboard">Mostrar a barra de ferramentas só con teclado físico</string>
+    <string name="toolbar_only_with_hw_keyboard_summary">Aínda así deberás activar mostrar o teclado virtual nos axustes do sistema</string>
+    <string name="spell_check_suggestions">Mostrar suxestións de ortografía</string>
+    <string name="spell_check_suggestions_summary">Mostrar suxestións o seleccionar unha palabra subliñada en vermello. Require establecer a app como revisora de ortografía predeterminada.</string>
 </resources>

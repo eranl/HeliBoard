@@ -12,6 +12,7 @@ import android.os.Vibrator;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 
+import helium314.keyboard.event.HapticEvent;
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode;
 import helium314.keyboard.latin.common.Constants;
 import helium314.keyboard.latin.settings.SettingsValues;
@@ -50,10 +51,13 @@ public final class AudioAndHapticFeedbackManager {
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
-    public void performHapticAndAudioFeedback(final int code,
-            final View viewToPerformHapticFeedbackOn) {
-        performHapticFeedback(viewToPerformHapticFeedbackOn);
-        performAudioFeedback(code);
+    public void performHapticAndAudioFeedback(
+        final int code,
+        final View viewToPerformHapticFeedbackOn,
+        final HapticEvent hapticEvent
+    ) {
+        performHapticFeedback(viewToPerformHapticFeedbackOn, hapticEvent);
+        performAudioFeedback(code, hapticEvent);
     }
 
     public boolean hasVibrator() {
@@ -61,7 +65,7 @@ public final class AudioAndHapticFeedbackManager {
     }
 
     public void vibrate(final long milliseconds) {
-        if (mVibrator == null) {
+        if (mVibrator == null || milliseconds <= 0) {
             return;
         }
         mVibrator.vibrate(milliseconds);
@@ -74,12 +78,15 @@ public final class AudioAndHapticFeedbackManager {
         return mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL;
     }
 
-    public void performAudioFeedback(final int code) {
+    public void performAudioFeedback(final int code, final HapticEvent hapticEvent) {
         // if mAudioManager is null, we can't play a sound anyway, so return
         if (mAudioManager == null) {
             return;
         }
         if (!mSoundOn) {
+            return;
+        }
+        if (hapticEvent != HapticEvent.KEY_PRESS) {
             return;
         }
         final int sound = switch (code) {
@@ -91,18 +98,22 @@ public final class AudioAndHapticFeedbackManager {
         mAudioManager.playSoundEffect(sound, mSettingsValues.mKeypressSoundVolume);
     }
 
-    public void performHapticFeedback(final View viewToPerformHapticFeedbackOn) {
+    public void performHapticFeedback(final View viewToPerformHapticFeedbackOn, final HapticEvent hapticEvent) {
         if (!mSettingsValues.mVibrateOn || (mDoNotDisturb && !mSettingsValues.mVibrateInDndMode)) {
             return;
         }
-        if (mSettingsValues.mKeypressVibrationDuration >= 0) {
+        if (hapticEvent == HapticEvent.NO_HAPTICS) {
+            // Avoid surprises with the handling of HapticFeedbackConstants.NO_HAPTICS
+            return;
+        }
+        if (hapticEvent.allowCustomDuration && mSettingsValues.mKeypressVibrationDuration >= 0) {
             vibrate(mSettingsValues.mKeypressVibrationDuration);
             return;
         }
         // Go ahead with the system default
         if (viewToPerformHapticFeedbackOn != null) {
             viewToPerformHapticFeedbackOn.performHapticFeedback(
-                    HapticFeedbackConstants.KEYBOARD_TAP,
+                    hapticEvent.feedbackConstant,
                     HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         }
     }

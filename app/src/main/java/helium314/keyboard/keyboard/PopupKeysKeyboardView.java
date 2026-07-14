@@ -6,6 +6,7 @@
 
 package helium314.keyboard.keyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -137,6 +138,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
         showPopupKeysPanelInternal(parentView, controller, pointX, pointY);
     }
 
+    @SuppressLint("RtlHardcoded") // a key on the left is on the left, independent of layout direction
     private void showPopupKeysPanelInternal(final View parentView, final Controller controller,
             final int pointX, final int pointY) {
         mController = controller;
@@ -148,18 +150,33 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
                 + getPaddingBottom();
 
         parentView.getLocationInWindow(mCoordinates);
-        // Ensure the horizontal position of the panel does not extend past the parentView edges.
-        final int maxX = parentView.getMeasuredWidth() - container.getMeasuredWidth();
-        final int panelX = Math.max(0, Math.min(maxX, x)) + CoordinateUtils.x(mCoordinates);
-        final int panelY = y + CoordinateUtils.y(mCoordinates);
-        container.setX(panelX);
-        container.setY(panelY);
+        final int containerY = y + CoordinateUtils.y(mCoordinates);
+        container.setY(containerY);
 
-        mOriginX = x + container.getPaddingLeft();
-        mOriginY = y + container.getPaddingTop();
-        var center = panelX + getMeasuredWidth() / 2;
-        // This is needed for cases where there's also a long text popup above this keyboard
-        controller.setLayoutGravity(center < pointX? Gravity.RIGHT : center > pointX? Gravity.LEFT : Gravity.CENTER_HORIZONTAL);
+        // This is needed for cases where there's also a text popup above this keyboard
+        final int panelMaxX = parentView.getMeasuredWidth() - getMeasuredWidth();
+        var panelFinalX = Math.max(0, Math.min(panelMaxX, x));
+        var center = panelFinalX + getMeasuredWidth() / 2;
+        var layoutGravity = center < pointX - getKeyboard().mMostCommonKeyWidth / 2?
+                        Gravity.RIGHT : center > pointX + getKeyboard().mMostCommonKeyWidth / 2? Gravity.LEFT : Gravity.CENTER_HORIZONTAL;
+
+        int containerAdjustedX = x;
+        if (getMeasuredWidth() < container.getMeasuredWidth()) {
+            containerAdjustedX = layoutGravity == Gravity.LEFT? panelFinalX : layoutGravity == Gravity.RIGHT
+                ? panelFinalX + getMeasuredWidth() - container.getMeasuredWidth()
+                : panelFinalX + (getMeasuredWidth() - container.getMeasuredWidth()) / 2;
+        }
+
+        // Ensure the horizontal position of the panel does not extend past the parentView edges.
+        int containerMaxX = parentView.getMeasuredWidth() - container.getMeasuredWidth();
+        int containerFinalX = Math.max(0, Math.min(containerMaxX, containerAdjustedX));
+        int containerX = containerFinalX + CoordinateUtils.x(mCoordinates);
+        container.setX(containerX);
+        setTranslationX(panelFinalX - containerFinalX);
+        controller.setLayoutGravity(layoutGravity);
+
+        mOriginX = panelFinalX;
+        mOriginY = y + container.getPaddingTop() + (int) getY();
         controller.onShowPopupKeysPanel(this);
         final PopupKeysKeyboardAccessibilityDelegate accessibilityDelegate = mAccessibilityDelegate;
         if (accessibilityDelegate != null
@@ -281,6 +298,7 @@ public class PopupKeysKeyboardView extends KeyboardView implements PopupKeysPane
         return y - mOriginY;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(final MotionEvent me) {
         final int action = me.getActionMasked();

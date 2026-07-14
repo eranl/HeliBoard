@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import helium314.keyboard.latin.common.StringUtils;
+import helium314.keyboard.latin.common.StringUtilsKt;
 import helium314.keyboard.latin.define.DebugFlags;
+import helium314.keyboard.latin.dictionary.Dictionary;
 import helium314.keyboard.latin.settings.Settings;
 
 import java.util.ArrayList;
@@ -265,6 +267,7 @@ public class SuggestedWords {
         // the application (including keyboard-computed ones, so this is almost always null)
         public final CompletionInfo mApplicationSpecifiedCompletionInfo;
         public final int mScore;
+        public int mOriginalScore; // relevant only for background data gathering, todo: remove when gathering period is over
         public final int mKindAndFlags;
         public final int mCodePointCount;
         public final Dictionary mSourceDict;
@@ -276,6 +279,7 @@ public class SuggestedWords {
         // first word of this suggestion.
         public final int mAutoCommitFirstWordConfidence;
         private String mDebugString = "";
+        private Boolean mIsEmoji;
 
         /**
          * Create a new suggested word info.
@@ -360,6 +364,13 @@ public class SuggestedWords {
 
         public String getWord() {
             return mWord;
+        }
+
+        public boolean isEmoji() {
+            if (mIsEmoji == null) {
+                mIsEmoji = StringUtilsKt.isEmoji(mWord);
+            }
+            return mIsEmoji;
         }
 
         @Deprecated

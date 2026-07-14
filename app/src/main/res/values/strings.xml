@@ -4,7 +4,10 @@
     modified
     SPDX-License-Identifier: Apache-2.0 AND GPL-3.0-only
 -->
-<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
+    tools:ignore="MissingTranslation">
     <!-- Name of Android spell checker service. The app name should not be translated. -->
     <string name="spell_checker_service_name">HeliBoard Spell Checker</string>
     <!-- Title for IME settings screen. The app name should not be translated. -->
@@ -21,12 +24,20 @@
     <string name="suggest_emojis">Suggest emojis</string>
     <!-- Description for option to suggest emojis -->
     <string name="suggest_emojis_summary">Use emoji dictionary in normal suggestions</string>
+    <!-- Option to perform inline emoji search -->
+    <string name="inline_emoji_search">Inline emoji search</string>
+    <!-- Description for option to perform inline emoji search -->
+    <string name="inline_emoji_search_summary">Suggest only emojis when a word is preceded by a colon</string>
+    <!-- Warning text for when enabling inline emoji search with no emoji dictionary. The %s will be replaced by dictionary_link_text. -->
+    <string name="emoji_dictionary_required">An emoji dictionary is required for this feature to work. Dictionaries in .dict format can be downloaded %s.</string>
     <!-- Option to show emoji descriptions on long press -->
     <string name="show_emoji_descriptions">Show emoji description on long press</string>
-    <!-- Description for option to show emoji descriptions on long press -->
-    <string name="show_emoji_descriptions_summary">Requires an emoji dictionary</string>
     <!-- Option to control whether or not to show a popup with a larger font on each key press. -->
     <string name="popup_on_keypress">Popup on keypress</string>
+    <!-- Option whether the keyboard can be hidden by swiping down on the toolbar -->
+    <string name="toolbar_swipe_down_to_hide">Hide keyboard by swipe</string>
+    <!-- Description for toolbar_swipe_down_to_hide -->
+    <string name="toolbar_swipe_down_to_hide_summary">Swipe down on the toolbar to close the keyboard</string>
     <!-- Settings screen title for preferences-->
     <string name="settings_screen_preferences">Preferences</string>
     <!-- Settings screen title for gesture typing preferences -->
@@ -53,18 +64,14 @@
     <string name="settings_category_experimental">Experimental</string>
     <!-- Settings category title for Appearance & Layout/Misc -->
     <string name="settings_category_miscellaneous">Miscellaneous</string>
-    <!--  Option for enabling or disabling the split keyboard layout in portrait mode.-->
+    <!-- Option for enabling or disabling the split keyboard layout in portrait mode.-->
     <string name="enable_split_keyboard">Enable split keyboard</string>
-    <!--  Option for enabling or disabling the split keyboard layout in landscape mode.-->
-    <string name="enable_split_keyboard_landscape">Enable split keyboard (landscape)</string>
-    <!--  Option for setting distance for split keyboard in portrait mode -->
+    <!-- Option for setting distance for split keyboard in portrait mode -->
     <string name="split_spacer_scale">Split distance</string>
-    <!--  Option for setting distance for split keyboard in landscape mode, todo: remove after merge -->
-    <string name="split_spacer_scale_landscape">Split distance (landscape)</string>
     <!-- Option name for including other IMEs in the language key switch list -->
     <string name="language_switch_key_switch_input_method">Switch to other input methods</string>
     <!-- Option name for switching language / subtype only -->
-    <string name="switch_language">Switch Language</string>
+    <string name="switch_language">Switch language</string>
     <!-- Option name for switching language / subtype and input method -->
     <string name="language_switch_key_switch_both">Switch both</string>
     <!-- Option to show language switch key -->
@@ -139,10 +146,14 @@
     <string name="auto_correct_shortcuts">Auto-correct shortcuts</string>
     <!-- Description for auto_correct_shortcuts -->
     <string name="auto_correct_shortcuts_summary">When enabled shortcuts might be expanded by autocorrect</string>
+    <!-- Option to enable auto correction for for capitalized suggestions (by pressing shift) -->
+    <string name="auto_correct_capitalized_suggestions">Auto-correct capitalized suggestions</string>
+    <!-- Description for auto_correct_capitalized_suggestions -->
+    <string name="auto_correct_capitalized_suggestions_description">After pressing shift to capitalize suggestions, auto-correct will trigger</string>
     <!-- Option to undo auto correction with backspace -->
     <string name="backspace_reverts_autocorrect">Backspace reverts autocorrect</string>
     <!-- Option to disable auto correction. -->
-    <string name="auto_correction_threshold_mode_off">Off</string>
+    <string name="auto_correction_threshold_mode_off">Off</string> <!-- todo: use it or remove it -->
     <!-- Option to suggest auto correction suggestions modestly. Auto-corrects only to a word which has small edit distance from typed word. -->
     <string name="auto_correction_threshold_mode_modest">Modest</string>
     <!-- Option to suggest auto correction suggestions aggressively. Auto-corrects to a word which has even large edit distance from typed word. -->
@@ -157,6 +168,12 @@
     <string name="bigram_prediction">Next-word suggestions</string>
     <!-- Description for "next word suggestion" option. This displays suggestions even when there is no input, based on the previous word. -->
     <string name="bigram_prediction_summary">Use the previous word in making suggestions</string>
+    <!-- Option to enable using punctuation suggestions. -->
+    <string name="suggest_punctuation">Punctuation suggestions</string>
+    <!-- Description for "suggest_punctuation" option. -->
+    <string name="suggest_punctuation_summary">Show punctuation when no other suggestions are available</string>
+    <!-- Option to customize punctuation suggestions. -->
+    <string name="custom_punctuation_suggestions">Set punctuation suggestions</string>
     <!-- Option to enable the suggestion of clipboard content. -->
     <string name="suggest_clipboard_content">Suggest clipboard content</string>
     <!-- Description for the "suggest clipboard content" option. This makes the primary clipboard content visible in the suggestion strip view. -->
@@ -189,8 +206,20 @@
     <string name="enable_clipboard_history">Enable clipboard history</string>
     <!-- Description for enabling/disabling clipboard history mentioning that if disabled, clipboard content is pasted -->
     <string name="enable_clipboard_history_summary">If disabled, clipboard key will paste clipboard content if any</string>
-    <!-- Preferences item for enabling clipboard history -->
+    <!-- Preferences item for controlling clipboard history retention time -->
     <string name="clipboard_history_retention_time">History retention time</string>
+    <!-- Preferences item for showing pinned clipboard items first -->
+    <string name="clipboard_history_pinned_first">Show pinned items on top</string>
+    <!-- Preferences item for extending the clipboard history to files (images or others) -->
+    <string name="clipboard_history_files">Add images and other files to clipboard history</string>
+    <!-- Preferences item for selecting maximum combined size of clipboard history files -->
+    <string name="clipboard_history_max_file_size">Clipboard size limit</string>
+    <!-- Description, used for non-image clipboard files -->
+    <string name="item_description">Description: %s</string>
+    <!-- Type, used for non-image clipboard files -->
+    <string name="item_type">Type: %s</string>
+    <!-- Units abbreviation for size (megabytes) -->
+    <string name="abbreviation_unit_mb">%s MB</string>
     <!-- Preferences item for enabling swipe deletion -->
     <string name="delete_swipe">Delete swipe</string>
     <!-- Description for "delete_swipe" option. -->
@@ -211,6 +240,8 @@
     <string name="backup_restored">Backup restored</string>
     <!-- Preferences item for format for timestamp keycode -->
     <string name="timestamp_format_title">Format for timestamp key</string>
+    <!-- Message in preferences how to get timestamp key -->
+    <string name="timestamp_description">You can add the timestamp key using a custom layout with \'timestamp\' key, or key code -10043</string>
     <!-- Preferences item for choosing secondary language -->
     <string name="secondary_locale">Multilingual typing</string>
     <!-- Clarification which locales are available for multilingual typing -->
@@ -268,12 +299,16 @@
     <string name="number_row">Number row</string>
     <!-- Description of the settings to enable number row -->
     <string name="number_row_summary">Always show number row</string>
+    <!-- Title of the setting to replace the top row in symbols layout with number row -->
+    <string name="number_row_in_symbols">Show number row in symbols view</string>
     <!-- Title of the setting to localize number row -->
     <string name="localized_number_row">Localize number row</string>
     <!-- Description of the settings to localize number row -->
     <string name="localized_number_row_summary">Prefer localized over latin numbers</string>
     <!-- Title of the setting to enable number row hints -->
     <string name="number_row_hints">Show hints on number row</string>
+    <!-- Title of the setting to save subtype per app -->
+    <string name="save_subtype_per_app">Remember language per app</string>
     <!-- Title of the setting to show key hints -->
     <string name="show_hints">Show key hints</string>
     <!-- Description of the settings to show hints -->
@@ -297,13 +332,13 @@
     <!-- Title of the setting to set the toolbar mode -->
     <string name="toolbar_mode">Toolbar mode</string>
     <!-- Option to set the toolbar mode to show an expandable toolbar -->
-    <string name="toolbar_mode_expandable">Toolbar keys and suggestions</string>
+    <string name="toolbar_mode_expandable" tools:keep="@string/toolbar_mode_expandable">Toolbar keys and suggestions</string>
     <!-- Option to set the toolbar mode to show the toolbar keys only -->
-    <string name="toolbar_mode_toolbar_keys">Toolbar keys only</string>
+    <string name="toolbar_mode_toolbar_keys" tools:keep="@string/toolbar_mode_toolbar_keys">Toolbar keys only</string>
     <!-- Option to set the toolbar mode to show the suggestions strip only -->
-    <string name="toolbar_mode_suggestion_strip">Suggestions only</string>
+    <string name="toolbar_mode_suggestion_strip" tools:keep="@string/toolbar_mode_suggestion_strip">Suggestions only</string>
     <!-- Option to set the toolbar mode to hidden -->
-    <string name="toolbar_mode_hidden">Hidden</string>
+    <string name="toolbar_mode_hidden" tools:keep="@string/toolbar_mode_hidden">Hidden</string>
     <!-- Option to hide clipboard and emoji toolbars when main toolbar is hidden -->
     <string name="toolbar_hiding_global">Hide clipboard and emoji toolbars too</string>
     <!-- Title of the setting to set toolbar keys -->
@@ -337,6 +372,7 @@
     <string name="redo" tools:keep="@string/redo">Redo</string>
     <string name="close_history" tools:keep="@string/close_history">Close clipboard history</string>
     <string name="emoji" tools:keep="@string/emoji">Emoji</string>
+    <string name="floating" tools:keep="@string/floating">Floating Keyboard</string>
     <!-- Title of the setting to set clipboard toolbar keys -->
     <string name="clipboard_toolbar_keys">Select clipboard toolbar keys</string>
     <!-- Title of the setting to set pinned toolbar keys -->
@@ -359,20 +395,22 @@
     <string name="prefs_long_press_keyboard_to_change_lang_summary">Long pressing space key will prompt input method selection menu</string>
     <!-- Title of the setting enabling long press on symbols key to switch to numpad -->
     <string name="prefs_long_press_symbol_for_numpad">Long press symbols key for numpad</string>
-    <!-- Title of the setting for reduced distance between keys -->
+    <!-- Title of the setting for reduced distance between keys, todo: not used any more -->
     <string name="prefs_narrow_key_gaps">Narrow key gaps</string>
+    <!-- Title of the setting for setting distance between keys -->
+    <string name="prefs_key_gap_scale">Key gap scale</string>
     <!-- Title of the setting for setting keyboard height -->
     <string name="prefs_keyboard_height_scale">Keyboard height scale</string>
     <!-- Title of the setting for setting bottom padding height -->
     <string name="prefs_bottom_padding_scale">Bottom padding scale</string>
-    <!-- Title of the setting for setting bottom padding height in landscape mode, todo: remove after merge -->
-    <string name="prefs_bottom_padding_scale_landscape">Bottom padding scale (landscape)</string>
-    <!-- Title of the setting for adjusting font size on the keyboard -->
+    <!-- Title of the setting for setting height of the bottom row -->
+    <string name="prefs_bottom_row_scale">Bottom row scale</string>
     <!-- Title of the setting for setting side padding -->
     <string name="prefs_side_padding_scale">Side padding scale</string>
-    <!-- Title of the setting for setting side padding in landscape mode, todo: remove after merge -->
-    <string name="prefs_side_padding_scale_landscape">Side padding scale (landscape)</string>
+    <!-- Title of the setting for adjusting font size on the keyboard -->
     <string name="prefs_font_scale">Keyboard font scale</string>
+    <!-- Title of the setting for adjusting font size of the long-press hints -->
+    <string name="prefs_hint_font_scale">Key hint font scale</string>
     <!-- Title of the setting for adjusting font size in emoji view -->
     <string name="prefs_emoji_font_scale">Emoji view font scale</string>
     <!-- Title of the setting for adjusting emoji key size to fit emoji size in emoji view -->
@@ -385,6 +423,8 @@
     <string name="prefs_space_bar_text">Custom text on space bar</string>
     <!-- Title of the setting for adding / removing custom font file -->
     <string name="custom_font">Set custom font from file</string>
+    <!-- Title of the setting for adding / removing custom font file used only for emojis -->
+    <string name="custom_emoji_font">Set custom emoji font from file</string>
     <!-- Description for English (UK) keyboard subtype
          (UK) should be an abbreviation of United Kingdom. -->
     <string name="subtype_en_GB">English (UK)</string>
@@ -406,11 +446,18 @@
     <string name="subtype_dag">Dagbani</string>
     <!-- Description for Sesotho (https://en.wikipedia.org/wiki/Sesotho_language) keyboard subtype -->
     <string name="subtype_st">Sesotho</string>
+    <!-- Name for Dargwa (https://en.wikipedia.org/wiki/Dargwa_language) keyboard subtype -->
     <string name="subtype_dru">Dargwa (Urakhi)</string>
+    <!-- Name for Eastern Mari (https://en.wikipedia.org/wiki/Meadow_Mari_language) keyboard subtype -->
+    <string name="subtype_mhr">Mari (Eastern)</string>
+    <!-- Name for Toki Pona (https://en.wikipedia.org/wiki/Toki_Pona) keyboard subtype -->
+    <string name="subtype_tok">Toki Pona</string>
     <!-- Description for a generic language / layout combination. %1$s is the language, %2$s is the layout -->
     <string name="subtype_with_layout_generic">%1$s (%2$s)</string>
     <!-- Description for "LANGUAGE_NAME" (Extended) keyboard subtype -->
     <string name="subtype_generic_extended">%s (Extended)</string>
+    <!-- Description for "LANGUAGE_NAME" (4-row) keyboard subtype -->
+    <string name="subtype_generic_4row">%s (4-row)</string>
     <!-- Description for "LANGUAGE_NAME" (Traditional) keyboard subtype -->
     <string name="subtype_generic_traditional">%s (Traditional)</string>
     <!-- Description for "LANGUAGE_NAME" (Akkhor) keyboard subtype with explicit keyboard layout -->
@@ -419,6 +466,8 @@
     <string name="subtype_probhat_bn_BD">%s (Probhat)</string>
     <!-- Description for "LANGUAGE_NAME" (Baishakhi) keyboard subtype with explicit keyboard layout -->
     <string name="subtype_baishakhi_bn_IN">%s (Baishakhi)</string>
+    <!-- Description for "LANGUAGE_NAME" (Khipro) keyboard subtype with explicit keyboard layout -->
+    <string name="subtype_khipro_bn">%s (Khipro)</string>
     <!-- Description for "LANGUAGE_NAME" (Compact) keyboard subtype with explicit keyboard layout -->
     <string name="subtype_generic_compact">%s (Compact)</string>
     <!-- Description for "LANGUAGE_NAME" (Phonetic) keyboard subtype with explicit keyboard layout -->
@@ -459,8 +508,6 @@ language, hence "No language". -->
     <string name="copy_to_clipboard">Copy to Clipboard</string>
     <!-- Error message when file cannot be read -->
     <string name="file_read_error">Cannot read file</string>
-    <!-- (currently not used) Button text for copying an existing layout -->
-    <string name="button_copy_existing_layout">Copy existing layout</string> <!-- todo: use it or remove it -->
     <!-- Message when deleting a layout -->
     <string name="delete_layout">Really delete custom layout %s?</string>
     <!-- Message when layout to be deleted is in use -->
@@ -475,6 +522,8 @@ language, hence "No language". -->
     <string name="layout_functional_keys" tools:keep="@string/layout_functional_keys">Functional keys</string>
     <!-- Name for functional keys layout for tablets -->
     <string name="layout_functional_keys_tablet" tools:keep="@string/layout_functional_keys_tablet">Functional keys (large screen)</string>
+    <!-- Name for special functional keys layout for Khipro -->
+    <string name="layout_functional_keys_khipro" tools:keep="@string/layout_functional_keys">Functional keys (Khipro)</string>
     <!-- Name for functional keys layout when showing symbols layout -->
     <string name="layout_functional_keys_symbols" tools:keep="@string/layout_functional_keys_symbols">Functional keys (Symbols)</string>
     <!-- Name for functional keys layout when showing more symbols layout -->
@@ -501,8 +550,12 @@ language, hence "No language". -->
     <string name="layout_number_row_basic" tools:keep="@string/layout_number_row_basic">Number row (basic)</string>
     <!-- Name for bottom row layout in emoji view -->
     <string name="layout_emoji_bottom_row" tools:keep="@string/layout_emoji_bottom_row">Emoji bottom row</string>
+    <!-- Name for bottom row layout with action key in emoji view -->
+    <string name="layout_emoji_bottom_row_with_action" tools:keep="@string/layout_emoji_bottom_row_with_action">Emoji bottom row with action key</string>
     <!-- Name for bottom row layout in clipboard view -->
     <string name="layout_clip_bottom_row" tools:keep="@string/layout_clip_bottom_row">Clipboard bottom row</string>
+    <!-- Name for bottom row layout with action key in clipboard view -->
+    <string name="layout_clip_bottom_row_with_action" tools:keep="@string/layout_clip_bottom_row_with_action">Clipboard bottom row with action key</string>
     <!-- Title for customizing background image -->
     <string name="customize_background_image">Set background image</string>
     <!-- Title for customizing background image in landscape mode -->
@@ -610,24 +663,17 @@ New dictionary:
     <string name="available_dictionary_experimental">"%s (experimental)"</string>
     <!-- Text shown when dictionary file could not be read -->
     <string name="dictionary_file_error">"Error: Selected file is not a valid dictionary file"</string>
-    <!-- (currently not used) Text shown when dictionary file is not for the selected locale -->
-    <string name="dictionary_file_wrong_locale">"The selected file is for %1$s, but %2$s was expected. Still use it for %2$s?"</string> <!-- todo: use it or remove it -->
     <!-- Text shown when dictionary file is has incompatible script with the keyboard -->
     <string name="dictionary_file_wrong_script">"Error: script not compatible with this keyboard"</string>
-    <!-- (currently not used) Button text for confirm / yes to the dictionary_file_wrong_locale message (above) -->
-    <string name="dictionary_file_wrong_locale_ok">"Still use"</string> <!-- todo: use it or remove it -->
     <!-- Text shown on other errors when loading dictionary file -->
     <string name="dictionary_load_error">"Error loading dictionary file"</string>
     <!-- Message about some dictionary indicating it can be downloaded, but hasn't been yet -->
     <string name="dictionary_available">Dictionary available</string>
     <!-- Hint to tell when the data was last updated. Usage : "Last updated [date]", may contain a : or so. -->
-    <string name="last_update">Last updated</string>
     <!-- Action to delete (a file) -->
     <string name="delete">Delete</string>
     <!-- Text for application version -->
     <string name="version_text">Version %s</string>
-    <!-- User dictionary settings. The title of the dialog to add a new word to the user dictionary. -->
-    <string name="user_dict_settings_add_dialog_title">Add to dictionary</string>
     <!-- User dictionary settings. Label to put before the shortcut field (once a shortcut is registered, the user can type the shortcut and get the word it points to in the suggestions). -->
     <string name="user_dict_settings_add_shortcut_option_name">Shortcut:</string>
     <!-- User dictionary settings. Label to put before the weight field -->
@@ -643,10 +689,7 @@ New dictionary:
     <!-- User dictionary settings. The list item to choose to insert a word into the user dictionary for all languages -->
     <string name="user_dict_settings_all_languages">For all languages</string>
     <!-- User dictionary settings. The text to show for the option that shows the entire list of supported locales to choose one -->
-    <string name="user_dict_settings_more_languages">More languages…</string>
-    <!-- User dictionary settings. Index of the user dictionary
-         This resource is copied from packages/apps/Settings/res/values/strings.xml -->
-    <string name="user_dict_fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="user_dict_settings_more_languages">More languages…</string> <!-- todo: use it or remove it -->
     <!-- Message in user dictionary dialog -->
     <string name="user_dict_word_already_present">This word is already present in the %s user dictionary. Please type another one.</string>
     <!-- User dictionary settings. Text button to add a word -->
@@ -704,7 +747,6 @@ New dictionary:
     <!-- Theme name for user-defined theme -->
     <string name="theme_name_user" tools:keep="@string/theme_name_user">User-Defined</string>
     <!-- Theme name for user-defined theme night mode theme -->
-    <string name="theme_name_user_night" tools:keep="@string/theme_name_user_night">User-Defined (night)</string>
     <!-- Text when determining color automatically -->
     <string name="auto_user_color">Choose color automatically</string>
     <!-- Menu item for showing fewer colors -->
@@ -714,9 +756,7 @@ New dictionary:
     <!-- Menu item for showing all colors -->
     <string name="all_colors">Show all colors</string>
     <!-- Warning message displayed when showing all colors -->
-    <string name="all_colors_warning">This setting exposes all colors that are used internally. The list of colors may change at any time. The default color is random, and the names will not be translated.</string>
-    <!-- (currently not used) Description for selection of user-defined colors. -->
-    <string name="select_user_colors_summary">Select colors for text and backgrounds</string> <!-- todo: use it or remove it -->
+    <string name="all_colors_warning">This setting exposes all colors that are used internally. The list of colors may change at any time. The default is derived from the normal colors, and the names will not be translated.</string>
     <!-- Selection: background color. -->
     <string name="select_color_background">Keyboard background</string>
     <!-- Selection: key text color. -->
@@ -743,12 +783,20 @@ New dictionary:
     <string name="get_layouts_message">"You can find and share layouts in the %s."</string>
     <!-- Text to be used in get_colors_message and get_layouts_message -->
     <string name="discussion_section_link">"discussion section"</string>
-    <!-- Settings screen title for about-->
+    <!-- Settings screen title for about -->
     <string name="settings_screen_about">About</string>
-    <!-- version for about screen-->
+    <!-- version for about screen -->
     <string name="version">Version</string>
-    <!-- github repo link for about screen-->
+    <!-- github repo link for about screen -->
     <string name="about_github_link">View on GitHub</string>
+    <!-- link to the wiki for about screen -->
+    <string name="about_wiki_link">Go to Wiki</string>
+    <!-- description for wiki link -->
+    <string name="about_wiki_link_description">The Wiki can be improved by any GitHub user!</string>
+    <!-- links to community stuff -->
+    <string name="about_community_links">Community links</string>
+    <!-- description for about_community_links -->
+    <string name="about_community_links_description">Themes, layout editor, discussions, …</string>
     <!-- preference title for saving the log to a file -->
     <string name="save_log">Save log</string>
     <!-- license for about screen-->
@@ -757,8 +805,6 @@ New dictionary:
     <string name="gnu_gpl">GNU General Public License v3.0</string>
     <!-- Button to close a dialog where neither "ok" nor "cancel" are suitable. Preferably 10 characters or less. -->
     <string name="dialog_close">Close</string>
-    <!-- (currently not used) Preference for selecting system locales -->
-    <string name="use_system_language_to_select_input_method_subtypes">"Use system languages"</string> <!--todo: use it (again) or remove it -->
     <!-- Hint for users to tap the languages for settings -->
     <string name="text_tap_languages">Tap the language to open settings</string>
     <!-- Title of internal InputMethodPicker, strings should be same as the ones from Android system -->
@@ -866,13 +912,27 @@ New dictionary:
     <!-- Option for no action when (currently only used for swiping the spacebar) -->
     <string name="action_none">None</string>
     <!-- Option to move the cursor when swiping the spacebar -->
-    <string name="space_swipe_move_cursor_entry">Move Cursor</string>
+    <string name="space_swipe_move_cursor_entry">Move cursor</string>
     <!-- Option to toggle the numpad when swiping the spacebar -->
-    <string name="space_swipe_toggle_numpad_entry">Toggle Numpad</string>
+    <string name="space_swipe_toggle_numpad_entry">Toggle numpad</string>
+    <!-- Option to hide the keyboard when swiping the spacebar -->
+    <string name="space_swipe_hide_keyboard_entry">Hide keyboard</string>
+    <!-- Option to use touchpad when swiping the spacebar -->
+    <string name="space_swipe_touchpad_mode_entry">Touchpad mode</string>
+    <!-- Option to adjust spacebar-touchpad sensitivity -->
+    <string name="touchpad_sensitivity">Touchpad sensitivity</string>
+    <!-- Option to enable or disable automatic scrolling when the cursor reaches the keyboard edges -->
+    <string name="touchpad_edge_scroll">Touchpad edge scrolling</string>
+    <!-- Description for the touchpad edge scrolling option -->
+    <string name="touchpad_edge_scroll_description">Automatically scroll when sliding to the edge of the keyboard</string>
     <!-- Title of the setting for variable toolbar direction -->
     <string name="var_toolbar_direction">Variable toolbar direction</string>
     <!-- Description of the variable toolbar direction setting -->
     <string name="var_toolbar_direction_summary">Reverse direction when a right-to-left keyboard subtype is selected</string>
+    <!-- Title of the setting for showing toolbar only when a hardware keyboard is connected -->
+    <string name="toolbar_only_with_hw_keyboard">Show only toolbar with physical keyboard</string>
+    <!-- Description of the setting for showing toolbar only when a hardware keyboard is connected -->
+    <string name="toolbar_only_with_hw_keyboard_summary">You still need to enable showing virtual keyboard in system settings</string>
     <!-- Title of the settings for adjusting the language swipe gesture distance -->
     <string name="prefs_language_swipe_distance">Switch language swipe distance</string>
     <!-- Title of the setting to customize toolbar key codes -->
@@ -905,4 +965,341 @@ New dictionary:
     <string name="custom_subtype">Custom subtype</string>
     <!-- Name for landscape orientation, used in various settings -->
     <string name="landscape">Landscape</string>
+    <!-- When a foldable phone is folded -->
+    <string name="folded">Folded</string>
+    <!-- Emoji search title bar text -->
+    <string name="emoji_search_title">Search emoji</string>
+    <!-- Placeholder text for search field -->
+    <string name="search_field_placeholder">Search</string>
+    <!-- Button to show later -->
+    <string name="ask_later">Ask me later</string>
+    <!-- Switch to toggle suggestions when using the spell checker -->
+    <string name="spell_check_suggestions">Show spellchecker suggestions</string>
+    <!-- Description for toggling suggestions when using the spell checker -->
+    <string name="spell_check_suggestions_summary">Show suggestions when selecting a word with red underline. Requires setting app as default spell checker.</string>
+
+
+    <!-- gesture data gathering, new strings for normal use should go above -->
+
+    <!-- Title for screen to provide gesture data for library development
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_screen">Gesture data gathering</string>
+    <!-- Descriptive text about gesture data gathering (parsed as HTML)
+    string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_description">
+        &lt;b&gt;Welcome to the gesture data gathering screen!&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+        This is part of an &lt;a href=https://nlnet.nl/project/GestureTyping&gt;NLnet-funded project&lt;/a&gt; striving to produce a fully open source gesture typing library capable of replacing the closed source Google library.&lt;br/&gt;
+        The result is planned to be a simple replacement for AOSP-based keyboards, but also usable with other keyboards, e.g. FlorisBoard.&lt;br/&gt;&lt;br/&gt;
+        For developing the library, it is tremendously helpful to have detailed gesture data in different languages and by different users available.&lt;br/&gt;
+        By gathering and submitting gesture typing data you can contribute to an open set of gesture data that will used for library development. The dataset will be published under a CC BY-SA 4.0 license some time after the data gathering phase is finished on %s.
+        Once you have collected data, you can submit it using the share icon on the bottom of this screen.
+    </string>
+    <!-- Button text for showing gesture_data_description and gesture_data_description_modes
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_info">What\'s this?</string>
+    <!-- Descriptive text about gesture data gathering modes (parsed as HTML)
+    string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_description_modes">
+        The \"safe\" way to contribute there is the &lt;i&gt;active gathering&lt;/i&gt; mode, where you are shown a specific word, and enter this word using gesture typing.&lt;br/&gt;
+        You can also use the &lt;i&gt;background gathering&lt;/i&gt; mode, where you can provide samples from your normal gesture typing from other apps.
+        Due to the sensitivity of this approach, this is opt-in, configurable, and has a review screen for the data you\'re about to submit.
+    </string>
+    <!-- Descriptive text about privacy of gesture data
+    string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_description_privacy">
+        Privacy\n\n
+        The data you submit consists of target word, keyboard layout and dimensions, gesture (times and coordinates), suggestions by the current library, hash of the used dictionaries, app version, data gathering mode, whether the gesture typing library is the "default" Google library, and an ID to go with each gesture.\n
+        Submitted data will be downloaded and deleted from the ProtonMail mailbox where it is stored at our earliest convenience.
+        After the gesture data gathering phase has ended, the accumulated data set from all users will be published under the Creative Commons BY-SA 4.0 license.\n\n
+
+        As part of trying to protect your privacy, you won\'t be listed explicitly as an author. Your credit will be as \"The HeliBoard Gesture Data Project Contributors.\" It should not be possible to connect the data you generate in this screen to your identity. However, it might be possible to determine which gestures were made by the same person.
+        This can be done e.g. from a custom keyboard layout, keyboard dimensions, language, or individual gesturing style.\n\n
+    </string>
+    <!-- Button text for showing gesture_data_description_privacy
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_privacy">Privacy</string>
+    <!-- Button for getting the data file
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_get_data">Share gesture data file</string>
+    <!-- Button for deleting the data file
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_delete_data">Clear gesture data</string>
+    <!-- Button for sending the data file via mail
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_send_mail">Send data via email</string>
+    <!-- Button for copying the target mail address
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_copy_mail">Copy email address</string>
+    <!-- Comment about mail address shown when sharing data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_mail_use">Note that the email address is intended for data submissions, you may not get fast or consistent replies.</string>
+    <!-- Info text shown when sharing data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_share_duplicate">You can share already submitted data again, in case you\'re not sure it was received correctly.
+        We detect and remove duplicates when processing the data.
+    </string>
+    <!-- Text requesting the user to gesture a word
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_please_type">Please gesture type:</string>
+    <!-- Text requesting the user to switch to HeliBoard, in case a different keyboard app is active
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_please_switch_keyboard">Please switch to %s</string>
+    <!-- Button for saving data and go to next word (now only shows up when the word %s is not in suggestions)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_next_save">Got "%s". Click if you\'re sure you gestured correctly</string>
+    <!-- Button for next word without saving data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_next">Skip word</string>
+    <!-- Text stating how many words were written using active data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_active_count">%1$s words in this session, %2$s words total (%3$s already submitted or deleted)</string>
+    <!-- Title for the screen to review and submit gesture data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_review_screen_title">Review &amp; share gesture data</string>
+    <!-- Short text on how many words are selected or available
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_words_selected">%s words</string>
+    <!-- Short title for date range display
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_date_range">Date range</string>
+    <!-- Text displayed when the user has more than 10000 gestures waiting to be submitted
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_much_data">You have a lot of unsubmitted data. Please submit and then remove the old data.</string>
+    <!-- Button text for opening an info dialog containing gesture_data_active_description
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_how_to_use">How to use</string>
+    <!-- Explanatory text about active gesture data gathering (parsed as HTML, containing a link to the dictionaries repository)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_active_description">Tap on &lt;i&gt;Start active gathering&lt;/i&gt;, optionally switch the dictionary, and start gesture typing the displayed word.&lt;br/&gt;
+        If your gesture matches the word, the data is saved and the next word is displayed. Otherwise you can retry, skip the word, or confirm you gestured correctly.&lt;br/&gt;
+        You can only use dictionaries that are built into the app or available in the &lt;a href=%s&gt;dictionaries repository&lt;/a&gt;, no other words will be used.
+    </string>
+    <!-- Title for active gesture data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_active">Active gathering</string>
+    <!-- Text for starting active gesture data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_active_start">Start active gathering</string>
+    <!-- Text for stopping active gesture data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_active_stop">Stop active gathering</string>
+    <!-- Message informing the user about coming end of data gathering (shown 2 weeks in advance, %s is the date)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_ends_at">Gesture data gathering phase will end at %s. Please submit your data before that date.</string>
+    <!-- Message informing the user that gesture data gathering is over
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_ended">Gesture data gathering phase ended at %s. You can share your existing data, but not add anything new.</string>
+    <!-- Text for sharing all available words (%s is number of words)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_share_all">Share all %s words</string>
+    <!-- Text for sharing only words that were not shared previously
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_share_new">Share %s not previously submitted words</string>
+    <!-- Text for delete dialog, offering delete all / shared / cancel options
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_delete_dialog">You have data for %1$s new and %2$s already shared words.</string>
+    <!-- Text informing about the limit of exporting at most %s words at once
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_share_limit">To avoid exceeding size limits, only the first %s words will be exported</string>
+    <!-- Short text for delete all button (%s is number of words)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_delete_dialog_all">Delete all %s words</string>
+    <!-- Delete confirmation message
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_delete_dialog_confirm">Are you sure? This will delete %s words. Make sure your shared date is submitted!</string>
+    <!-- Short text for delete all button (%s is number of words)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_delete_dialog_submitted">Delete %s submitted words</string>
+    <!-- Message that many words are waiting to be shared (%s is 5000, 10000, ...)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_many_not_shared_words">You have more than %s words waiting to be submitted</string>
+    <!-- Body of the mail for sending gesture data. Translatable because it contains information relevant for the user.
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_email_body">IMPORTANT:\n\n
+        Hey there!\n
+        As a reminder, this data is going to be publicly shared under the CC BY-SA 4.0 license, and you won\'t be listed as an author to protect your privacy.\n\n
+        Thanks for sharing the rights to your data with us. We will put it to good use!\n\n
+        Please note that changing the wording of this notice doesn\'t change what we will do with your data. This isn\'t a contract to be modified, it is just a friendly reminder!\n
+        If you want to send us a message along with your data, write it below the line here.\n
+        ---------------------------------------------\n
+    </string>
+    <!-- Message informing user about the possibility of gesture data gathering (dialog in main settings)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_promotion_message">
+        Hey there!\n
+        Since you installed the gesture typing library, you might be interested in HeliBoard\'s project for creating a fully open gesture typing library.
+        You can help by contributing gesture data. For more information visit the gesture data gathering screen.
+    </string>
+    <!-- Message asking the user to contribute to gesture data gathering again (dialog in main settings)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_reminder_message">
+        Hey there!\n
+        You previously used the gesture data gathering, but did not add data for quite a while. Do you want to contribute again?
+    </string>
+    <!-- Button to go to gesture data gathering screen
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_take_me_there">Take me there</string>
+    <!-- Message followed by a list of links
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="background_gesture_data_links">Information on background gathering:</string>
+    <string name="gesture_data_links">Information on active gathering:</string>
+    <!-- Switch text for enabling background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_switch">Use background data gathering</string>
+    <!-- Text under the switch showing in how many apps background data gathering is allowed
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_allowed_apps">Allowed apps: %s</string>
+    <!-- Switch text for enabling discard-by-default mode for background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_manual_save">Discard by default</string>
+    <!-- Description text for enabling discard-by-default mode for background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_manual_save_summary">Data is saved manually via the toolbar key</string>
+    <!-- Button for opening info dialog
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_info">More information</string>
+    <!-- Info dialog main message (other sections in different strings)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_info_message">
+        Turning on background data collection allows Heliboard to record gestures you type in other apps.
+        This is very useful for the gesture typing project as it can produce a considerable amount of data, albeit at lower quality than active gathering.
+        Background data collection is not a replacement for actively gathered data, it is meant to be an addition, as data quality is more important than quantity.\n\n
+        Background gathering has high potential of collecting data that you may consider too private to share, even when published anonymously.
+        For this reason we want to clarify when gesture data is being gathered, and how you can influence it.\n\n
+        You can find a video explaining more about background data gathering in the links section at the bottom right of this screen.
+    </string>
+    <!-- Title for info dialog section about background data gathering indicator
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_indicator">Data gathering indicator</string>
+    <!-- Message for info dialog section about background data gathering indicator (which is displayed above the text), parsed as HTML
+     %1$s -> gesture_data_background_gathering_control
+     %2$s -> gesture_data_background_gathering_manual_save
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_indicator_message">
+        Any time gesture data may be recorded, you will see an indicator icon in the bottom left of the keyboard.
+        When the circle is filled, at least one gesture has been collected and is waiting to be saved.
+        Data is saved either using the toolbar key (see &lt;i&gt;%1$s&lt;/i&gt;) or automatically (when &lt;i&gt;%2$s&lt;/i&gt; is disabled).
+        Automatic saving usually happens when switching text fields or closing the keyboard, but may also happen if the text field changes for some other reason.
+        When data is being saved, the indicator will turn green for a short time.
+    </string>
+    <!-- Title for info dialog section about controlling background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_control">How to control what is saved</string>
+    <!-- Message for info dialog section about controlling background data gathering, parsed as HTML
+     %1$s -> gesture_data_background_apps_button
+     %2$s -> gesture_data_background_excluded_words_button
+     %3$s -> gesture_data_background_gathering_manual_save
+     %4$s -> background_gathering
+     %5$s -> background_gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_control_message">
+        Independent of the settings, background data gathering is disabled when using incognito mode. It is also disabled for input fields marked as sensitive (passwords, email, or whenever the input field requests the keyboard to not learn the words).
+        Only words that are in a main dictionary (built-in or from the &lt;a href=%5$s&gt;dictionaries repository&lt;/a&gt;) will be collected.
+        &lt;br&gt;&lt;br&gt;
+
+        Using &lt;i&gt;%1$s&lt;/i&gt; you can select which apps you want to allow background data gathering in.
+        The default setting disables every app, with opt-in per app. You can choose to instead enable every app, and opt-out per app. Doing so is more convenient, but will automatically allow data collection from newly installed apps. This could cause data to be collected which you did not expect.
+        &lt;br&gt;&lt;br&gt;
+
+        With &lt;i&gt;%2$s&lt;/i&gt; you can exclude specific sensitive words.
+        When gesturing an excluded word, the indicator icon will still show the filled icon (\"data waiting to be saved\"), but the data will be discarded when normally it would be saved.
+        Any blocked words that have already been saved before the word was blocked, will be discarded on exporting data.&lt;br&gt;
+        Note that background gathering will only collect words that are already in a main dictionary, so the only words you will probably need to block are common words that could be used to personally identify you such as: your name, street, city, territory, etc.
+        &lt;br&gt;&lt;br&gt;
+
+        When &lt;i&gt;%3$s&lt;/i&gt; is enabled, data is saved only if you choose to do so manually using the &lt;i&gt;%4$s&lt;/i&gt; toolbar key (see below).
+        If data is not saved, pending data will be deleted when changing input field or closing the keyboard.&lt;br&gt;
+        App and word exclusions still apply in this mode.
+        &lt;br&gt;&lt;br&gt;
+
+        The &lt;i&gt;%4$s&lt;/i&gt; toolbar key can be used to control data gathering. The effect of a press depends on the current state:
+        When background gathering is disabled, it will be enabled.&lt;br&gt;
+        A long-press will disable gathering for five minutes.&lt;br&gt;
+        You can re-enable background data gathering earlier with a normal key press.&lt;br&gt;
+        When &lt;i&gt;%3$s&lt;/i&gt; is enabled, pending data will be saved.&lt;br&gt;
+        Otherwise, pending data will be discarded.&lt;br&gt;
+    </string>
+    <!-- Message for info dialog section about reviewing and sharing background data, parsed as HTML
+     %1$s -> gesture_data_review_screen_title
+     %2$s -> https://codeberg.org/eclexic/swipe-o-scope
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_gathering_review_message">
+        Using &lt;i&gt;%1$s&lt;/i&gt; screen you can check and filter the gathered data, delete data you consider too sensitive, and share data.
+        The delete and share buttons will operate on the filtered data, or on the selection if you use long-press to select words.
+        (Note that the \"normal\" share icon outside the &lt;i&gt;%1$s&lt;/i&gt; screen will only share data from active gathering.)&lt;br&gt;
+        The order of shared data is randomized, so nothing more than the individual words can be deduced.&lt;br&gt;
+        If you want to view the full data that is stored for a gesture, you can share it to a file, and load the file in &lt;a href=%2$s&gt;Swipe-O-Scope&lt;a&gt;.
+    </string>
+    <!-- Button for opening app selection for background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_apps_button">Manage allowed apps</string>
+    <!-- Text for app selection for background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_apps">Select apps to include in background data gathering</string>
+    <!-- Switch text for including apps by default
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_apps_include_default">Include apps by default</string>
+    <!-- Button for opening list of words that will never be saved in background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_excluded_words_button">Manage excluded words</string>
+    <!-- Text showing which dictionary the suggestion is coming from
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_dictionary">Dictionary: %s</string>
+    <!-- Text showing position of the chosen suggestion within all suggestion for that gesture
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_position">Position: %s</string>
+    <!-- Button for excluding a specific word from background data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_background_exclude_words">Exclude word from background gathering</string>
+    <!-- Hint indicating that long-press selects entries
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_long_press_select_hint">Long-press to select</string>
+    <!-- Toolbar key to enable / disable background gesture data gathering
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="background_gathering" tools:keep="@string/background_gathering">Background data gathering</string>
+    <!-- Review screen menu entry to display actively gathered data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_show_active">Show actively gathered data</string>
+    <!-- Review screen menu entry to display actively gathered data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_show_background">Show background data</string>
+    <!-- Review screen menu entry to display shared but not deleted gathered data
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_include_shared">Include already submitted data</string>
+    <!-- Review screen text indicating the word is already submitted
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_shared">submitted</string>
+    <!-- Text shown while gesture data is being written, may take up to 30s with 10000 words and a slow phone
+     %s is percent already written
+     %% will be displayed as %
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_saving">Saving… %s%%</string>
+    <!-- Dialog message asking the user whether they want to enable the toolbar key
+     shown when background data gathering is enabled for the first time
+     %1$s -> gesture_data_background_gathering_info
+     %2$s -> background_gathering
+     %3$s -> dictionary_link_text ("here")
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_first_enable_dialog">
+        Welcome to background data gathering!&lt;br&gt;
+        Do you wish to add the &lt;i&gt;%1$s&lt;/i&gt; key to the toolbar?
+        You can use it to control data gathering, read more about it using the &lt;i&gt;%2$s&lt;/i&gt; button.
+        &lt;br&gt;&lt;br&gt;
+        By default, background collection is disabled for all apps. This means nothing will be collected until you chose which apps you allow.
+        You can change it %3$s.
+    </string>
+    <!-- Button for adding the background_gathering toolbar key
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_add_key">Add toolbar key</string>
+    <!-- Dialog message informing the user they don't have a known dictionary for the current locale (parsed as HTML)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_no_known_dict">
+        Background gathering only collects words coming from dictionaries that are built-in or available at the &lt;a href=%s&gt;dictionaries repository&lt;/a&gt;.
+        Currently you have no such dictionary enabled.
+    </string>
+    <!-- Link text for gesture data visualization tool (parsed as HTML)
+     string will probably be removed once data gathering is finished (end of 2026 latest) -->
+    <string name="gesture_data_swipe_o_scope">Tool for visualizing gesture data: &lt;a href=%s&gt;Swipe-O-Scope&lt;/a&gt;</string>
+
+    <!-- new strings should go above the section for gesture data gathering -->
 </resources>

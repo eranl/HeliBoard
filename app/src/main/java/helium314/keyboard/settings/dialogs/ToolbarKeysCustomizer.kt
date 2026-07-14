@@ -33,10 +33,11 @@ import helium314.keyboard.latin.utils.getStringResourceOrName
 import helium314.keyboard.latin.utils.prefs
 import helium314.keyboard.latin.utils.readCustomKeyCodes
 import helium314.keyboard.latin.utils.writeCustomKeyCodes
-import helium314.keyboard.settings.Theme
+import helium314.keyboard.latin.utils.Theme
 import helium314.keyboard.settings.initPreview
-import helium314.keyboard.settings.previewDark
-import helium314.keyboard.settings.screens.GetIcon
+import helium314.keyboard.latin.utils.previewDark
+import androidx.core.content.edit
+import helium314.keyboard.settings.GetIconOrEmpty
 
 @Composable
 fun ToolbarKeysCustomizer(
@@ -64,7 +65,7 @@ fun ToolbarKeysCustomizer(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.clickable { showKeyCustomizer = it }.fillParentMaxWidth()
                     ) {
-                        KeyboardIconsSet.instance.GetIcon(it.name)
+                        KeyboardIconsSet.instance.GetIconOrEmpty(it.name)
                         Text(it.name.lowercase().getStringResourceOrName("", ctx))
                     }
                 }
@@ -82,7 +83,7 @@ fun ToolbarKeysCustomizer(
             onConfirmed = {
                 showDeletePrefConfirmDialog = false
                 onDismissRequest()
-                prefs.edit().remove(key).apply()
+                prefs.edit { remove(key) }
             },
             content = { Text(stringResource(R.string.customize_toolbar_key_code_reset_message)) }
         )
