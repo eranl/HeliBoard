@@ -109,7 +109,6 @@ android {
         target {
             compilerOptions {
                 jvmTarget.set(JvmTarget.JVM_17)
-                freeCompilerArgs = listOf("-XXLanguage:+WhenGuards")
             }
         }
     }
