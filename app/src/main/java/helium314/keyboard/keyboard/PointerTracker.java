@@ -1159,7 +1159,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
         if (key == null) {
             return;
         }
-        sListener.onLongPressKey(key.getCode());
+        final int code = key.getCode();
+        sListener.onLongPressKey(code);
         if (key.hasNoPanelAutoPopupKey()) {
             cancelKeyTracking();
             final int popupKeyCode = key.getPopupKeys()[0].mCode;
@@ -1168,7 +1169,6 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             sListener.onReleaseKey(popupKeyCode, false);
             return;
         }
-        final int code = key.getCode();
         if (code == KeyCode.LANGUAGE_SWITCH
                 || (code == Constants.CODE_SPACE && key.getPopupKeys() == null && Settings.getValues().mSpaceForLangChange)
         ) {
@@ -1179,9 +1179,8 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
                 return;
             }
         }
-        if (code == KeyCode.SYMBOL_ALPHA && Settings.getValues().mLongPressSymbolsForNumpad) {
-            // toggle numpad with sliding input enabled, forcing return to the alpha layout when done
-            sListener.toggleNumpad(true, true);
+        if (code == KeyCode.SYMBOL_ALPHA) {
+            sListener.onLongPressAlphaSymbolForNumpad();
             return;
         }
 
@@ -1259,9 +1258,10 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
     }
 
     private void startLongPressTimer(Key key) {
-        // Note that we need to cancel all active long press shift key timers if any whenever we
-        // start a new long press timer for both non-shift and shift keys.
+        // Note that we need to cancel all active long press shift and symbol key timers if
+        // any whenever we start a new long press timer for both non-shift and shift keys.
         sTimerProxy.cancelLongPressShiftKeyTimer();
+        sTimerProxy.cancelLongPressAlphaSymbolKeyTimer();
         if (sInGesture) return;
         if (key == null) return;
         if (!key.isLongPressEnabled()) return;
@@ -1276,22 +1276,32 @@ public final class PointerTracker implements PointerTrackerQueue.Element,
             sIsShiftLongPressSuppressed = false;
             return;
         }
+        if (code == KeyCode.SYMBOL_ALPHA
+            && (!Settings.getValues().mLongPressSymbolsForNumpad
+                || mKeyboard.mId.getElement() != KeyboardElement.SYMBOLS
+            )
+        ) {
+            return;
+        }
 
         int delay = getLongPressTimeout(code);
         if (delay <= 0) return;
         sTimerProxy.startLongPressTimerOf(this, delay);
     }
 
-    private int getLongPressTimeout(final int code) {
-        final int longpressTimeout = Settings.getValues().mKeyLongpressTimeout;
-        if (code == KeyCode.SHIFT || code == KeyCode.SYMBOL_ALPHA) {
-            // We use slightly longer timeout for shift-lock and the numpad long-press.
-            return longpressTimeout * 3 / 2;
-        } else if (mIsInSlidingKeyInput) {
-            // We use longer timeout for sliding finger input started from a modifier key.
-            return longpressTimeout * 3;
-        }
-        return longpressTimeout;
+    private int getLongPressTimeout(int code) {
+        int longpressTimeout = Settings.getValues().mKeyLongpressTimeout;
+        return switch (code) {
+            case Constants.CODE_SPACE, KeyCode.SHIFT, KeyCode.SYMBOL_ALPHA
+                // We use slightly longer timeout for space, shift-lock, and the numpad long-press.
+                -> longpressTimeout * 3 / 2
+            ;
+            default -> mIsInSlidingKeyInput
+                // We use longer timeout for sliding finger input started from a modifier key.
+                ? longpressTimeout * 3
+                : longpressTimeout
+            ;
+        };
     }
 
     private boolean isClearlyInsideKey(final Key key, final int x, final int y) {
