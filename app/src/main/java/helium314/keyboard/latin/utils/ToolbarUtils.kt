@@ -10,8 +10,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.edit
 import androidx.core.view.forEach
+import helium314.keyboard.event.HapticEvent
 import helium314.keyboard.keyboard.internal.KeyboardIconsSet
 import helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode
+import helium314.keyboard.latin.AudioAndHapticFeedbackManager
 import helium314.keyboard.latin.R
 import helium314.keyboard.latin.common.Constants.Separators
 import helium314.keyboard.latin.settings.Defaults
@@ -247,13 +249,32 @@ fun clearCustomToolbarKeyCodes() {
     customToolbarKeyCodes = null
 }
 
-fun repeatToolbarKey(view: View, onClick: (view: View) -> Unit) {
+fun onClickToolbarKey(view: View, onCodeInput: (Int) -> Unit) {
+    AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(KeyCode.NOT_SPECIFIED, view, HapticEvent.KEY_PRESS)
+    val code = getCodeForToolbarKey(view.tag as ToolbarKey)
+    if (code != KeyCode.UNSPECIFIED) {
+        onCodeInput(code)
+    }
+}
+
+fun onLongClickToolbarKey(view: View, onCodeInput: (Int, Boolean) -> Unit) {
+    AudioAndHapticFeedbackManager.getInstance().performHapticAndAudioFeedback(KeyCode.NOT_SPECIFIED, view, HapticEvent.KEY_LONG_PRESS)
+    val longClickCode = getCodeForToolbarKeyLongClick(view.tag as ToolbarKey)
+    if (longClickCode == KeyCode.KEY_REPEAT) {
+        onClickToolbarKey(view) { onCodeInput(it, false) }
+        repeatToolbarKey(view) { onClickToolbarKey(view) { onCodeInput(it, true) } }
+    } else if (longClickCode != KeyCode.UNSPECIFIED) {
+        onCodeInput(longClickCode, false)
+    }
+}
+
+private fun repeatToolbarKey(view: View, onClick: (view: View) -> Unit) {
     view.handler.postDelayed({
         if (view.isPressed) {
             onClick(view)
             repeatToolbarKey(view, onClick)
         }
-    }, ViewConfiguration.getKeyRepeatDelay().toLong())
+    }, view.resources.getInteger(R.integer.config_key_repeat_interval).toLong())
 }
 
 private var customToolbarKeyCodes: EnumMap<ToolbarKey, Pair<Int?, Int?>>? = null
