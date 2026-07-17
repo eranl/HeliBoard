@@ -104,12 +104,12 @@ fun getCodeForToolbarKeyLongClick(key: ToolbarKey) = Settings.getInstance().getC
     SELECT_WORD -> KeyCode.CLIPBOARD_SELECT_ALL
     COPY -> KeyCode.CLIPBOARD_CUT
     PASTE -> KeyCode.CLIPBOARD
-    LEFT -> KeyCode.WORD_LEFT
-    RIGHT -> KeyCode.WORD_RIGHT
-    UP -> KeyCode.PAGE_UP
-    DOWN -> KeyCode.PAGE_DOWN
-    WORD_LEFT -> KeyCode.MOVE_START_OF_LINE
-    WORD_RIGHT -> KeyCode.MOVE_END_OF_LINE
+    LEFT -> KeyCode.KEY_REPEAT
+    RIGHT -> KeyCode.KEY_REPEAT
+    UP -> KeyCode.KEY_REPEAT
+    DOWN -> KeyCode.KEY_REPEAT
+    WORD_LEFT -> KeyCode.KEY_REPEAT
+    WORD_RIGHT -> KeyCode.KEY_REPEAT
     PAGE_UP -> KeyCode.MOVE_START_OF_PAGE
     PAGE_DOWN -> KeyCode.MOVE_END_OF_PAGE
     BACKGROUND_GATHERING -> KeyCode.BACKGROUND_GATHERING_TEMP_OFF
