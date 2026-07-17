@@ -1118,10 +1118,19 @@ public class Key implements Comparable<Key> {
             mPopupKeysColumnAndFlags = getPopupKeysColumnAndFlagsAndSetNullInArray(params, popupKeys);
             final String[] finalPopupKeys = popupKeys == null ? null : PopupKeySpec.filterOutEmptyString(popupKeys);
             if (finalPopupKeys != null) {
-                actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
-                mPopupKeys = new PopupKeySpec[finalPopupKeys.length];
+                PopupKeySpec[] tempPopupKeys = new PopupKeySpec[finalPopupKeys.length];
+                boolean hasRepeatPopup = false;
                 for (int i = 0; i < finalPopupKeys.length; i++) {
-                    mPopupKeys[i] = new PopupKeySpec(finalPopupKeys[i], needsToUpcase, localeForUpcasing);
+                    tempPopupKeys[i] = new PopupKeySpec(finalPopupKeys[i], needsToUpcase, localeForUpcasing);
+                    if (tempPopupKeys[i].mCode == KeyCode.KEY_REPEAT)
+                        hasRepeatPopup = true;
+                }
+                if (hasRepeatPopup) {
+                    mPopupKeys = null;
+                    actionFlags |= ACTION_FLAGS_IS_REPEATABLE;
+                } else {
+                    mPopupKeys = tempPopupKeys;
+                    actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
                 }
             } else {
                 mPopupKeys = null;

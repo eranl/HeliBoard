@@ -305,7 +305,7 @@ sealed interface KeyData : AbstractKeyData {
         }
     }
 
-    override fun compute(params: KeyboardParams): KeyData? {
+    override fun compute(params: KeyboardParams, isPopup: Boolean): KeyData? {
         require(groupId in GROUP_NO_DEFAULT_POPUP..GROUP_ENTER) { "only groupIds from -1 to 3 are supported" }
         require(label.isNotEmpty() || type == KeyType.PLACEHOLDER || code != KeyCode.UNSPECIFIED) { "non-placeholder key has no code and no label" }
         require(width >= 0f || width == -1f) { "illegal width $width" }
@@ -315,7 +315,7 @@ sealed interface KeyData : AbstractKeyData {
             return null
         }
 
-        val newCode = code.checkAndConvertCode()
+        val newCode = code.checkAndConvertCode(isPopup)
         val newLabelFlags = if (labelFlags == 0 && params.mId.element.isNumberLayout) {
             if (type == KeyType.NUMERIC) {
                 when (params.mId.element) {
@@ -593,7 +593,7 @@ class MultiTextKeyData(
 ) : KeyData {
     @Transient override val code: Int = KeyCode.MULTIPLE_CODE_POINTS
 
-    override fun compute(params: KeyboardParams): KeyData {
+    override fun compute(params: KeyboardParams, isPopup: Boolean): KeyData {
         // todo: does this work? maybe convert label to | style?
         //  but if i allow negative codes, ctrl+z could be on a single key (but floris doesn't support this anyway)
         return this

@@ -184,7 +184,7 @@ object KeyCode {
     const val BACKGROUND_GATHERING =         -10052 // will be useless after removal of gesture data gathering (keep for compatibility)
     const val BACKGROUND_GATHERING_TEMP_OFF =-10053 // will be useless after removal of gesture data gathering (keep for compatibility)
 
-    // Valid for long press only
+    // Valid in popups and for toolbar key long press only
     const val KEY_REPEAT =                -11000
 
     // Intents

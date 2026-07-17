@@ -35,6 +35,7 @@ import java.io.File
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
@@ -526,6 +527,26 @@ f""", // no newline at the end
         assertEquals(KeyCode.TAB, keys[6].mCode)
         assertEquals("⌚", keys[6].mPopupKeys?.first()?.mLabel)
         assertEquals(KeyCode.TIMESTAMP, keys[6].mPopupKeys?.first()?.mCode)
+    }
+
+    @Test fun keyRepeatPopup() {
+        val key = LayoutParser.parseJsonString("""[[{ "label": "c", "popup": {
+          "main": { "code":   -11000, "label": "x" }
+    } }]]""").flatMap { row -> row.mapNotNull { it.compute(params) } }.single()
+        assertEquals(null, key.toKeyParams(params).mPopupKeys)
+        assertEquals(1, key.toKeyParams(params).mActionFlags and 0x01 )
+        val key2 = LayoutParser.parseSimpleString("a b|!code/-11000").flatMap { row -> row.mapNotNull { it.compute(params) } }.single()
+        assertEquals(null, key2.toKeyParams(params).mPopupKeys)
+        assertEquals(1, key2.toKeyParams(params).mActionFlags and 0x01 )
+    }
+
+    @Test fun keyRepeatKeyDoesNotWork() {
+        assertFails {
+            LayoutParser.parseJsonString("""[[{ "label": "c", "code":   -11000 }} }]]""")
+                .flatMap { row -> row.mapNotNull { it.compute(params) } }.single()
+        }
+        // but unfortunately the following does work:
+        LayoutParser.parseSimpleString("a|!code/-11000").flatMap { row -> row.mapNotNull { it.compute(params) } }.single()
     }
 
     private data class Expected(
