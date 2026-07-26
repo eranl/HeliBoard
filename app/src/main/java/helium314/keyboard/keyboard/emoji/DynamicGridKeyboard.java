@@ -255,17 +255,6 @@ final class DynamicGridKeyboard extends Keyboard {
         }
     }
 
-    Key getKey(Collection<DynamicGridKeyboard> keyboards, Object o) {
-        if (o instanceof Integer code) {
-            return getKeyByCode(keyboards, code);
-        }
-        if (o instanceof final String outputText) {
-            return getKeyByOutputText(keyboards, outputText);
-        }
-        Log.w(TAG, "Invalid object: " + o);
-        return null;
-    }
-
     private int getKeyX0(final int index) {
         final int column = index % mColumnsNum;
         return column * mHorizontalStep + mHorizontalGap / 2;

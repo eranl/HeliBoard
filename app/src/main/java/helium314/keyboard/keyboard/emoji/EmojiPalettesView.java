@@ -349,11 +349,6 @@ public final class EmojiPalettesView extends LinearLayout
         initDictionaryFacilitator();
     }
 
-    public void addRecent(String emoji) {
-        initialize();
-        addRecentKey(getRecentsKeyboard().getKey(mEmojiCategory.getKeyboards(), emoji));
-    }
-
     void addRecentKey(final Key key) {
         if (Settings.getValues().mIncognitoModeEnabled) {
             // We do not want to log recent keys while being in incognito
