@@ -21,6 +21,7 @@ object KeyLabel {
     const val DELETE = "delete"
     const val SHIFT = "shift"
     const val NUMPAD = "numpad"
+    const val DPAD = "dpad"
     const val SYMBOL = "symbol"
     const val ALPHA = "alpha"
     const val SYMBOL_ALPHA = "symbol_alpha"
@@ -92,8 +93,12 @@ object KeyLabel {
 
     fun keyLabelToActualLabel(label: String, params: KeyboardParams): String {
         val newLabel = when (label) {
-            SYMBOL_ALPHA -> if (params.mId.element.isAlphabet) params.mLocaleKeyboardInfos.labelSymbol else params.mLocaleKeyboardInfos.labelAlphabet
-            SYMBOL -> params.mLocaleKeyboardInfos.labelSymbol
+            SYMBOL_ALPHA -> if (params.mId.element.isAlphabet) {
+                params.mLocaleKeyboardInfos.labelSymbol
+            } else {
+                params.mLocaleKeyboardInfos.labelAlphabet
+            }
+            SYMBOL -> params.mLocaleKeyboardInfos.labelSymbolInNumpad
             ALPHA -> params.mLocaleKeyboardInfos.labelAlphabet
             COMMA -> params.mLocaleKeyboardInfos.labelComma
             PERIOD -> getPeriodLabel(params)
@@ -139,7 +144,7 @@ object KeyLabel {
         KeyboardElement.SYMBOLS -> params.mLocaleKeyboardInfos.getShiftSymbolLabel(
             Settings.getInstance().isTablet)
         KeyboardElement.ALPHABET_MANUAL_SHIFTED, KeyboardElement.ALPHABET_AUTOMATIC_SHIFTED -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY_SHIFTED}"
-        KeyboardElement.ALPHABET_SHIFT_LOCKED, KeyboardElement.ALPHABET_SHIFT_LOCK_SHIFTED -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY_LOCKED}"
+        KeyboardElement.ALPHABET_SHIFT_LOCKED -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY_LOCKED}"
 
         else -> "!icon/${KeyboardIconsSet.NAME_SHIFT_KEY}"
     }
@@ -155,21 +160,21 @@ object KeyLabel {
     }
 
     private fun getSpaceLabel(params: KeyboardParams): String =
-        if (params.mId.element.isAlphaOrSymbol || params.mId.element.isBottomRow)
+        if (params.mId.element.takesFunctionalKeys || params.mId.element.isBottomRow)
             "!icon/space_key|!code/key_space"
         else "!icon/space_key_for_number_layout|!code/key_space"
 
     // todo (later): should this be handled with metaState? but metaState shift would require LOTS of changes...
     private fun getActionKeyCode(params: KeyboardParams): String {
         params.mId.internalAction?.let { return "${KeyboardCodesSet.PREFIX_CODE}${it.code}" }
-        return if (params.mId.isMultiLine && (params.mId.element == KeyboardElement.ALPHABET_MANUAL_SHIFTED || params.mId.element == KeyboardElement.ALPHABET_SHIFT_LOCK_SHIFTED))
+        return if (params.mId.isMultiLine && params.mId.element == KeyboardElement.ALPHABET_MANUAL_SHIFTED)
             "!code/key_shift_enter"
         else "!code/key_enter"
     }
 
     private fun getActionKeyLabel(params: KeyboardParams): String {
         params.mId.internalAction?.let { return it.label }
-        if (params.mId.isMultiLine && (params.mId.element == KeyboardElement.ALPHABET_MANUAL_SHIFTED || params.mId.element == KeyboardElement.ALPHABET_SHIFT_LOCK_SHIFTED))
+        if (params.mId.isMultiLine && params.mId.element == KeyboardElement.ALPHABET_MANUAL_SHIFTED)
             return "!icon/enter_key"
         val iconName = when (params.mId.imeAction) {
             EditorInfo.IME_ACTION_GO               -> KeyboardIconsSet.NAME_GO_KEY

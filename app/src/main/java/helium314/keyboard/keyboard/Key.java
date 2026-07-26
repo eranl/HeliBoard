@@ -64,7 +64,6 @@ public class Key implements Comparable<Key> {
     public static final int LABEL_FLAGS_FOLLOW_KEY_LABEL_RATIO = 0xC0;
     public static final int LABEL_FLAGS_FOLLOW_KEY_HINT_LABEL_RATIO = 0x140;
     // End of key text ratio mask enum values
-    public static final int LABEL_FLAGS_HAS_POPUP_HINT = 0x200;
     public static final int LABEL_FLAGS_HAS_SHIFTED_LETTER_HINT = 0x400;
     public static final int LABEL_FLAGS_HAS_HINT_LABEL = 0x800;
     // The bit to calculate the ratio of key label width against key width. If autoXScale bit is on
@@ -373,8 +372,7 @@ public class Key implements Comparable<Key> {
     private static boolean needsToUpcase(int labelFlags, KeyboardElement keyboardElement) {
         if ((labelFlags & LABEL_FLAGS_PRESERVE_CASE) != 0) return false;
         return switch (keyboardElement) {
-            case ALPHABET_MANUAL_SHIFTED, ALPHABET_AUTOMATIC_SHIFTED,
-                    ALPHABET_SHIFT_LOCKED, ALPHABET_SHIFT_LOCK_SHIFTED -> true;
+            case ALPHABET_MANUAL_SHIFTED, ALPHABET_AUTOMATIC_SHIFTED, ALPHABET_SHIFT_LOCKED -> true;
             default -> false;
         };
     }
@@ -642,10 +640,6 @@ public class Key implements Comparable<Key> {
 
     public final boolean isAlignLabelOffCenter() {
         return (mLabelFlags & LABEL_FLAGS_ALIGN_LABEL_OFF_CENTER) != 0;
-    }
-
-    public final boolean hasPopupHint() {
-        return (mLabelFlags & LABEL_FLAGS_HAS_POPUP_HINT) != 0;
     }
 
     public final boolean hasShiftedLetterHint() {
@@ -1124,10 +1118,19 @@ public class Key implements Comparable<Key> {
             mPopupKeysColumnAndFlags = getPopupKeysColumnAndFlagsAndSetNullInArray(params, popupKeys);
             final String[] finalPopupKeys = popupKeys == null ? null : PopupKeySpec.filterOutEmptyString(popupKeys);
             if (finalPopupKeys != null) {
-                actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
-                mPopupKeys = new PopupKeySpec[finalPopupKeys.length];
+                PopupKeySpec[] tempPopupKeys = new PopupKeySpec[finalPopupKeys.length];
+                boolean hasRepeatPopup = false;
                 for (int i = 0; i < finalPopupKeys.length; i++) {
-                    mPopupKeys[i] = new PopupKeySpec(finalPopupKeys[i], needsToUpcase, localeForUpcasing);
+                    tempPopupKeys[i] = new PopupKeySpec(finalPopupKeys[i], needsToUpcase, localeForUpcasing);
+                    if (tempPopupKeys[i].mCode == KeyCode.KEY_REPEAT)
+                        hasRepeatPopup = true;
+                }
+                if (hasRepeatPopup) {
+                    mPopupKeys = null;
+                    actionFlags |= ACTION_FLAGS_IS_REPEATABLE;
+                } else {
+                    mPopupKeys = tempPopupKeys;
+                    actionFlags |= ACTION_FLAGS_ENABLE_LONG_PRESS;
                 }
             } else {
                 mPopupKeys = null;
@@ -1194,7 +1197,7 @@ public class Key implements Comparable<Key> {
                     actionFlags |= ACTION_FLAGS_IS_REPEATABLE;
                 // fallthrough
             case KeyCode.SHIFT, Constants.CODE_ENTER, KeyCode.SHIFT_ENTER, KeyCode.ALPHA, Constants.CODE_SPACE, KeyCode.NUMPAD,
-                    KeyCode.SYMBOL, KeyCode.SYMBOL_ALPHA, KeyCode.LANGUAGE_SWITCH, KeyCode.EMOJI, KeyCode.CLIPBOARD,
+                    KeyCode.DPAD, KeyCode.SYMBOL, KeyCode.SYMBOL_ALPHA, KeyCode.LANGUAGE_SWITCH, KeyCode.EMOJI, KeyCode.CLIPBOARD,
                     KeyCode.MOVE_START_OF_LINE, KeyCode.MOVE_END_OF_LINE, KeyCode.MOVE_START_OF_PAGE, KeyCode.MOVE_END_OF_PAGE,
                     KeyCode.EMOJI_SEARCH:
                 actionFlags |= ACTION_FLAGS_NO_KEY_PREVIEW; // no preview even if icon!
