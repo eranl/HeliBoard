@@ -270,13 +270,13 @@ class EmojiSearchActivity : ComponentActivity() {
 
     override fun onStop() {
         Log.d(TAG, "search ending. Selected emoji: ${pressedKey?.let { getEmoji(it) }}. imeClosed: $imeClosed")
-        val intent = Intent(this, LatinIME::class.java).setAction(EMOJI_SEARCH_DONE_ACTION)
+        val intent = Intent(EMOJI_SEARCH_DONE_ACTION).setPackage(packageName)
             .putExtra(IME_CLOSED_KEY, imeClosed)
         pressedKey?.let {
             intent.putExtra(EMOJI_KEY, getEmoji(it))
             KeyboardSwitcher.getInstance().emojiPalettesView.addRecentKey(it)
         }
-        startService(intent)
+        sendBroadcast(intent)
         super.onStop()
     }
 
