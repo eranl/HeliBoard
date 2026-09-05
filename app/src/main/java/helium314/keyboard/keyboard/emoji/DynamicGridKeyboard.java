@@ -12,8 +12,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import helium314.keyboard.latin.common.Constants;
-import helium314.keyboard.latin.settings.Defaults;
-import helium314.keyboard.latin.utils.Log;
+import helium314.keyboard.latin.common.StringUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +21,6 @@ import helium314.keyboard.keyboard.Key;
 import helium314.keyboard.keyboard.Keyboard;
 import helium314.keyboard.keyboard.internal.PopupKeySpec;
 import helium314.keyboard.latin.settings.Settings;
-import helium314.keyboard.latin.utils.JsonUtils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -37,7 +35,6 @@ final class DynamicGridKeyboard extends Keyboard {
     private static final String TAG = DynamicGridKeyboard.class.getSimpleName();
     private final Object mLock = new Object();
 
-    private final SharedPreferences mPrefs;
     private final int mHorizontalStep;
     private final int mHorizontalGap;
     private final int mVerticalStep;
@@ -51,18 +48,18 @@ final class DynamicGridKeyboard extends Keyboard {
     private List<Key> mCachedGridKeys;
     private final ArrayList<Integer> mEmptyColumnIndices = new ArrayList<>(4);
 
-    public static DynamicGridKeyboard ofKeyCount(final SharedPreferences prefs, final Keyboard templateKeyboard,
-            final int maxKeyCount, final int categoryId, final int width) {
-        return new DynamicGridKeyboard(prefs, templateKeyboard, maxKeyCount, categoryId, width, false);
+    public static DynamicGridKeyboard ofKeyCount(SharedPreferences prefs, Keyboard templateKeyboard,
+            int maxKeyCount, boolean isRecents, int width) {
+        return new DynamicGridKeyboard(prefs, templateKeyboard, maxKeyCount, isRecents, width, false);
     }
 
-    public static DynamicGridKeyboard ofRowCount(final SharedPreferences prefs, final Keyboard templateKeyboard,
-            final int maxRowCount, final int categoryId, final int width) {
-        return new DynamicGridKeyboard(prefs, templateKeyboard, maxRowCount, categoryId, width, true);
+    public static DynamicGridKeyboard ofRowCount(SharedPreferences prefs, Keyboard templateKeyboard,
+            int maxRowCount, boolean isRecents, int width) {
+        return new DynamicGridKeyboard(prefs, templateKeyboard, maxRowCount, isRecents, width, true);
     }
 
-    private DynamicGridKeyboard(final SharedPreferences prefs, final Keyboard templateKeyboard,
-            final int maxCount, final int categoryId, final int width, boolean fixedRowCount) {
+    private DynamicGridKeyboard(SharedPreferences prefs, Keyboard templateKeyboard,
+            int maxCount, boolean isRecents, int width, boolean fixedRowCount) {
         super(templateKeyboard);
         // todo: would be better to keep them final and not require width, but how to properly set width of the template keyboard?
         //  an alternative would be to always create the templateKeyboard with full width
@@ -82,8 +79,7 @@ final class DynamicGridKeyboard extends Keyboard {
             setSpacerColumns(spacerWidth);
         mMaxKeyCount = fixedRowCount? maxCount * getOccupiedColumnCount() : maxCount;
         mFixedRowCount = fixedRowCount;
-        mIsRecents = categoryId == EmojiCategory.ID_RECENTS;
-        mPrefs = prefs;
+        mIsRecents = isRecents;
     }
 
     private void setSpacerColumns(final float spacerWidth) {
@@ -143,16 +139,17 @@ final class DynamicGridKeyboard extends Keyboard {
     public void flushPendingRecentKeys() {
         synchronized (mLock) {
             while (!mPendingKeys.isEmpty()) {
-                addKey(mPendingKeys.pollFirst(), true);
+                Key key = mPendingKeys.pollFirst();
+                addKey(key, true);
+                saveRecentKey(key);
             }
-            saveRecentKeys();
         }
     }
 
-    public void addKeyFirst(final Key usedKey) {
+    public void addKeyFirst(Key usedKey) {
         addKey(usedKey, true);
         if (mIsRecents) {
-            saveRecentKeys();
+            saveRecentKey(usedKey);
         }
     }
 
@@ -209,17 +206,11 @@ final class DynamicGridKeyboard extends Keyboard {
         }
     }
 
-    private void saveRecentKeys() {
-        final ArrayList<Object> keys = new ArrayList<>();
-        for (final Key key : mGridKeys) {
-            if (key.getOutputText() != null) {
-                keys.add(key.getOutputText());
-            } else {
-                keys.add(key.getCode());
-            }
-        }
-        final String jsonStr = JsonUtils.listToJsonStr(keys);
-        mPrefs.edit().putString(Settings.PREF_EMOJI_RECENT_KEYS, jsonStr).apply();
+    private void saveRecentKey(@Nullable Key key) {
+        if (key == null) return;
+        String outputText = key.getOutputText();
+        if (outputText != null) RecentEmojis.add(outputText);
+        else RecentEmojis.addCodepoint(key.getCode());
     }
 
     private Key getKeyByCode(final Collection<DynamicGridKeyboard> keyboards,
@@ -250,19 +241,15 @@ final class DynamicGridKeyboard extends Keyboard {
         return new Key(getTemplateKey(Constants.RECENTS_TEMPLATE_KEY_CODE_0), null, null, Key.BACKGROUND_TYPE_EMPTY, 0, outputText);
     }
 
-    public void loadRecentKeys(final Collection<DynamicGridKeyboard> keyboards) {
-        final String str = mPrefs.getString(Settings.PREF_EMOJI_RECENT_KEYS, Defaults.PREF_EMOJI_RECENT_KEYS);
-        final List<Object> keys = JsonUtils.jsonStrToList(str);
-        for (final Object o : keys) {
-            final Key key;
-            if (o instanceof Integer) {
-                final int code = (Integer)o;
+    public void loadRecentKeys(Collection<DynamicGridKeyboard> keyboards) {
+        List<String> emojis = RecentEmojis.INSTANCE.get();
+        for (String emoji : emojis) {
+            Key key;
+            if (StringUtils.codePointCount(emoji) == 1) {
+                int code = Character.codePointAt(emoji, 0);
                 key = getKeyByCode(keyboards, code);
-            } else if (o instanceof final String outputText) {
-                key = getKeyByOutputText(keyboards, outputText);
             } else {
-                Log.w(TAG, "Invalid object: " + o);
-                continue;
+                key = getKeyByOutputText(keyboards, emoji);
             }
             addKeyLast(key);
         }
