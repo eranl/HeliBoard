@@ -151,7 +151,7 @@ internal class EmojiCategory(private val context: Context, private val layoutSet
                     maxRecentsKeyCount, category == Category.RECENTS, currentWidth
                 )
                 categoryKeyboardMap[categoryKeyboardMapKey] = kbd
-                kbd.loadRecentKeys(getKeyboards())
+                kbd.loadRecentKeys(categoryKeyboardMap.values)
                 return kbd
             }
 
@@ -173,8 +173,6 @@ internal class EmojiCategory(private val context: Context, private val layoutSet
             return categoryKeyboardMap[categoryKeyboardMapKey]!!
         }
     }
-
-    fun getKeyboards(): Collection<DynamicGridKeyboard> = categoryKeyboardMap.values
 
     private fun computeMaxKeyCountPerPage(): Int {
         val tempKeyboard = DynamicGridKeyboard.ofKeyCount(prefs,
